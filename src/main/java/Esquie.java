@@ -19,5 +19,10 @@ public class Esquie {
                 """;
         String breakLine = "\n--------------------------------------";
         System.out.println(logo + breakLine);
+
+        // Initial Conversation
+        System.out.println("Bonjour mon ami! I'm Esquie\uD83D\uDE00" + "\nWhat can I do for you?");
+        System.out.println(breakLine);
+        System.out.println("Bye mon ami! Hope to see you again soon!");
     }
 }
