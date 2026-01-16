@@ -4,6 +4,12 @@ import java.util.Scanner;
  * A Personal Assistant Chatbot that helps a person keep track of various things.
  */
 public class Esquie {
+    /** Array for storing tring entered by the user. */
+    private static String[] taskList = new String[100];
+
+    /** Counter for the number of task added. */
+    private static int numberOfTasks = 0;
+
     /**
      * Prints the logo, welcome message and immediately exits.
      *
@@ -36,8 +42,9 @@ public class Esquie {
             if (input.equalsIgnoreCase("bye")) {
                 break;
             } else {
+                taskList[numberOfTasks++] = input;
                 System.out.println(indentation + replyBreakLine);
-                System.out.println(indentation + indentation + input);
+                System.out.println(indentation + indentation + "added: " + input);
                 System.out.println(indentation + replyBreakLine);
             }
         }
