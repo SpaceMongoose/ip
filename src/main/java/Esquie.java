@@ -66,14 +66,20 @@ public class Esquie {
     }
 
     /**
-     * Handles user input and either adds to task list, or lists task list.
+     * Handles user input and either adds to task list, or display task list.
      *
      * @param input Either command, or task entered by user.
      */
     public static void inputHandler(String input) {
-        taskList[numberOfTasks++] = input;
         System.out.println(INDENTATION + REPLYBREAKLINE);
-        System.out.println(INDENTATION + INDENTATION + "added: " + input);
+        if (input.equalsIgnoreCase("list")) {
+           for(int i = 0; i < numberOfTasks; i++) {
+               System.out.println(INDENTATION + INDENTATION + (i + 1) + ". " + taskList[i]);
+           }
+        } else {
+            taskList[numberOfTasks++] = input;
+            System.out.println(INDENTATION + INDENTATION + "added: " + input);
+        }
         System.out.println(INDENTATION + REPLYBREAKLINE);
     }
 }
