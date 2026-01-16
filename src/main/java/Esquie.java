@@ -27,10 +27,7 @@ public class Esquie {
             if (input.equalsIgnoreCase("bye")) {
                 break;
             } else {
-                taskList[numberOfTasks++] = input;
-                System.out.println(INDENTATION + REPLYBREAKLINE);
-                System.out.println(INDENTATION + INDENTATION + "added: " + input);
-                System.out.println(INDENTATION + REPLYBREAKLINE);
+                inputHandler(input);
             }
         }
         printExit();
@@ -66,5 +63,17 @@ public class Esquie {
     public static void printExit() {
         System.out.println(BREAKLINE);
         System.out.println("Bye mon ami! Hope to see you again soon!");
+    }
+
+    /**
+     * Handles user input and either adds to task list, or lists task list.
+     *
+     * @param input Either command, or task entered by user.
+     */
+    public static void inputHandler(String input) {
+        taskList[numberOfTasks++] = input;
+        System.out.println(INDENTATION + REPLYBREAKLINE);
+        System.out.println(INDENTATION + INDENTATION + "added: " + input);
+        System.out.println(INDENTATION + REPLYBREAKLINE);
     }
 }
