@@ -40,4 +40,25 @@ public class Task {
     public void markIncomplete() {
         this.isDone = false;
     }
+
+    /**
+    * Returns the task description.
+    *
+    * @return The description of the task.
+    */
+    public String getDescription() {
+        return this.description;
+    }
+
+
+    /**
+     * Returns a complete string with both current task status and task description.
+     *
+     * @return A formatted string (e.g. [] read book or [X] burn book).
+     *
+     */
+    @Override
+    public String toString() {
+        return "[" + getStatusIcon() + "] " + getDescription();
+    }
 }

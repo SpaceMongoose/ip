@@ -5,7 +5,7 @@ import java.util.Scanner;
  */
 public class Esquie {
     /** Array (with 100 limit) for storing tasks entered by the user. */
-    private static String[] taskList = new String[100];
+    private static Task[] taskList = new Task[100];
 
     /** Counter for the number of tasks added. */
     private static int numberOfTasks = 0;
@@ -73,11 +73,11 @@ public class Esquie {
     public static void inputHandler(String input) {
         System.out.println(INDENTATION + REPLYBREAKLINE);
         if (input.equalsIgnoreCase("list")) {
-           for(int i = 0; i < numberOfTasks; i++) {
-               System.out.println(INDENTATION + INDENTATION + (i + 1) + ". " + taskList[i]);
-           }
+            for (int i = 0; i < numberOfTasks; i++) {
+                System.out.println(INDENTATION + INDENTATION + (i + 1) + "." + taskList[i].toString());
+            }
         } else {
-            taskList[numberOfTasks++] = input;
+            taskList[numberOfTasks++] = new Task(input);
             System.out.println(INDENTATION + INDENTATION + "added: " + input);
         }
         System.out.println(INDENTATION + REPLYBREAKLINE);
