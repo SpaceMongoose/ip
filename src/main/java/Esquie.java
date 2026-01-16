@@ -23,8 +23,8 @@ public class Esquie {
         // Loop to Scan for Inputs
         Scanner sc = new Scanner(System.in);
         while (true) {
-            String input = sc.nextLine();
-            if (input.equalsIgnoreCase("bye")) {
+            String[] input = sc.nextLine().split(" ");
+            if (input[0].equalsIgnoreCase("bye")) {
                 break;
             } else {
                 inputHandler(input);
@@ -66,20 +66,69 @@ public class Esquie {
     }
 
     /**
-     * Handles user input and either adds to task list, or display task list.
+     * Handles user input and either adds to task list, display task list, mark and unmark task.
      *
-     * @param input Either command, or task entered by user.
+     * @param input A String array that contains the commands and parameters specified by User
      */
-    public static void inputHandler(String input) {
+    public static void inputHandler(String[] input) {
         System.out.println(INDENTATION + REPLYBREAKLINE);
-        if (input.equalsIgnoreCase("list")) {
+        if (input[0].equalsIgnoreCase("list")) {
             for (int i = 0; i < numberOfTasks; i++) {
                 System.out.println(INDENTATION + INDENTATION + (i + 1) + "." + taskList[i].toString());
             }
+
+        } else if (input[0].equalsIgnoreCase("mark") || input[0].equalsIgnoreCase("unmark")) {
+            // Error Checking
+            // input length is minimally 2 i.e. command and taskNumber
+            if (input.length < 2) {
+                System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
+                System.out.println(INDENTATION + REPLYBREAKLINE);
+                return;
+            }
+
+            try {
+                // Checks if the 2nd number is Integer or not
+                // Integer.parseInt returns NumberFormatException if fails
+                int taskNumber = Integer.parseInt(input[1]) - 1;
+                boolean isMark = input[0].equalsIgnoreCase("mark");
+                markHandler(taskNumber, isMark);
+            } catch (NumberFormatException e) {
+                System.out.print(INDENTATION + INDENTATION + "You didnt give me a number... Esquie is now sad\n");
+            }
+
         } else {
-            taskList[numberOfTasks++] = new Task(input);
-            System.out.println(INDENTATION + INDENTATION + "added: " + input);
+            // Input is not a command, join back the input and add to list
+            String originalInput = String.join(" ", input);
+            taskList[numberOfTasks++] = new Task(originalInput);
+            System.out.println(INDENTATION + INDENTATION + "added: " + originalInput);
+
         }
         System.out.println(INDENTATION + REPLYBREAKLINE);
+    }
+
+    /**
+     * Based on User input, determines which task to mark or unmark
+     *
+     * @param taskNumber the task to interact with in the taskList
+     * @param isMark true = mark, false = unmark
+     * */
+    public static void markHandler(int taskNumber, boolean isMark) {
+        // Error Checking
+        if (taskNumber < 0 || taskNumber >= numberOfTasks) {
+            System.out.println(INDENTATION + INDENTATION +"I think you did an oopsie! That does not exist");
+            return;
+        }
+
+        Task currentTask = taskList[taskNumber];
+        if (isMark) {
+            currentTask.markComplete();
+            System.out.println(INDENTATION + INDENTATION + "WheeWhoo! I've marked this task as done:");
+
+        } else {
+            currentTask.markIncomplete();
+            System.out.println(INDENTATION + INDENTATION + "WhooWhee! I've marked this task as not done yet:");
+
+        }
+        System.out.println(INDENTATION + INDENTATION + currentTask.toString());
     }
 }
