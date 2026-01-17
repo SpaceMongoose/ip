@@ -106,7 +106,6 @@ public class Esquie {
 
     /**
      * Executes the mark command by either marking or unmarking a task.
-     * Method does nothing if input is not minimally length 2.
      *
      * @param input A String array that is split from user input. Should contain command and task description.
      */
@@ -186,7 +185,6 @@ public class Esquie {
 
     /**
      * Executes the todo command by adding a new todo task.
-     * Method does nothing if input is not minimally length 2.
      *
      * @param input A String array that is split from user input. Should contain command and task description.
      */
@@ -203,7 +201,6 @@ public class Esquie {
 
     /**
      * Executes the deadline command by adding a new deadline task.
-     * Method does nothing if input is not minimally length 2.
      *
      * @param input A String array that is split from user input. Contains command, task description and deadline.
      */
@@ -229,7 +226,6 @@ public class Esquie {
 
     /**
      * Executes the event command by adding a new event task.
-     * Method does nothing if input is not minimally length 2.
      *
      * @param input A String array that is split from user input. Contains command, task description and deadline.
      */
@@ -268,6 +264,11 @@ public class Esquie {
         taskHandler(task);
     }
 
+    /**
+     * Executes the delete command by deleting a task.
+     *
+     * @param input A String array that is split from user input.
+     */
     private void deleteHandler(String[] input) throws EsquieException {
         if (input.length < 2) {
             throw new EsquieException(DOUBLEINDENTATION
