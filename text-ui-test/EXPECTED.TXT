@@ -53,7 +53,7 @@ What can I do for you?
         6.[E][ ] Drink Esquie's wine (from: 1 Feb 0000H to: 1 Feb 2359H)
         --------------------------------------
         --------------------------------------
-        WheeWhoo! I've marked this task as done:
+        WhooWhee! I've marked this task as done:
         [T][X] Defeat Renoir
         --------------------------------------
         --------------------------------------
@@ -61,15 +61,15 @@ What can I do for you?
         [T][ ] Defeat Renoir
         --------------------------------------
         --------------------------------------
-        WheeWhoo! I've marked this task as done:
+        WhooWhee! I've marked this task as done:
         [E][X] Drink Esquie's wine (from: 1 Feb 0000H to: 1 Feb 2359H)
         --------------------------------------
         --------------------------------------
-        WheeWhoo! I've marked this task as done:
+        WhooWhee! I've marked this task as done:
         [D][X] Level up Verso (by: 2 Feb 2026)
         --------------------------------------
         --------------------------------------
-        WheeWhoo! I've marked this task as done:
+        WhooWhee! I've marked this task as done:
         [E][X] Go to Monoco's Station for a Party (from: 27 Jan 1800H to: 27 Jan 1900H)
         --------------------------------------
         --------------------------------------
@@ -104,21 +104,27 @@ What can I do for you?
         --------------------------------------
         --------------------------------------
         Whoopsie! Something is missing from the todo command!
+        Example Usage: todo borrow book
         --------------------------------------
         --------------------------------------
         Whoopsie! Something is missing from the todo command!
+        Example Usage: todo borrow book
         --------------------------------------
         --------------------------------------
         Whoopsie! Something is missing from the deadline command!
+        Example Usage: deadline return book /by Sunday
         --------------------------------------
         --------------------------------------
         Whoopsie! Something is missing from the deadline command!
+        Example Usage: deadline return book /by Sunday
         --------------------------------------
         --------------------------------------
         Whoopsie! Either your task or date is missing!
+        Example Usage: deadline return book /by Sunday
         --------------------------------------
         --------------------------------------
         Whoopsie! Either your task or date is missing!
+        Example Usage: deadline return book /by Sunday
         --------------------------------------
         --------------------------------------
         Got it. I've added this task:
@@ -127,25 +133,31 @@ What can I do for you?
         --------------------------------------
         --------------------------------------
         Whoopsie! Something is wrong with the event command!
+        Example Usage: event project meeting /from Mon 2pm /to 4pm
         --------------------------------------
         --------------------------------------
         Whoopsie! Something is wrong with the event command!
+        Example Usage: event project meeting /from Mon 2pm /to 4pm
         --------------------------------------
         --------------------------------------
         Whoopsie, something is wrong with the event command!
         Either the from or to timing is missing from the event command!
+        Example Usage: event project meeting /from Mon 2pm /to 4pm
         --------------------------------------
         --------------------------------------
         Whoopsie, something is wrong with the event command!
         Either the from or to timing is missing from the event command!
+        Example Usage: event project meeting /from Mon 2pm /to 4pm
         --------------------------------------
         --------------------------------------
         Whoopsie, something is wrong with the event command!
         Either the from or to timing is missing from the event command!
+        Example Usage: event project meeting /from Mon 2pm /to 4pm
         --------------------------------------
         --------------------------------------
         Whoopsie, something is wrong with the event command! 
         Either a task description or time is missing!
+        Example Usage: event project meeting /from Mon 2pm /to 4pm
         --------------------------------------
         --------------------------------------
         Got it. I've added this task:

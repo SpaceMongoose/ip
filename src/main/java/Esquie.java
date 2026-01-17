@@ -113,7 +113,9 @@ public class Esquie {
         // Error Checking
         // input length is minimally 2 i.e. command and taskNumber
         if (input.length < 2) {
-            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! command is missing an argument!");
+            throw new EsquieException(DOUBLEINDENTATION
+                    + "Whoopsie! command is missing an argument!"
+                    + "\n" + DOUBLEINDENTATION + "Example Usage: mark 1 OR unmark 1");
         }
 
         try {
@@ -123,7 +125,10 @@ public class Esquie {
             boolean isMark = input[0].equalsIgnoreCase("mark");
             toggleMarkStatus(taskNumber, isMark);
         } catch (NumberFormatException e) {
-            throw new EsquieException(DOUBLEINDENTATION + "You didnt give me a number... Esquie is now sad :(");
+            throw new EsquieException(DOUBLEINDENTATION
+                    + "You didnt give me a number... Esquie is now sad :("
+                    + "\n" + DOUBLEINDENTATION + "Example Usage: mark 1 OR unmark 1");
+
         }
     }
 
@@ -142,7 +147,7 @@ public class Esquie {
         Task currentTask = taskList[taskNumber];
         if (isMark) {
             currentTask.markComplete();
-            System.out.println(DOUBLEINDENTATION + "WheeWhoo! I've marked this task as done:");
+            System.out.println(DOUBLEINDENTATION + "WhooWhee! I've marked this task as done:");
 
         } else {
             currentTask.markIncomplete();
@@ -168,7 +173,7 @@ public class Esquie {
      *
      * @param task The task object to be added.
      */
-    private void taskHandler(Task task) throws EsquieException{
+    private void taskHandler(Task task) throws EsquieException {
         if (numberOfTasks >= 100) {
             throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! Number of tasks is full!");
         }
@@ -187,7 +192,9 @@ public class Esquie {
      */
     private void todoHandler(String[] input) throws EsquieException {
         if (input.length < 2 || input[1].trim().isEmpty()) {
-            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! Something is missing from the todo command!");
+            throw new EsquieException(DOUBLEINDENTATION
+                    + "Whoopsie! Something is missing from the todo command!"
+                    + "\n" + DOUBLEINDENTATION + "Example Usage: todo borrow book");
         }
 
         Task task = new Todo(input[1].trim());
@@ -202,14 +209,18 @@ public class Esquie {
      */
     private void deadlineHandler(String[] input) throws EsquieException {
         if (input.length < 2) {
-            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! Something is missing from the deadline command!");
+            throw new EsquieException(DOUBLEINDENTATION
+                    + "Whoopsie! Something is missing from the deadline command!"
+                    + "\n" + DOUBLEINDENTATION + "Example Usage: deadline return book /by Sunday");
         }
 
         // e.g. return book /by Sunday
         String[] byInput = input[1].split(" /by ", 2);
 
         if (byInput.length < 2 || byInput[0].trim().isEmpty() || byInput[1].trim().isEmpty()) {
-            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! Either your task or date is missing!");
+            throw new EsquieException(DOUBLEINDENTATION
+                    + "Whoopsie! Either your task or date is missing!"
+                    + "\n" + DOUBLEINDENTATION + "Example Usage: deadline return book /by Sunday");
         }
 
         Task task = new Deadline(byInput[0].trim(), byInput[1].trim());
@@ -222,9 +233,11 @@ public class Esquie {
      *
      * @param input A String array that is split from user input. Contains command, task description and deadline.
      */
-    private void eventHandler(String[] input) throws EsquieException{
+    private void eventHandler(String[] input) throws EsquieException {
         if (input.length < 2) {
-            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! Something is wrong with the event command!");
+            throw new EsquieException(DOUBLEINDENTATION
+                    + "Whoopsie! Something is wrong with the event command!"
+                    + "\n" + DOUBLEINDENTATION + "Example Usage: event project meeting /from Mon 2pm /to 4pm");
         }
 
         // e.g. project meeting /from Mon 2pm /to 4pm
@@ -235,7 +248,8 @@ public class Esquie {
             throw new EsquieException(DOUBLEINDENTATION
                     + "Whoopsie, something is wrong with the event command! \n"
                     + DOUBLEINDENTATION
-                    + "Either a task description or time is missing!");
+                    + "Either a task description or time is missing!"
+                    + "\n" + DOUBLEINDENTATION + "Example Usage: event project meeting /from Mon 2pm /to 4pm");
         }
         String description = splitFrom[0];
         String date = splitFrom[1]; // Mon 2pm /to 4pm
@@ -246,7 +260,8 @@ public class Esquie {
             throw new EsquieException(DOUBLEINDENTATION
                     + "Whoopsie, something is wrong with the event command!\n"
                     + DOUBLEINDENTATION
-                    + "Either the from or to timing is missing from the event command!");
+                    + "Either the from or to timing is missing from the event command!"
+                    + "\n" + DOUBLEINDENTATION + "Example Usage: event project meeting /from Mon 2pm /to 4pm");
         }
 
         Task task = new Event(description.trim(), splitTo[0].trim(), splitTo[1].trim());
