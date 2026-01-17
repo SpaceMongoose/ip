@@ -82,16 +82,16 @@ What can I do for you?
         6.[E][X] Drink Esquie's wine (from: 1 Feb 0000H to: 1 Feb 2359H)
         --------------------------------------
         --------------------------------------
-        I think you did an oopsie! That does not exist
+        Whoopsie! This task does not exist
         --------------------------------------
         --------------------------------------
-        I think you did an oopsie! That does not exist
+        Whoopsie! This task does not exist
         --------------------------------------
         --------------------------------------
-        I think you did an oopsie! That does not exist
+        Whoopsie! This task does not exist
         --------------------------------------
         --------------------------------------
-        I think you did an oopsie! That does not exist
+        Whoopsie! This task does not exist
         --------------------------------------
         --------------------------------------
         Listing Current Tasks:
@@ -103,19 +103,54 @@ What can I do for you?
         6.[E][X] Drink Esquie's wine (from: 1 Feb 0000H to: 1 Feb 2359H)
         --------------------------------------
         --------------------------------------
-        WhooWhee?? Please check the command!
+        Whoopsie! Something is missing from the todo command!
         --------------------------------------
         --------------------------------------
-        WhooWhee?? Please check the command!
+        Whoopsie! Something is missing from the todo command!
         --------------------------------------
         --------------------------------------
-        WhooWhee?? Please check the command!
+        Whoopsie! Something is missing from the deadline command!
         --------------------------------------
         --------------------------------------
-        WhooWhee?? Please check the command!
+        Whoopsie! Something is missing from the deadline command!
         --------------------------------------
         --------------------------------------
-        WhooWhee?? Please check the command!
+        Whoopsie! Either your task or date is missing!
+        --------------------------------------
+        --------------------------------------
+        Whoopsie! Either your task or date is missing!
+        --------------------------------------
+        --------------------------------------
+        Got it. I've added this task:
+        [D][ ] fly back to lumiere (by: Today)
+        Now you have 7 tasks in the list.
+        --------------------------------------
+        --------------------------------------
+        Whoopsie! Something is wrong with the event command!
+        --------------------------------------
+        --------------------------------------
+        Whoopsie! Something is wrong with the event command!
+        --------------------------------------
+        --------------------------------------
+        Whoopsie, something is wrong with the event command!
+        Either the from or to timing is missing from the event command!
+        --------------------------------------
+        --------------------------------------
+        Whoopsie, something is wrong with the event command!
+        Either the from or to timing is missing from the event command!
+        --------------------------------------
+        --------------------------------------
+        Whoopsie, something is wrong with the event command!
+        Either the from or to timing is missing from the event command!
+        --------------------------------------
+        --------------------------------------
+        Whoopsie, something is wrong with the event command! 
+        Either a task description or time is missing!
+        --------------------------------------
+        --------------------------------------
+        Got it. I've added this task:
+        [E][ ] fly to the monolith (from: Monday to: Friday)
+        Now you have 8 tasks in the list.
         --------------------------------------
 --------------------------------------
 Bye mon ami! Hope to see you again soon!

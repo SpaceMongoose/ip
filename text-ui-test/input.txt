@@ -18,8 +18,17 @@ mark -1
 unmark -1
 list
 todo
+todo
 deadline
+deadline
+deadline fly back to lumiere /by
+deadline /by Today
+deadline fly back to lumiere /by Today
 event
-deadline test feaosifj /b /y /yb
-event /from s /to s
+event
+event fly to the monolith /from /to
+event fly to the monolith /from Monday /to
+event fly to the monolith /from  /to Friday
+event  /from Monday  /to Friday
+event fly to the monolith /from Monday  /to Friday
 bye
