@@ -4,23 +4,33 @@ import java.util.Scanner;
  * A Personal Assistant Chatbot that helps a person keep track of various things.
  */
 public class Esquie {
-    /** Array (with 100 limit) for storing tasks entered by the user. */
-    private static Task[] taskList = new Task[100];
-
-    /** Counter for the number of tasks added. */
-    private static int numberOfTasks = 0;
+    private Task[] taskList;
+    private int numberOfTasks;
 
     /** Constants used for standardized formatting. */
     private static final String BREAKLINE = "--------------------------------------";
     private static final String REPLYBREAKLINE = "    --------------------------------------";
     private static final String INDENTATION = "    ";
 
+    /**
+     * Initialize Esquie with empty task list (up to 100 items) and a counter for the number of tasks.
+     */
+    public Esquie() {
+        this.taskList = new Task[100];
+        this.numberOfTasks = 0;
+    }
+
     public static void main(String[] args) {
+        new Esquie().run();
+    }
 
-        // Prints the Welcome Message
+    /**
+     * Starts the main execution of Esquie.
+     * Displays welcome message and loops to read user input to call the correct methods.
+     * Loop is continued until Esquie reads "bye".
+     */
+    public void run() {
         printWelcome();
-
-        // Loop to Scan for Inputs
         Scanner sc = new Scanner(System.in);
         while (true) {
             String[] input = sc.nextLine().split(" ", 2);
@@ -37,7 +47,7 @@ public class Esquie {
      * Prints the logo and welcome message to the User.
      *
      */
-    public static void printWelcome() {
+    private void printWelcome() {
         String logo = """
                   ______                 _     \s
                  |  ____|               (_)    \s
@@ -61,7 +71,7 @@ public class Esquie {
      * Prints the exit message.
      *
      */
-    public static void printExit() {
+    private void printExit() {
         System.out.println(BREAKLINE);
         System.out.println("Bye mon ami! Hope to see you again soon!");
     }
@@ -72,7 +82,7 @@ public class Esquie {
      *
      * @param input A String array that contains the commands and parameters specified by User
      */
-    public static void inputHandler(String[] input) {
+    private void inputHandler(String[] input) {
         System.out.println(INDENTATION + REPLYBREAKLINE);
         if (input[0].equalsIgnoreCase("list")) {
             listHandler();
@@ -96,7 +106,7 @@ public class Esquie {
      *
      * @param input A String array that is split from user input. Should contain command and task description.
      */
-    public static void markHandler(String[] input) {
+    private void markHandler(String[] input) {
         // Error Checking
         // input length is minimally 2 i.e. command and taskNumber
         if (input.length < 2) {
@@ -122,7 +132,7 @@ public class Esquie {
      * @param taskNumber the task to interact with in the taskList
      * @param isMark true = mark, false = unmark
      * */
-    public static void toggleMarkStatus(int taskNumber, boolean isMark) {
+    private void toggleMarkStatus(int taskNumber, boolean isMark) {
         // Error Checking
         if (taskNumber < 0 || taskNumber >= numberOfTasks) {
             System.out.println(INDENTATION + INDENTATION + "I think you did an oopsie! That does not exist");
@@ -146,7 +156,8 @@ public class Esquie {
      * Method to List all current tasks in the Tasklist.
      *
      */
-    public static void listHandler() {
+    private void listHandler() {
+        System.out.println(INDENTATION + INDENTATION + "Listing Current Tasks:");
         for (int i = 0; i < numberOfTasks; i++) {
             System.out.println(INDENTATION + INDENTATION + (i + 1) + "." + taskList[i].toString());
         }
@@ -157,7 +168,7 @@ public class Esquie {
      *
      * @param task The task object to be added.
      */
-    public static void taskHandler(Task task) {
+    private void taskHandler(Task task) {
         if (numberOfTasks >= 100) {
             System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Number of tasks is full!");
             return;
@@ -175,13 +186,13 @@ public class Esquie {
      *
      * @param input A String array that is split from user input. Should contain command and task description.
      */
-    public static void todoHandler(String[] input) {
+    private void todoHandler(String[] input) {
         if (input.length < 2 || input[1].trim().isEmpty()) {
             System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
             return;
         }
 
-        Task task = new Todo(input[1]);
+        Task task = new Todo(input[1].trim());
         taskHandler(task);
     }
 
@@ -191,7 +202,7 @@ public class Esquie {
      *
      * @param input A String array that is split from user input. Contains command, task description and deadline.
      */
-    public static void deadlineHandler(String[] input) {
+    private void deadlineHandler(String[] input) {
         if (input.length < 2) {
             System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
             return;
@@ -205,7 +216,7 @@ public class Esquie {
             return;
         }
 
-        Task task = new Deadline(byInput[0], byInput[1]);
+        Task task = new Deadline(byInput[0].trim(), byInput[1].trim());
         taskHandler(task);
     }
 
@@ -215,7 +226,7 @@ public class Esquie {
      *
      * @param input A String array that is split from user input. Contains command, task description and deadline.
      */
-    public static void eventHandler(String[] input) {
+    private void eventHandler(String[] input) {
         if (input.length < 2) {
             System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
             return;
@@ -239,7 +250,7 @@ public class Esquie {
             return;
         }
 
-        Task task = new Event(description, splitTo[0], splitTo[1]);
+        Task task = new Event(description.trim(), splitTo[0].trim(), splitTo[1].trim());
         taskHandler(task);
     }
 }
