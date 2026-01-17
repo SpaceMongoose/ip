@@ -75,24 +75,7 @@ public class Esquie {
         if (input[0].equalsIgnoreCase("list")) {
             listHandler();
         } else if (input[0].equalsIgnoreCase("mark") || input[0].equalsIgnoreCase("unmark")) {
-            // Error Checking
-            // input length is minimally 2 i.e. command and taskNumber
-            if (input.length < 2) {
-                System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
-                System.out.println(INDENTATION + REPLYBREAKLINE);
-                return;
-            }
-
-            try {
-                // Checks if the 2nd number is Integer or not
-                // Integer.parseInt returns NumberFormatException if fails
-                int taskNumber = Integer.parseInt(input[1]) - 1;
-                boolean isMark = input[0].equalsIgnoreCase("mark");
-                markHandler(taskNumber, isMark);
-            } catch (NumberFormatException e) {
-                System.out.print(INDENTATION + INDENTATION + "You didnt give me a number... Esquie is now sad\n");
-            }
-
+            markHandler(input);
         } else if (input[0].equalsIgnoreCase("todo")) {
             todoHandler(input);
 
@@ -103,13 +86,33 @@ public class Esquie {
     }
 
 
+    public static void markHandler(String[] input) {
+        // Error Checking
+        // input length is minimally 2 i.e. command and taskNumber
+        if (input.length < 2) {
+            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
+            System.out.println(INDENTATION + REPLYBREAKLINE);
+            return;
+        }
+
+        try {
+            // Checks if the 2nd number is Integer or not
+            // Integer.parseInt returns NumberFormatException if fails
+            int taskNumber = Integer.parseInt(input[1]) - 1;
+            boolean isMark = input[0].equalsIgnoreCase("mark");
+            toggleMarkStatus(taskNumber, isMark);
+        } catch (NumberFormatException e) {
+            System.out.print(INDENTATION + INDENTATION + "You didnt give me a number... Esquie is now sad\n");
+        }
+    }
+
     /**
      * Based on User input, determines which task to mark or unmark
      *
      * @param taskNumber the task to interact with in the taskList
      * @param isMark true = mark, false = unmark
      * */
-    public static void markHandler(int taskNumber, boolean isMark) {
+    public static void toggleMarkStatus(int taskNumber, boolean isMark) {
         // Error Checking
         if (taskNumber < 0 || taskNumber >= numberOfTasks) {
             System.out.println(INDENTATION + INDENTATION +"I think you did an oopsie! That does not exist");
@@ -129,7 +132,6 @@ public class Esquie {
         System.out.println(INDENTATION + INDENTATION + currentTask.toString());
     }
 
-
     /**
      * Method to List all current tasks in the Tasklist
      *
@@ -139,7 +141,6 @@ public class Esquie {
             System.out.println(INDENTATION + INDENTATION + (i + 1) + "." + taskList[i].toString());
         }
     }
-
 
     /**
      * Adds a task to taskList and prints success message
@@ -153,7 +154,6 @@ public class Esquie {
         numberOfTasks++;
         System.out.println(INDENTATION + INDENTATION + "Now you have " + numberOfTasks + " tasks in the list.");
     }
-
 
     /**
      * Executes the todo command by adding a new todo task
