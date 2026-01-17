@@ -94,18 +94,10 @@ public class Esquie {
             }
 
         } else if (input[0].equalsIgnoreCase("todo")) {
-            if (input.length < 2) {
-                System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
-                System.out.println(INDENTATION + REPLYBREAKLINE);
-                return;
-            }
-
-            Task task = new Todo(input[1]);
-            taskHandler(task);
+            todoHandler(input);
 
         } else {
             System.out.println(INDENTATION + INDENTATION + "Esquie did not understand that!");
-
         }
         System.out.println(INDENTATION + REPLYBREAKLINE);
     }
@@ -160,5 +152,23 @@ public class Esquie {
         System.out.println(INDENTATION + INDENTATION + taskList[numberOfTasks].toString());
         numberOfTasks++;
         System.out.println(INDENTATION + INDENTATION + "Now you have " + numberOfTasks + " tasks in the list.");
+    }
+
+
+    /**
+     * Executes the todo command by adding a new todo task
+     * Method does nothing if input is not minimally length 2
+     *
+     * @param input A String array that is split from user input. Should contain command and task description.
+     */
+    public static void todoHandler(String[] input) {
+        if (input.length < 2) {
+            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
+            System.out.println(INDENTATION + REPLYBREAKLINE);
+            return;
+        }
+
+        Task task = new Todo(input[1]);
+        taskHandler(task);
     }
 }
