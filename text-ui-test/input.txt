@@ -31,4 +31,11 @@ event fly to the monolith /from Monday /to
 event fly to the monolith /from  /to Friday
 event  /from Monday  /to Friday
 event fly to the monolith /from Monday  /to Friday
+list
+delete 5
+delete
+delete    2
+delete 1000
+delete -1
+list
 bye

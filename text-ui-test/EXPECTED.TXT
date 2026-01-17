@@ -164,5 +164,45 @@ What can I do for you?
         [E][ ] fly to the monolith (from: Monday to: Friday)
         Now you have 8 tasks in the list.
         --------------------------------------
+        --------------------------------------
+        Listing Current Tasks:
+        1.[T][ ] Defeat the Paintress
+        2.[T][ ] Defeat Renoir
+        3.[D][ ] Finish Expedition 33 (by: 17 Jan 2027)
+        4.[E][X] Go to Monoco's Station for a Party (from: 27 Jan 1800H to: 27 Jan 1900H)
+        5.[D][X] Level up Verso (by: 2 Feb 2026)
+        6.[E][X] Drink Esquie's wine (from: 1 Feb 0000H to: 1 Feb 2359H)
+        7.[D][ ] fly back to lumiere (by: Today)
+        8.[E][ ] fly to the monolith (from: Monday to: Friday)
+        --------------------------------------
+        --------------------------------------
+        Got it. I've removed this task:
+        [D][X] Level up Verso (by: 2 Feb 2026)
+        Now you have 7 tasks in the list.
+        --------------------------------------
+        --------------------------------------
+        Whoopsie! Something is wrong with the delete command!
+        Example Usage: delete 3
+        --------------------------------------
+        --------------------------------------
+        Got it. I've removed this task:
+        [T][ ] Defeat Renoir
+        Now you have 6 tasks in the list.
+        --------------------------------------
+        --------------------------------------
+        Whoopsie! Task does not exist
+        --------------------------------------
+        --------------------------------------
+        Whoopsie! Task does not exist
+        --------------------------------------
+        --------------------------------------
+        Listing Current Tasks:
+        1.[T][ ] Defeat the Paintress
+        2.[D][ ] Finish Expedition 33 (by: 17 Jan 2027)
+        3.[E][X] Go to Monoco's Station for a Party (from: 27 Jan 1800H to: 27 Jan 1900H)
+        4.[E][X] Drink Esquie's wine (from: 1 Feb 0000H to: 1 Feb 2359H)
+        5.[D][ ] fly back to lumiere (by: Today)
+        6.[E][ ] fly to the monolith (from: Monday to: Friday)
+        --------------------------------------
 --------------------------------------
 Bye mon ami! Hope to see you again soon!

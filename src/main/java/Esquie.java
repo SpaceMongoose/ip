@@ -96,6 +96,8 @@ public class Esquie {
             deadlineHandler(input);
         } else if (input[0].equalsIgnoreCase("event")) {
             eventHandler(input);
+        } else if (input[0].equalsIgnoreCase("delete")) {
+            deleteHandler(input);
         } else {
             throw new EsquieException(DOUBLEINDENTATION + "Esquie did not understand that!");
         }
@@ -264,5 +266,27 @@ public class Esquie {
 
         Task task = new Event(description.trim(), splitTo[0].trim(), splitTo[1].trim());
         taskHandler(task);
+    }
+
+    private void deleteHandler(String[] input) throws EsquieException {
+        if (input.length < 2) {
+            throw new EsquieException(DOUBLEINDENTATION
+                    + "Whoopsie! Something is wrong with the delete command!"
+                    + "\n" + DOUBLEINDENTATION + "Example Usage: delete 3");
+        }
+
+        try {
+            Task removedTask = taskList.remove(Integer.parseInt(input[1].trim()) - 1);
+            System.out.println(DOUBLEINDENTATION + "Got it. I've removed this task:");
+            System.out.println(DOUBLEINDENTATION + removedTask.toString());
+            System.out.println(DOUBLEINDENTATION + "Now you have " + taskList.size() + " tasks in the list.");
+
+        } catch (IndexOutOfBoundsException e) {
+            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! Task does not exist");
+        } catch (NumberFormatException e) {
+            throw new EsquieException(DOUBLEINDENTATION
+                    + "Whoopsie! You did not give me a proper number!"
+                    + "\n" + DOUBLEINDENTATION + "Example Usage: delete 3");
+        }
     }
 }
