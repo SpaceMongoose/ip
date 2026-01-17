@@ -82,6 +82,8 @@ public class Esquie {
             todoHandler(input);
         } else if (input[0].equalsIgnoreCase("deadline")) {
             deadlineHandler(input);
+        } else if (input[0].equalsIgnoreCase("event")) {
+            eventHandler(input);
         } else {
             System.out.println(INDENTATION + INDENTATION + "Esquie did not understand that!");
         }
@@ -156,6 +158,10 @@ public class Esquie {
      * @param task The task object to be added.
      */
     public static void taskHandler(Task task) {
+        if (numberOfTasks >= 100) {
+            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Number of tasks is full!");
+            return;
+        }
         taskList[numberOfTasks] = task;
         System.out.println(INDENTATION + INDENTATION + "Got it. I've added this task:");
         System.out.println(INDENTATION + INDENTATION + taskList[numberOfTasks].toString());
@@ -170,7 +176,7 @@ public class Esquie {
      * @param input A String array that is split from user input. Should contain command and task description.
      */
     public static void todoHandler(String[] input) {
-        if (input.length < 2) {
+        if (input.length < 2 || input[1].trim().isEmpty()) {
             System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
             return;
         }
@@ -180,10 +186,10 @@ public class Esquie {
     }
 
     /**
-     * Executes the todo command by adding a new todo task.
+     * Executes the deadline command by adding a new deadline task.
      * Method does nothing if input is not minimally length 2.
      *
-     * @param input A String array that is split from user input. Should contain command and task description.
+     * @param input A String array that is split from user input. Contains command, task description and deadline.
      */
     public static void deadlineHandler(String[] input) {
         if (input.length < 2) {
@@ -194,12 +200,46 @@ public class Esquie {
         // e.g. return book /by Sunday
         String[] byInput = input[1].split(" /by ", 2);
 
-        if (byInput.length < 2) {
+        if (byInput.length < 2 || byInput[0].trim().isEmpty()) {
             System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
             return;
         }
 
         Task task = new Deadline(byInput[0], byInput[1]);
+        taskHandler(task);
+    }
+
+    /**
+     * Executes the event command by adding a new event task.
+     * Method does nothing if input is not minimally length 2.
+     *
+     * @param input A String array that is split from user input. Contains command, task description and deadline.
+     */
+    public static void eventHandler(String[] input) {
+        if (input.length < 2) {
+            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
+            return;
+        }
+
+        // e.g. project meeting /from Mon 2pm /to 4pm
+
+        // This splits the description and time
+        String[] splitFrom = input[1].split(" /from ", 2);
+        if (splitFrom.length < 2) {
+            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
+            return;
+        }
+        String description = splitFrom[0];
+        String date = splitFrom[1]; // Mon 2pm /to 4pm
+
+        // This further splits the time to obtain from and to
+        String[] splitTo = date.split(" /to ", 2);
+        if (splitTo.length < 2) {
+            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
+            return;
+        }
+
+        Task task = new Event(description, splitTo[0], splitTo[1]);
         taskHandler(task);
     }
 }
