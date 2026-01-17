@@ -1,11 +1,11 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
  * A Personal Assistant Chatbot that helps a person keep track of various things.
  */
 public class Esquie {
-    private Task[] taskList;
-    private int numberOfTasks;
+    private ArrayList<Task> taskList;
 
     /** Constants used for standardized formatting. */
     private static final String BREAKLINE = "--------------------------------------";
@@ -15,8 +15,7 @@ public class Esquie {
      * Initialize Esquie with empty task list (up to 100 items) and a counter for the number of tasks.
      */
     public Esquie() {
-        this.taskList = new Task[100];
-        this.numberOfTasks = 0;
+        this.taskList = new ArrayList<>();
     }
 
     public static void main(String[] args) {
@@ -140,11 +139,11 @@ public class Esquie {
      * */
     private void toggleMarkStatus(int taskNumber, boolean isMark) throws EsquieException {
         // Error Checking
-        if (taskNumber < 0 || taskNumber >= numberOfTasks) {
+        if (taskNumber < 0 || taskNumber >= taskList.size()) {
             throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! This task does not exist");
         }
 
-        Task currentTask = taskList[taskNumber];
+        Task currentTask = taskList.get(taskNumber);
         if (isMark) {
             currentTask.markComplete();
             System.out.println(DOUBLEINDENTATION + "WhooWhee! I've marked this task as done:");
@@ -163,8 +162,8 @@ public class Esquie {
      */
     private void listHandler() {
         System.out.println(DOUBLEINDENTATION + "Listing Current Tasks:");
-        for (int i = 0; i < numberOfTasks; i++) {
-            System.out.println(DOUBLEINDENTATION + (i + 1) + "." + taskList[i].toString());
+        for (int i = 0; i < taskList.size(); i++) {
+            System.out.println(DOUBLEINDENTATION + (i + 1) + "." + taskList.get(i).toString());
         }
     }
 
@@ -174,14 +173,13 @@ public class Esquie {
      * @param task The task object to be added.
      */
     private void taskHandler(Task task) throws EsquieException {
-        if (numberOfTasks >= 100) {
+        if (taskList.size() >= 100) {
             throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! Number of tasks is full!");
         }
-        taskList[numberOfTasks] = task;
+        taskList.add(task);
         System.out.println(DOUBLEINDENTATION + "Got it. I've added this task:");
-        System.out.println(DOUBLEINDENTATION + taskList[numberOfTasks].toString());
-        numberOfTasks++;
-        System.out.println(DOUBLEINDENTATION + "Now you have " + numberOfTasks + " tasks in the list.");
+        System.out.println(DOUBLEINDENTATION + taskList.get(taskList.size() - 1).toString());
+        System.out.println(DOUBLEINDENTATION + "Now you have " + taskList.size() + " tasks in the list.");
     }
 
     /**
