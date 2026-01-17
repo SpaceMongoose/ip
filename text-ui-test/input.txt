@@ -1,0 +1,25 @@
+list
+todo Defeat the Paintress
+todo Defeat Renoir
+deadline Finish Expedition 33 /by 17 Jan 2027
+event Go to Monoco's Station for a Party /from 27 Jan 1800H /to 27 Jan 1900H
+deadline Level up Verso /by 2 Feb 2026
+event Drink Esquie's wine /from 1 Feb 0000H /to 1 Feb 2359H
+list
+mark 2
+unmark 2
+mark 6
+mark 5
+mark 4
+list
+mark 100
+mark 0
+mark -1
+unmark -1
+list
+todo
+deadline
+event
+deadline test feaosifj /b /y /yb
+event /from s /to s
+bye
