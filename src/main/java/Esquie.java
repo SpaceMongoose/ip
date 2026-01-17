@@ -9,8 +9,7 @@ public class Esquie {
 
     /** Constants used for standardized formatting. */
     private static final String BREAKLINE = "--------------------------------------";
-    private static final String REPLYBREAKLINE = "    --------------------------------------";
-    private static final String INDENTATION = "    ";
+    private static final String DOUBLEINDENTATION = "        ";
 
     /**
      * Initialize Esquie with empty task list (up to 100 items) and a counter for the number of tasks.
@@ -33,11 +32,16 @@ public class Esquie {
         printWelcome();
         Scanner sc = new Scanner(System.in);
         while (true) {
-            String[] input = sc.nextLine().split(" ", 2);
+            String[] input = sc.nextLine().trim().split(" ", 2);
             if (input[0].equalsIgnoreCase("bye")) {
                 break;
             } else {
-                inputHandler(input);
+                try {
+                    inputHandler(input);
+                } catch (EsquieException e) {
+                    System.out.println(e.getMessage());
+                    System.out.println(DOUBLEINDENTATION + BREAKLINE);
+                }
             }
         }
         printExit();
@@ -76,14 +80,13 @@ public class Esquie {
         System.out.println("Bye mon ami! Hope to see you again soon!");
     }
 
-
     /**
      * Handles user input and either adds to task list, display task list, mark and unmark task.
      *
      * @param input A String array that contains the commands and parameters specified by User
      */
-    private void inputHandler(String[] input) {
-        System.out.println(INDENTATION + REPLYBREAKLINE);
+    private void inputHandler(String[] input) throws EsquieException {
+        System.out.println(DOUBLEINDENTATION + BREAKLINE);
         if (input[0].equalsIgnoreCase("list")) {
             listHandler();
         } else if (input[0].equalsIgnoreCase("mark") || input[0].equalsIgnoreCase("unmark")) {
@@ -95,9 +98,9 @@ public class Esquie {
         } else if (input[0].equalsIgnoreCase("event")) {
             eventHandler(input);
         } else {
-            System.out.println(INDENTATION + INDENTATION + "Esquie did not understand that!");
+            throw new EsquieException(DOUBLEINDENTATION + "Esquie did not understand that!");
         }
-        System.out.println(INDENTATION + REPLYBREAKLINE);
+        System.out.println(DOUBLEINDENTATION + BREAKLINE);
     }
 
     /**
@@ -106,23 +109,21 @@ public class Esquie {
      *
      * @param input A String array that is split from user input. Should contain command and task description.
      */
-    private void markHandler(String[] input) {
+    private void markHandler(String[] input) throws EsquieException {
         // Error Checking
         // input length is minimally 2 i.e. command and taskNumber
         if (input.length < 2) {
-            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
-            System.out.println(INDENTATION + REPLYBREAKLINE);
-            return;
+            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! command is missing an argument!");
         }
 
         try {
             // Checks if the 2nd number is Integer or not
             // Integer.parseInt returns NumberFormatException if fails
-            int taskNumber = Integer.parseInt(input[1]) - 1;
+            int taskNumber = Integer.parseInt(input[1].trim()) - 1;
             boolean isMark = input[0].equalsIgnoreCase("mark");
             toggleMarkStatus(taskNumber, isMark);
         } catch (NumberFormatException e) {
-            System.out.print(INDENTATION + INDENTATION + "You didnt give me a number... Esquie is now sad\n");
+            throw new EsquieException(DOUBLEINDENTATION + "You didnt give me a number... Esquie is now sad :(");
         }
     }
 
@@ -132,24 +133,23 @@ public class Esquie {
      * @param taskNumber the task to interact with in the taskList
      * @param isMark true = mark, false = unmark
      * */
-    private void toggleMarkStatus(int taskNumber, boolean isMark) {
+    private void toggleMarkStatus(int taskNumber, boolean isMark) throws EsquieException {
         // Error Checking
         if (taskNumber < 0 || taskNumber >= numberOfTasks) {
-            System.out.println(INDENTATION + INDENTATION + "I think you did an oopsie! That does not exist");
-            return;
+            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! This task does not exist");
         }
 
         Task currentTask = taskList[taskNumber];
         if (isMark) {
             currentTask.markComplete();
-            System.out.println(INDENTATION + INDENTATION + "WheeWhoo! I've marked this task as done:");
+            System.out.println(DOUBLEINDENTATION + "WheeWhoo! I've marked this task as done:");
 
         } else {
             currentTask.markIncomplete();
-            System.out.println(INDENTATION + INDENTATION + "WhooWhee! I've marked this task as not done yet:");
+            System.out.println(DOUBLEINDENTATION  + "WhooWhee! I've marked this task as not done yet:");
 
         }
-        System.out.println(INDENTATION + INDENTATION + currentTask.toString());
+        System.out.println(DOUBLEINDENTATION + currentTask.toString());
     }
 
     /**
@@ -157,9 +157,9 @@ public class Esquie {
      *
      */
     private void listHandler() {
-        System.out.println(INDENTATION + INDENTATION + "Listing Current Tasks:");
+        System.out.println(DOUBLEINDENTATION + "Listing Current Tasks:");
         for (int i = 0; i < numberOfTasks; i++) {
-            System.out.println(INDENTATION + INDENTATION + (i + 1) + "." + taskList[i].toString());
+            System.out.println(DOUBLEINDENTATION + (i + 1) + "." + taskList[i].toString());
         }
     }
 
@@ -168,16 +168,15 @@ public class Esquie {
      *
      * @param task The task object to be added.
      */
-    private void taskHandler(Task task) {
+    private void taskHandler(Task task) throws EsquieException{
         if (numberOfTasks >= 100) {
-            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Number of tasks is full!");
-            return;
+            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! Number of tasks is full!");
         }
         taskList[numberOfTasks] = task;
-        System.out.println(INDENTATION + INDENTATION + "Got it. I've added this task:");
-        System.out.println(INDENTATION + INDENTATION + taskList[numberOfTasks].toString());
+        System.out.println(DOUBLEINDENTATION + "Got it. I've added this task:");
+        System.out.println(DOUBLEINDENTATION + taskList[numberOfTasks].toString());
         numberOfTasks++;
-        System.out.println(INDENTATION + INDENTATION + "Now you have " + numberOfTasks + " tasks in the list.");
+        System.out.println(DOUBLEINDENTATION + "Now you have " + numberOfTasks + " tasks in the list.");
     }
 
     /**
@@ -186,10 +185,9 @@ public class Esquie {
      *
      * @param input A String array that is split from user input. Should contain command and task description.
      */
-    private void todoHandler(String[] input) {
+    private void todoHandler(String[] input) throws EsquieException {
         if (input.length < 2 || input[1].trim().isEmpty()) {
-            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
-            return;
+            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! Something is missing from the todo command!");
         }
 
         Task task = new Todo(input[1].trim());
@@ -202,18 +200,16 @@ public class Esquie {
      *
      * @param input A String array that is split from user input. Contains command, task description and deadline.
      */
-    private void deadlineHandler(String[] input) {
+    private void deadlineHandler(String[] input) throws EsquieException {
         if (input.length < 2) {
-            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
-            return;
+            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! Something is missing from the deadline command!");
         }
 
         // e.g. return book /by Sunday
         String[] byInput = input[1].split(" /by ", 2);
 
-        if (byInput.length < 2 || byInput[0].trim().isEmpty()) {
-            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
-            return;
+        if (byInput.length < 2 || byInput[0].trim().isEmpty() || byInput[1].trim().isEmpty()) {
+            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! Either your task or date is missing!");
         }
 
         Task task = new Deadline(byInput[0].trim(), byInput[1].trim());
@@ -226,28 +222,31 @@ public class Esquie {
      *
      * @param input A String array that is split from user input. Contains command, task description and deadline.
      */
-    private void eventHandler(String[] input) {
+    private void eventHandler(String[] input) throws EsquieException{
         if (input.length < 2) {
-            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
-            return;
+            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! Something is wrong with the event command!");
         }
 
         // e.g. project meeting /from Mon 2pm /to 4pm
 
         // This splits the description and time
         String[] splitFrom = input[1].split(" /from ", 2);
-        if (splitFrom.length < 2) {
-            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
-            return;
+        if (splitFrom.length < 2 || splitFrom[0].trim().isEmpty() || splitFrom[1].trim().isEmpty()) {
+            throw new EsquieException(DOUBLEINDENTATION
+                    + "Whoopsie, something is wrong with the event command! \n"
+                    + DOUBLEINDENTATION
+                    + "Either a task description or time is missing!");
         }
         String description = splitFrom[0];
         String date = splitFrom[1]; // Mon 2pm /to 4pm
 
         // This further splits the time to obtain from and to
         String[] splitTo = date.split(" /to ", 2);
-        if (splitTo.length < 2) {
-            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
-            return;
+        if (splitTo.length < 2 || splitTo[0].trim().isEmpty() || splitTo[1].trim().isEmpty()) {
+            throw new EsquieException(DOUBLEINDENTATION
+                    + "Whoopsie, something is wrong with the event command!\n"
+                    + DOUBLEINDENTATION
+                    + "Either the from or to timing is missing from the event command!");
         }
 
         Task task = new Event(description.trim(), splitTo[0].trim(), splitTo[1].trim());
