@@ -1,3 +1,6 @@
+/**
+ * Task with a specific date or time attached to it. (Only End Date)
+ */
 public class Deadline extends Task {
 
     protected String by;

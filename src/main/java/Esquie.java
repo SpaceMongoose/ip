@@ -56,6 +56,7 @@ public class Esquie {
         System.out.println(BREAKLINE);
     }
 
+
     /**
      * Prints the exit message.
      *
@@ -64,6 +65,7 @@ public class Esquie {
         System.out.println(BREAKLINE);
         System.out.println("Bye mon ami! Hope to see you again soon!");
     }
+
 
     /**
      * Handles user input and either adds to task list, display task list, mark and unmark task.
@@ -78,14 +80,20 @@ public class Esquie {
             markHandler(input);
         } else if (input[0].equalsIgnoreCase("todo")) {
             todoHandler(input);
-
+        } else if (input[0].equalsIgnoreCase("deadline")) {
+            deadlineHandler(input);
         } else {
             System.out.println(INDENTATION + INDENTATION + "Esquie did not understand that!");
         }
         System.out.println(INDENTATION + REPLYBREAKLINE);
     }
 
-
+    /**
+     * Executes the mark command by either marking or unmarking a task.
+     * Method does nothing if input is not minimally length 2.
+     *
+     * @param input A String array that is split from user input. Should contain command and task description.
+     */
     public static void markHandler(String[] input) {
         // Error Checking
         // input length is minimally 2 i.e. command and taskNumber
@@ -107,7 +115,7 @@ public class Esquie {
     }
 
     /**
-     * Based on User input, determines which task to mark or unmark
+     * Based on User input, determines which task to mark or unmark.
      *
      * @param taskNumber the task to interact with in the taskList
      * @param isMark true = mark, false = unmark
@@ -115,7 +123,7 @@ public class Esquie {
     public static void toggleMarkStatus(int taskNumber, boolean isMark) {
         // Error Checking
         if (taskNumber < 0 || taskNumber >= numberOfTasks) {
-            System.out.println(INDENTATION + INDENTATION +"I think you did an oopsie! That does not exist");
+            System.out.println(INDENTATION + INDENTATION + "I think you did an oopsie! That does not exist");
             return;
         }
 
@@ -133,7 +141,7 @@ public class Esquie {
     }
 
     /**
-     * Method to List all current tasks in the Tasklist
+     * Method to List all current tasks in the Tasklist.
      *
      */
     public static void listHandler() {
@@ -143,9 +151,9 @@ public class Esquie {
     }
 
     /**
-     * Adds a task to taskList and prints success message
+     * Adds a task to taskList and prints success message.
      *
-     * @param task The task object to be added
+     * @param task The task object to be added.
      */
     public static void taskHandler(Task task) {
         taskList[numberOfTasks] = task;
@@ -156,19 +164,42 @@ public class Esquie {
     }
 
     /**
-     * Executes the todo command by adding a new todo task
-     * Method does nothing if input is not minimally length 2
+     * Executes the todo command by adding a new todo task.
+     * Method does nothing if input is not minimally length 2.
      *
      * @param input A String array that is split from user input. Should contain command and task description.
      */
     public static void todoHandler(String[] input) {
         if (input.length < 2) {
             System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
-            System.out.println(INDENTATION + REPLYBREAKLINE);
             return;
         }
 
         Task task = new Todo(input[1]);
+        taskHandler(task);
+    }
+
+    /**
+     * Executes the todo command by adding a new todo task.
+     * Method does nothing if input is not minimally length 2.
+     *
+     * @param input A String array that is split from user input. Should contain command and task description.
+     */
+    public static void deadlineHandler(String[] input) {
+        if (input.length < 2) {
+            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
+            return;
+        }
+
+        // e.g. return book /by Sunday
+        String[] byInput = input[1].split(" /by ", 2);
+
+        if (byInput.length < 2) {
+            System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
+            return;
+        }
+
+        Task task = new Deadline(byInput[0], byInput[1]);
         taskHandler(task);
     }
 }
