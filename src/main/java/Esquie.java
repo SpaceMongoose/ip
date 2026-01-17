@@ -23,7 +23,7 @@ public class Esquie {
         // Loop to Scan for Inputs
         Scanner sc = new Scanner(System.in);
         while (true) {
-            String[] input = sc.nextLine().split(" ");
+            String[] input = sc.nextLine().split(" ", 2);
             if (input[0].equalsIgnoreCase("bye")) {
                 break;
             } else {
@@ -73,10 +73,7 @@ public class Esquie {
     public static void inputHandler(String[] input) {
         System.out.println(INDENTATION + REPLYBREAKLINE);
         if (input[0].equalsIgnoreCase("list")) {
-            for (int i = 0; i < numberOfTasks; i++) {
-                System.out.println(INDENTATION + INDENTATION + (i + 1) + "." + taskList[i].toString());
-            }
-
+            listHandler();
         } else if (input[0].equalsIgnoreCase("mark") || input[0].equalsIgnoreCase("unmark")) {
             // Error Checking
             // input length is minimally 2 i.e. command and taskNumber
@@ -96,15 +93,23 @@ public class Esquie {
                 System.out.print(INDENTATION + INDENTATION + "You didnt give me a number... Esquie is now sad\n");
             }
 
+        } else if (input[0].equalsIgnoreCase("todo")) {
+            if (input.length < 2) {
+                System.out.println(INDENTATION + INDENTATION + "WhooWhee?? Please check the command!");
+                System.out.println(INDENTATION + REPLYBREAKLINE);
+                return;
+            }
+
+            Task task = new Todo(input[1]);
+            taskHandler(task);
+
         } else {
-            // Input is not a command, join back the input and add to list
-            String originalInput = String.join(" ", input);
-            taskList[numberOfTasks++] = new Task(originalInput);
-            System.out.println(INDENTATION + INDENTATION + "added: " + originalInput);
+            System.out.println(INDENTATION + INDENTATION + "Esquie did not understand that!");
 
         }
         System.out.println(INDENTATION + REPLYBREAKLINE);
     }
+
 
     /**
      * Based on User input, determines which task to mark or unmark
@@ -130,5 +135,30 @@ public class Esquie {
 
         }
         System.out.println(INDENTATION + INDENTATION + currentTask.toString());
+    }
+
+
+    /**
+     * Method to List all current tasks in the Tasklist
+     *
+     */
+    public static void listHandler() {
+        for (int i = 0; i < numberOfTasks; i++) {
+            System.out.println(INDENTATION + INDENTATION + (i + 1) + "." + taskList[i].toString());
+        }
+    }
+
+
+    /**
+     * Adds a task to taskList and prints success message
+     *
+     * @param task The task object to be added
+     */
+    public static void taskHandler(Task task) {
+        taskList[numberOfTasks] = task;
+        System.out.println(INDENTATION + INDENTATION + "Got it. I've added this task:");
+        System.out.println(INDENTATION + INDENTATION + taskList[numberOfTasks].toString());
+        numberOfTasks++;
+        System.out.println(INDENTATION + INDENTATION + "Now you have " + numberOfTasks + " tasks in the list.");
     }
 }
