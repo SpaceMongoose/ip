@@ -86,19 +86,30 @@ public class Esquie {
      */
     private void inputHandler(String[] input) throws EsquieException {
         System.out.println(DOUBLEINDENTATION + BREAKLINE);
-        if (input[0].equalsIgnoreCase("list")) {
-            listHandler();
-        } else if (input[0].equalsIgnoreCase("mark") || input[0].equalsIgnoreCase("unmark")) {
-            markHandler(input);
-        } else if (input[0].equalsIgnoreCase("todo")) {
-            todoHandler(input);
-        } else if (input[0].equalsIgnoreCase("deadline")) {
-            deadlineHandler(input);
-        } else if (input[0].equalsIgnoreCase("event")) {
-            eventHandler(input);
-        } else if (input[0].equalsIgnoreCase("delete")) {
-            deleteHandler(input);
-        } else {
+        try {
+            Command cmd = Command.valueOf(input[0].toUpperCase());
+
+            switch (cmd) {
+                case LIST:
+                    listHandler();
+                    break;
+                case MARK, UNMARK:
+                    markHandler(input);
+                    break;
+                case TODO:
+                    todoHandler(input);
+                    break;
+                case DEADLINE:
+                    deadlineHandler(input);
+                    break;
+                case EVENT:
+                    eventHandler(input);
+                    break;
+                case DELETE:
+                    deleteHandler(input);
+                    break;
+            }
+        } catch (IllegalArgumentException e) {
             throw new EsquieException(DOUBLEINDENTATION + "Esquie did not understand that!");
         }
         System.out.println(DOUBLEINDENTATION + BREAKLINE);
