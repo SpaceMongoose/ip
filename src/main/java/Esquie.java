@@ -90,24 +90,24 @@ public class Esquie {
             Command cmd = Command.valueOf(input[0].toUpperCase());
 
             switch (cmd) {
-                case LIST:
-                    listHandler();
-                    break;
-                case MARK, UNMARK:
-                    markHandler(input);
-                    break;
-                case TODO:
-                    todoHandler(input);
-                    break;
-                case DEADLINE:
-                    deadlineHandler(input);
-                    break;
-                case EVENT:
-                    eventHandler(input);
-                    break;
-                case DELETE:
-                    deleteHandler(input);
-                    break;
+            case LIST:
+                listHandler();
+                break;
+            case MARK, UNMARK:
+                markHandler(input);
+                break;
+            case TODO:
+                todoHandler(input);
+                break;
+            case DEADLINE:
+                deadlineHandler(input);
+                break;
+            case EVENT:
+                eventHandler(input);
+                break;
+            case DELETE:
+                deleteHandler(input);
+                break;
             }
         } catch (IllegalArgumentException e) {
             throw new EsquieException(DOUBLEINDENTATION + "Esquie did not understand that!");
