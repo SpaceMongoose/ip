@@ -61,4 +61,13 @@ public class Task {
     public String toString() {
         return "[" + getStatusIcon() + "] " + getDescription();
     }
+
+    /**
+     * Returns a standardized string for task saving.
+     *
+     */
+    public String saveString() {
+        String statusVal = getStatusIcon().equals("X") ? "1" : "0";
+        return statusVal + " | " + getDescription();
+    }
 }

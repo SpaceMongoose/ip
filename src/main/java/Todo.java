@@ -21,4 +21,13 @@ public class Todo extends Task {
     public String toString() {
         return "[T]" + super.toString();
     }
+
+    /**
+     * Returns a standardized string for task saving.
+     *
+     */
+    @Override
+    public String saveString() {
+        return "T" + " | " + super.saveString();
+    }
 }

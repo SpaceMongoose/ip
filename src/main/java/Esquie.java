@@ -1,7 +1,9 @@
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -74,7 +76,6 @@ public class Esquie {
         System.out.println("Bonjour mon ami! I'm Esquie\uD83D\uDE00" + "\nWhat can I do for you?");
         System.out.println(BREAKLINE);
     }
-
 
     /**
      * Prints the exit message.
@@ -195,6 +196,7 @@ public class Esquie {
             throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! Number of tasks is full!");
         }
         taskList.add(task);
+        writeTask(task);
         System.out.println(DOUBLEINDENTATION + "Got it. I've added this task:");
         System.out.println(DOUBLEINDENTATION + taskList.get(taskList.size() - 1).toString());
         System.out.println(DOUBLEINDENTATION + "Now you have " + taskList.size() + " tasks in the list.");
@@ -328,5 +330,17 @@ public class Esquie {
             System.out.println(DOUBLEINDENTATION + "Something went wrong with the save file");
         }
 
+    }
+
+    /**
+     * Append task to esquie.txt.
+     */
+    private void writeTask(Task task) throws EsquieException {
+        Path path = Paths.get(".", "data", "esquie.txt");
+        try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
+            writer.write(task.saveString() + "\n");
+        } catch (IOException e) {
+            throw new EsquieException(DOUBLEINDENTATION + "Oopsie! Something went wrong with the saving");
+        }
     }
 }

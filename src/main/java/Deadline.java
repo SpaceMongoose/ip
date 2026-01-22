@@ -24,4 +24,13 @@ public class Deadline extends Task {
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by + ")";
     }
+
+    /**
+     * Returns a standardized string for task saving.
+     *
+     */
+    @Override
+    public String saveString() {
+        return "D" + " | " + super.saveString()  + " | " + by;
+    }
 }
