@@ -1,3 +1,7 @@
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -13,9 +17,11 @@ public class Esquie {
 
     /**
      * Initialize Esquie with empty task list (up to 100 items) and a counter for the number of tasks.
+     * Check if save file exists.
      */
     public Esquie() {
         this.taskList = new ArrayList<>();
+        checkSave();
     }
 
     public static void main(String[] args) {
@@ -169,7 +175,7 @@ public class Esquie {
     }
 
     /**
-     * Method to List all current tasks in the Tasklist.
+     * List all current tasks in the Tasklist.
      *
      */
     private void listHandler() {
@@ -300,5 +306,27 @@ public class Esquie {
                     + "Whoopsie! You did not give me a proper number!"
                     + "\n" + DOUBLEINDENTATION + "Example Usage: delete 3");
         }
+    }
+
+    /**
+     * Check if save file (./data/esquie.txt) exists. Otherwise, create.
+     *
+     */
+    private void checkSave() {
+        Path path = Paths.get(".", "data", "esquie.txt");
+        try {
+            // 1. Create directory if missing
+            if (path.getParent() != null) {
+                Files.createDirectories(path.getParent());
+            }
+
+            // 2. Create esquie.txt (save file) if missing
+            if (!Files.exists(path)) {
+                Files.createFile(path);
+            }
+        } catch (IOException e) {
+            System.out.println(DOUBLEINDENTATION + "Something went wrong with the save file");
+        }
+
     }
 }
