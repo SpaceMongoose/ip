@@ -165,10 +165,12 @@ public class Esquie {
         Task currentTask = taskList.get(taskNumber);
         if (isMark) {
             currentTask.markComplete();
+            overwriteAll();
             System.out.println(DOUBLEINDENTATION + "WhooWhee! I've marked this task as done:");
 
         } else {
             currentTask.markIncomplete();
+            overwriteAll();
             System.out.println(DOUBLEINDENTATION  + "WhooWhee! I've marked this task as not done yet:");
 
         }
@@ -297,6 +299,7 @@ public class Esquie {
 
         try {
             Task removedTask = taskList.remove(Integer.parseInt(input[1].trim()) - 1);
+            overwriteAll();
             System.out.println(DOUBLEINDENTATION + "Got it. I've removed this task:");
             System.out.println(DOUBLEINDENTATION + removedTask.toString());
             System.out.println(DOUBLEINDENTATION + "Now you have " + taskList.size() + " tasks in the list.");
@@ -338,7 +341,23 @@ public class Esquie {
     private void writeTask(Task task) throws EsquieException {
         Path path = Paths.get(".", "data", "esquie.txt");
         try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-            writer.write(task.saveString() + "\n");
+            writer.write(task.saveString());
+            writer.newLine();
+        } catch (IOException e) {
+            throw new EsquieException(DOUBLEINDENTATION + "Oopsie! Something went wrong with the saving");
+        }
+    }
+
+    /**
+     * Overwrites the entire save file whenever there is a mark/unmark/delete event
+     */
+    private void overwriteAll() throws EsquieException {
+        Path path = Paths.get(".", "data", "esquie.txt");
+        try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE)) {
+            for (Task task : taskList) {
+                writer.write(task.saveString());
+                writer.newLine();
+            }
         } catch (IOException e) {
             throw new EsquieException(DOUBLEINDENTATION + "Oopsie! Something went wrong with the saving");
         }
