@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -232,11 +233,17 @@ public class Esquie {
         if (byInput.length < 2 || byInput[0].trim().isEmpty() || byInput[1].trim().isEmpty()) {
             throw new EsquieException(DOUBLEINDENTATION
                     + "Whoopsie! Either your task or date is missing!"
-                    + "\n" + DOUBLEINDENTATION + "Example Usage: deadline return book /by Sunday");
+                    + "\n" + DOUBLEINDENTATION + "Example Usage: deadline Play E33 /by 2026-01-25 1750");
         }
-
-        Task task = new Deadline(byInput[0].trim(), byInput[1].trim());
-        taskHandler(task);
+        try {
+            Task task = new Deadline(byInput[0].trim(), byInput[1].trim());
+            taskHandler(task);
+        } catch (DateTimeParseException e) {
+            throw new EsquieException(DOUBLEINDENTATION
+                    + "Oopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm format!"
+                    + "\n" + DOUBLEINDENTATION
+                    + "Example Usage: deadline Play E33 /by 2026-01-25 1750");
+        }
     }
 
     /**
@@ -409,6 +416,8 @@ public class Esquie {
             }
         } catch (IndexOutOfBoundsException e) {
             throw new EsquieException(DOUBLEINDENTATION + "Corrupted Save File");
+        } catch (DateTimeParseException e) {
+            throw new EsquieException(DOUBLEINDENTATION + "Corrupted Date in Save File: " + input);
         }
     }
 }

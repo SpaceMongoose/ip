@@ -1,48 +1,68 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
+
 /**
  * Task with a specific date or time attached to it. (Only End Date)
  */
 public class Deadline extends Task {
-    protected String by;
+    protected LocalDateTime by;
+    private static final DateTimeFormatter DATE_FORMATTER = new DateTimeFormatterBuilder()
+                                                    .appendPattern("yyyy-MM-dd")
+                                                    .optionalStart()
+                                                    .appendPattern(" HHmm")
+                                                    .optionalEnd()
+                                                    .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                                                    .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+                                                    .toFormatter();
+
+    private static final DateTimeFormatter SAVE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
     /**
      * Creates a new Deadline Task.
      *
      * @param description The description of the event.
-     * @param by The deadline of the event.
+     * @param by The deadline of the event. Expects a string in "yyyy-MM-dd HH:mm", (HH:mm) is optional
      */
     public Deadline(String description, String by) {
         super(description);
-        this.by = by;
+        this.by = LocalDateTime.parse(by, DATE_FORMATTER);
     }
 
     /**
      * Creates a new Deadline Task that may or may not be done.
      *
      * @param description The description of the event.
-     * @param by The deadline of the event.
+     * @param by The deadline of the event. Expects a string in "yyyy-MM-dd HH:mm", (HH:mm) is optional
      * @param isDone Indicate if task is marked or not.
      */
     public Deadline(String description, String by, boolean isDone) {
         super(description, isDone);
-        this.by = by;
+        this.by = LocalDateTime.parse(by, DATE_FORMATTER);
     }
 
     /**
-     * Returns the String representation of an Deadline task.
+     * Returns the String representation of a Deadline task.
      *
-     * @return A formatted string [e.g. [D][ ] return book (by: Sunday)].
+     * @return A formatted string [e.g. [D][ ] return book (by: Jan 15 2026, 1800)].
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        // DATE_FORMATTER returns 00:00 if no time is specified
+        // Select which type of pattern (either show time or no time)
+        boolean noTime = (by.getHour() == 0 && by.getMinute() == 0);
+        String pattern = noTime ? "MMM d yyyy" : "MMM d yyyy, HHmm";
+        String formatDate = by.format(DateTimeFormatter.ofPattern(pattern));
+        return "[D]" + super.toString() + " (by: " + formatDate + ")";
     }
 
     /**
      * Returns a standardized string for task saving.
-     *
+     * e.g. 2000-01-01 1300 or 2000-01-01 if not time is specified
      */
     @Override
     public String saveString() {
-        return "D" + " | " + super.saveString()  + " | " + by;
+        return "D" + " | " + super.saveString()  + " | " + by.format(SAVE_FORMATTER);
     }
 }
