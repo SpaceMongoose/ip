@@ -18,6 +18,17 @@ public class Task {
     }
 
     /**
+     * Initializes new Task with given description and specific "mark" status.
+     *
+     * @param description Text describing the task.
+     * @param isDone Indicate if task is marked or not.
+     */
+    public Task(String description, boolean isDone) {
+        this.description = description;
+        this.isDone = isDone;
+    }
+
+    /**
      * Returns the current status of completion in String.
      * "X" indicates completion, " " indicates not complete.
      *

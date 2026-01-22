@@ -13,6 +13,16 @@ public class Todo extends Task {
     }
 
     /**
+     * Creates a new Todo Task that may or may not be done.
+     *
+     * @param description The description of the event.
+     * @param isDone Indicate if task is marked or not.
+     */
+    public Todo(String description, boolean isDone) {
+        super(description, isDone);
+    }
+
+    /**
      * Returns the String representation of an Todo task.
      *
      * @return A formatted string [e.g. [T][ ] borrow book].

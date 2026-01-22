@@ -16,6 +16,18 @@ public class Deadline extends Task {
     }
 
     /**
+     * Creates a new Deadline Task that may or may not be done.
+     *
+     * @param description The description of the event.
+     * @param by The deadline of the event.
+     * @param isDone Indicate if task is marked or not.
+     */
+    public Deadline(String description, String by, boolean isDone) {
+        super(description, isDone);
+        this.by = by;
+    }
+
+    /**
      * Returns the String representation of an Deadline task.
      *
      * @return A formatted string [e.g. [D][ ] return book (by: Sunday)].

@@ -19,6 +19,20 @@ public class Event extends Task {
         this.to = to;
     }
 
+    /**
+     * Creates a new Event Task that may or may not be done.
+     *
+     * @param description The description of the event.
+     * @param from The start time or date of the event.
+     * @param to The end time or date of the event.
+     * @param isDone Indicate if task is marked or not.
+     */
+    public Event(String description, String from, String to, boolean isDone) {
+        super(description, isDone);
+        this.from = from;
+        this.to = to;
+    }
+
 
     /**
      * Returns the String representation of an Event task.
