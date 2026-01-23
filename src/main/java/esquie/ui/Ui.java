@@ -1,3 +1,5 @@
+package esquie.ui;
+
 import java.util.Scanner;
 
 /**

@@ -1,3 +1,13 @@
+package esquie;
+
+import esquie.tasks.TaskList;
+import esquie.ui.Ui;
+import esquie.storage.Storage;
+import esquie.parser.Parser;
+import esquie.commands.Command;
+import esquie.exceptions.EsquieException;
+
+
 /**
  * A Personal Assistant Chatbot that helps a person keep track of various things.
  */

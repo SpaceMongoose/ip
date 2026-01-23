@@ -1,3 +1,5 @@
+package esquie.tasks;
+
 /**
  * Task without any specific date or time attached to it.
  */

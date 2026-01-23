@@ -1,3 +1,12 @@
+package esquie.storage;
+
+import esquie.tasks.Task;
+import esquie.tasks.Todo;
+import esquie.tasks.Deadline;
+import esquie.tasks.Event;
+import esquie.tasks.TaskList;
+import esquie.exceptions.EsquieException;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
