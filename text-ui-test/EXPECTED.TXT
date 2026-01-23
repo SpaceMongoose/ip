@@ -30,7 +30,7 @@ What can I do for you?
         --------------------------------------
         --------------------------------------
         Got it. I've added this task:
-        [E][ ] Go to Monoco's Station for a Party (from: 27 Jan 1800H to: 27 Jan 1900H)
+        [E][ ] Go to Monoco's Station for a Party (from: 27 Jan 2026, 1500H to: 27 Jan 2026, 1900H)
         Now you have 4 tasks in the list.
         --------------------------------------
         --------------------------------------
@@ -39,8 +39,11 @@ What can I do for you?
         Now you have 5 tasks in the list.
         --------------------------------------
         --------------------------------------
+        Oopsie! End time cannot be before Start time!
+        --------------------------------------
+        --------------------------------------
         Got it. I've added this task:
-        [E][ ] Drink Esquie's wine (from: 1 Feb 0000H to: 1 Feb 2359H)
+        [E][ ] Drink Esquie's wine (from: 1 Feb 2026 to: 1 Feb 2026, 2359H)
         Now you have 6 tasks in the list.
         --------------------------------------
         --------------------------------------
@@ -48,9 +51,9 @@ What can I do for you?
         1.[T][ ] Defeat the Paintress
         2.[T][ ] Defeat Renoir
         3.[D][ ] Finish Expedition 33 (by: 17 Jan 2027)
-        4.[E][ ] Go to Monoco's Station for a Party (from: 27 Jan 1800H to: 27 Jan 1900H)
+        4.[E][ ] Go to Monoco's Station for a Party (from: 27 Jan 2026, 1500H to: 27 Jan 2026, 1900H)
         5.[D][ ] Level up Verso (by: 2 Feb 2026)
-        6.[E][ ] Drink Esquie's wine (from: 1 Feb 0000H to: 1 Feb 2359H)
+        6.[E][ ] Drink Esquie's wine (from: 1 Feb 2026 to: 1 Feb 2026, 2359H)
         --------------------------------------
         --------------------------------------
         WhooWhee! I've marked this task as done:
@@ -62,7 +65,7 @@ What can I do for you?
         --------------------------------------
         --------------------------------------
         WhooWhee! I've marked this task as done:
-        [E][X] Drink Esquie's wine (from: 1 Feb 0000H to: 1 Feb 2359H)
+        [E][X] Drink Esquie's wine (from: 1 Feb 2026 to: 1 Feb 2026, 2359H)
         --------------------------------------
         --------------------------------------
         WhooWhee! I've marked this task as done:
@@ -70,16 +73,16 @@ What can I do for you?
         --------------------------------------
         --------------------------------------
         WhooWhee! I've marked this task as done:
-        [E][X] Go to Monoco's Station for a Party (from: 27 Jan 1800H to: 27 Jan 1900H)
+        [E][X] Go to Monoco's Station for a Party (from: 27 Jan 2026, 1500H to: 27 Jan 2026, 1900H)
         --------------------------------------
         --------------------------------------
         Listing Current Tasks:
         1.[T][ ] Defeat the Paintress
         2.[T][ ] Defeat Renoir
         3.[D][ ] Finish Expedition 33 (by: 17 Jan 2027)
-        4.[E][X] Go to Monoco's Station for a Party (from: 27 Jan 1800H to: 27 Jan 1900H)
+        4.[E][X] Go to Monoco's Station for a Party (from: 27 Jan 2026, 1500H to: 27 Jan 2026, 1900H)
         5.[D][X] Level up Verso (by: 2 Feb 2026)
-        6.[E][X] Drink Esquie's wine (from: 1 Feb 0000H to: 1 Feb 2359H)
+        6.[E][X] Drink Esquie's wine (from: 1 Feb 2026 to: 1 Feb 2026, 2359H)
         --------------------------------------
         --------------------------------------
         Whoopsie! This task does not exist
@@ -98,9 +101,9 @@ What can I do for you?
         1.[T][ ] Defeat the Paintress
         2.[T][ ] Defeat Renoir
         3.[D][ ] Finish Expedition 33 (by: 17 Jan 2027)
-        4.[E][X] Go to Monoco's Station for a Party (from: 27 Jan 1800H to: 27 Jan 1900H)
+        4.[E][X] Go to Monoco's Station for a Party (from: 27 Jan 2026, 1500H to: 27 Jan 2026, 1900H)
         5.[D][X] Level up Verso (by: 2 Feb 2026)
-        6.[E][X] Drink Esquie's wine (from: 1 Feb 0000H to: 1 Feb 2359H)
+        6.[E][X] Drink Esquie's wine (from: 1 Feb 2026 to: 1 Feb 2026, 2359H)
         --------------------------------------
         --------------------------------------
         Whoopsie! Something is missing from the todo command!
@@ -120,16 +123,15 @@ What can I do for you?
         --------------------------------------
         --------------------------------------
         Whoopsie! Either your task or date is missing!
-        Example Usage: deadline return book /by Sunday
+        Example Usage: deadline Play E33 /by 2026-01-25 1750
         --------------------------------------
         --------------------------------------
         Whoopsie! Either your task or date is missing!
-        Example Usage: deadline return book /by Sunday
+        Example Usage: deadline Play E33 /by 2026-01-25 1750
         --------------------------------------
         --------------------------------------
-        Got it. I've added this task:
-        [D][ ] fly back to lumiere (by: Today)
-        Now you have 7 tasks in the list.
+        Oopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm format!
+        Example Usage: /by 2026-01-25 OR /by 2026-01-25 1750
         --------------------------------------
         --------------------------------------
         Whoopsie! Something is wrong with the event command!
@@ -160,25 +162,23 @@ What can I do for you?
         Example Usage: event project meeting /from Mon 2pm /to 4pm
         --------------------------------------
         --------------------------------------
-        Got it. I've added this task:
-        [E][ ] fly to the monolith (from: Monday to: Friday)
-        Now you have 8 tasks in the list.
+        Oopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm format!
+        Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800
+        Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25
         --------------------------------------
         --------------------------------------
         Listing Current Tasks:
         1.[T][ ] Defeat the Paintress
         2.[T][ ] Defeat Renoir
         3.[D][ ] Finish Expedition 33 (by: 17 Jan 2027)
-        4.[E][X] Go to Monoco's Station for a Party (from: 27 Jan 1800H to: 27 Jan 1900H)
+        4.[E][X] Go to Monoco's Station for a Party (from: 27 Jan 2026, 1500H to: 27 Jan 2026, 1900H)
         5.[D][X] Level up Verso (by: 2 Feb 2026)
-        6.[E][X] Drink Esquie's wine (from: 1 Feb 0000H to: 1 Feb 2359H)
-        7.[D][ ] fly back to lumiere (by: Today)
-        8.[E][ ] fly to the monolith (from: Monday to: Friday)
+        6.[E][X] Drink Esquie's wine (from: 1 Feb 2026 to: 1 Feb 2026, 2359H)
         --------------------------------------
         --------------------------------------
         Got it. I've removed this task:
         [D][X] Level up Verso (by: 2 Feb 2026)
-        Now you have 7 tasks in the list.
+        Now you have 5 tasks in the list.
         --------------------------------------
         --------------------------------------
         Whoopsie! Something is wrong with the delete command!
@@ -187,7 +187,7 @@ What can I do for you?
         --------------------------------------
         Got it. I've removed this task:
         [T][ ] Defeat Renoir
-        Now you have 6 tasks in the list.
+        Now you have 4 tasks in the list.
         --------------------------------------
         --------------------------------------
         Whoopsie! Task does not exist
@@ -199,10 +199,8 @@ What can I do for you?
         Listing Current Tasks:
         1.[T][ ] Defeat the Paintress
         2.[D][ ] Finish Expedition 33 (by: 17 Jan 2027)
-        3.[E][X] Go to Monoco's Station for a Party (from: 27 Jan 1800H to: 27 Jan 1900H)
-        4.[E][X] Drink Esquie's wine (from: 1 Feb 0000H to: 1 Feb 2359H)
-        5.[D][ ] fly back to lumiere (by: Today)
-        6.[E][ ] fly to the monolith (from: Monday to: Friday)
+        3.[E][X] Go to Monoco's Station for a Party (from: 27 Jan 2026, 1500H to: 27 Jan 2026, 1900H)
+        4.[E][X] Drink Esquie's wine (from: 1 Feb 2026 to: 1 Feb 2026, 2359H)
         --------------------------------------
 --------------------------------------
 Bye mon ami! Hope to see you again soon!

@@ -1,10 +1,14 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+
+import java.time.format.DateTimeParseException;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -103,12 +107,12 @@ public class Esquie {
             Command cmd = Command.valueOf(input[0].toUpperCase());
 
             switch (cmd) {
-                case LIST -> listHandler();
-                case MARK, UNMARK -> markHandler(input);
-                case TODO -> todoHandler(input);
-                case DEADLINE -> deadlineHandler(input);
-                case EVENT -> eventHandler(input);
-                case DELETE -> deleteHandler(input);
+            case LIST -> listHandler();
+            case MARK, UNMARK -> markHandler(input);
+            case TODO -> todoHandler(input);
+            case DEADLINE -> deadlineHandler(input);
+            case EVENT -> eventHandler(input);
+            case DELETE -> deleteHandler(input);
             }
         } catch (IllegalArgumentException e) {
             throw new EsquieException(DOUBLEINDENTATION + "Esquie did not understand that!");
@@ -232,11 +236,17 @@ public class Esquie {
         if (byInput.length < 2 || byInput[0].trim().isEmpty() || byInput[1].trim().isEmpty()) {
             throw new EsquieException(DOUBLEINDENTATION
                     + "Whoopsie! Either your task or date is missing!"
-                    + "\n" + DOUBLEINDENTATION + "Example Usage: deadline return book /by Sunday");
+                    + "\n" + DOUBLEINDENTATION + "Example Usage: deadline Play E33 /by 2026-01-25 1750");
         }
-
-        Task task = new Deadline(byInput[0].trim(), byInput[1].trim());
-        taskHandler(task);
+        try {
+            Task task = new Deadline(byInput[0].trim(), byInput[1].trim());
+            taskHandler(task);
+        } catch (DateTimeParseException e) {
+            throw new EsquieException(DOUBLEINDENTATION
+                    + "Oopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm format!"
+                    + "\n" + DOUBLEINDENTATION
+                    + "Example Usage: /by 2026-01-25 OR /by 2026-01-25 1750");
+        }
     }
 
     /**
@@ -263,7 +273,7 @@ public class Esquie {
                     + "\n" + DOUBLEINDENTATION + "Example Usage: event project meeting /from Mon 2pm /to 4pm");
         }
         String description = splitFrom[0];
-        String date = splitFrom[1]; // Mon 2pm /to 4pm
+        String date = splitFrom[1];
 
         // This further splits the time to obtain from and to
         String[] splitTo = date.split(" /to ", 2);
@@ -275,8 +285,17 @@ public class Esquie {
                     + "\n" + DOUBLEINDENTATION + "Example Usage: event project meeting /from Mon 2pm /to 4pm");
         }
 
-        Task task = new Event(description.trim(), splitTo[0].trim(), splitTo[1].trim());
-        taskHandler(task);
+        try {
+            Task task = new Event(description.trim(), splitTo[0].trim(), splitTo[1].trim());
+            taskHandler(task);
+        } catch (DateTimeParseException e) {
+            throw new EsquieException(DOUBLEINDENTATION
+                    + "Oopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm format!"
+                    + "\n" + DOUBLEINDENTATION
+                    + "Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800"
+                    + "\n" + DOUBLEINDENTATION
+                    + "Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25");
+        }
     }
 
     /**
@@ -409,6 +428,8 @@ public class Esquie {
             }
         } catch (IndexOutOfBoundsException e) {
             throw new EsquieException(DOUBLEINDENTATION + "Corrupted Save File");
+        } catch (DateTimeParseException e) {
+            throw new EsquieException(DOUBLEINDENTATION + "Corrupted Date in Save File: " + input);
         }
     }
 }
