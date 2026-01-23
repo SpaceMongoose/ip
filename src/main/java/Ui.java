@@ -48,8 +48,7 @@ public class Ui {
      *
      */
     public void printExit() {
-        System.out.println(BREAKLINE);
-        System.out.println("Bye mon ami! Hope to see you again soon!");
+        System.out.println(DOUBLEINDENTATION + "Bye mon ami! Hope to see you again soon!");
     }
 
     /**

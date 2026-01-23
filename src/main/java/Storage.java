@@ -22,7 +22,7 @@ public class Storage {
 
     /**
      * Loads tasks into taskList that was from a previous session (if exists).
-     * @return a ArrayList<Task> used by TaskList class to create a new TaskList, or import old tasks
+     * @return a ArrayList<Task> used by TaskList class to create a new TaskList, or import old tasks.
      */
     public ArrayList<Task> loadTasks() throws EsquieException {
         ArrayList<Task> tasks = new ArrayList<>();
