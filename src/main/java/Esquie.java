@@ -1,12 +1,10 @@
 import java.time.format.DateTimeParseException;
 
-import java.util.ArrayList;
-
 /**
  * A Personal Assistant Chatbot that helps a person keep track of various things.
  */
 public class Esquie {
-    private ArrayList<Task> taskList;
+    private TaskList taskList;
     private Ui ui;
     private Storage storage;
 
@@ -15,14 +13,15 @@ public class Esquie {
      * Check if save file exists.
      */
     public Esquie(String filePath) throws EsquieException {
-        this.taskList = new ArrayList<>();
         this.ui = new Ui();
         this.storage = new Storage(filePath);
         try {
+            this.taskList = new TaskList(storage.loadTasks());
             storage.checkSave();
-            storage.loadTasks(taskList);
+
         } catch (EsquieException e) {
             ui.printError(e.getMessage());
+            this.taskList = new TaskList(); // Start with empty list if something went wrong
         }
     }
 
@@ -271,7 +270,7 @@ public class Esquie {
         }
 
         try {
-            Task removedTask = taskList.remove(Integer.parseInt(input[1].trim()) - 1);
+            Task removedTask = taskList.delete(Integer.parseInt(input[1].trim()) - 1);
             storage.overwriteAll(taskList);
             ui.showMessage("Got it. I've removed this task:");
             ui.showMessage(removedTask.toString());

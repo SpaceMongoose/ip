@@ -22,15 +22,16 @@ public class Storage {
 
     /**
      * Loads tasks into taskList that was from a previous session (if exists).
-     * @param taskList is the task list to modify
+     * @return a ArrayList<Task> used by TaskList class to create a new TaskList, or import old tasks
      */
-    void loadTasks(ArrayList<Task> taskList) throws EsquieException {
+    public ArrayList<Task> loadTasks() throws EsquieException {
+        ArrayList<Task> tasks = new ArrayList<>();
         if (Files.exists(filePath)) {
             try (BufferedReader reader = Files.newBufferedReader(filePath)) {
                 String line = reader.readLine();
                 while (line != null) {
                     try {
-                        parseString(line, taskList);
+                        parseString(line, tasks);
                     } catch (EsquieException e) {
                         // No indentation since this loads before Esquie
                         System.out.println("Warning! Skipping corrupted line in save file: " + line);
@@ -41,6 +42,7 @@ public class Storage {
                 throw new EsquieException("Oopsie! Something went wrong with importing previous tasks");
             }
         }
+        return tasks;
     }
 
     /**
@@ -67,10 +69,11 @@ public class Storage {
     /**
      * Parses a line of save file format, adds previous tasks to the taskList.
      *
-     * @param input is a line from the save file (esquie.txt)
-     * @param taskList is the task list to modify
+     * @param input is a line from the save file (esquie.txt).
+     * @param taskList is the taskList to add on previous tasks too.
      */
     private void parseString(String input, ArrayList<Task> taskList) throws EsquieException {
+
         if (input.trim().isEmpty()) {
             return;
         }
@@ -93,7 +96,7 @@ public class Storage {
             default -> throw new EsquieException("Corrupted Save File");
             }
         } catch (IndexOutOfBoundsException e) {
-            throw new EsquieException( "Corrupted Save File");
+            throw new EsquieException("Corrupted Save File");
         } catch (DateTimeParseException e) {
             throw new EsquieException("Corrupted Date in Save File: " + input);
         }
@@ -116,13 +119,13 @@ public class Storage {
      * Overwrites the entire save file whenever there is a mark/unmark/delete event.
      * @param taskList is the task list to modify.
      */
-    public void overwriteAll(ArrayList<Task> taskList) throws EsquieException {
+    public void overwriteAll(TaskList taskList) throws EsquieException {
         try (BufferedWriter writer = Files.newBufferedWriter(filePath,
                 StandardOpenOption.CREATE,
                 StandardOpenOption.TRUNCATE_EXISTING,
                 StandardOpenOption.WRITE)) {
-            for (Task task : taskList) {
-                writer.write(task.saveString());
+            for (int i = 0; i < taskList.size(); i++) {
+                writer.write(taskList.get(i).saveString());
                 writer.newLine();
             }
         } catch (IOException e) {
