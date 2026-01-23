@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+/**
+ * Ui deals with interactions with the user, focusing on input and output.
+ */
 public class Ui {
     private Scanner sc;
     /** Constants used for standardized formatting. */
@@ -11,7 +14,7 @@ public class Ui {
     }
 
     /**
-     * Reads and returns input from the user
+     * Reads and returns input from the user.
      */
     public String readCommand() {
         return sc.nextLine().trim();
@@ -50,28 +53,28 @@ public class Ui {
     }
 
     /**
-     * Prints an indented line that acts as a seperator
+     * Prints an indented line that acts as a separator.
      */
     public void printLine() {
         System.out.println(DOUBLEINDENTATION + BREAKLINE);
     }
 
     /**
-     * Prints a formatted error message
+     * Prints a formatted error message.
      */
     public void printError(String message) {
         System.out.println(DOUBLEINDENTATION + message);
     }
 
     /**
-     * Returns a DOUBLEINDENTATION for formatting reasons
+     * Returns a DOUBLEINDENTATION for formatting reasons.
      */
     public String printIndent() {
         return DOUBLEINDENTATION;
     }
 
     /**
-     * Prints a formatted message
+     * Prints a formatted message.
      */
     public void showMessage(String message) {
         System.out.println(DOUBLEINDENTATION + message);

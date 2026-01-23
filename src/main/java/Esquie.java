@@ -1,15 +1,5 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
-
 import java.time.format.DateTimeParseException;
 
-import java.util.Scanner;
 import java.util.ArrayList;
 
 /**
@@ -18,21 +8,27 @@ import java.util.ArrayList;
 public class Esquie {
     private ArrayList<Task> taskList;
     private Ui ui;
+    private Storage storage;
 
     /**
      * Initialize Esquie with empty task list (up to 100 items) and a counter for the number of tasks.
      * Check if save file exists.
      */
-    public Esquie() throws EsquieException {
+    public Esquie(String filePath) throws EsquieException {
         this.taskList = new ArrayList<>();
         this.ui = new Ui();
-        loadTasks();
-        checkSave();
+        this.storage = new Storage(filePath);
+        try {
+            storage.checkSave();
+            storage.loadTasks(taskList);
+        } catch (EsquieException e) {
+            ui.printError(e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
         try {
-            new Esquie().run();
+            new Esquie("./data/esquie.txt").run();
         } catch (EsquieException e) {
             System.out.println(e.getMessage());
         }
@@ -126,12 +122,12 @@ public class Esquie {
         Task currentTask = taskList.get(taskNumber);
         if (isMark) {
             currentTask.markComplete();
-            overwriteAll();
+            storage.overwriteAll(taskList);
             ui.showMessage("WhooWhee! I've marked this task as done:");
 
         } else {
             currentTask.markIncomplete();
-            overwriteAll();
+            storage.overwriteAll(taskList);
             ui.showMessage("WhooWhee! I've marked this task as not done yet:");
 
         }
@@ -159,7 +155,7 @@ public class Esquie {
             throw new EsquieException("Whoopsie! Number of tasks is full!");
         }
         taskList.add(task);
-        writeTask(task);
+        storage.writeTask(task);
         ui.showMessage("Got it. I've added this task:");
         ui.showMessage(taskList.get(taskList.size() - 1).toString());
         ui.showMessage("Now you have " + taskList.size() + " tasks in the list.");
@@ -197,7 +193,7 @@ public class Esquie {
 
         if (byInput.length < 2 || byInput[0].trim().isEmpty() || byInput[1].trim().isEmpty()) {
             throw new EsquieException("Whoopsie! Either your task or date is missing!"
-                    + "\n" + ui.printIndent()+ "Example Usage: deadline Play E33 /by 2026-01-25 1750");
+                    + "\n" + ui.printIndent() + "Example Usage: deadline Play E33 /by 2026-01-25 1750");
         }
         try {
             Task task = new Deadline(byInput[0].trim(), byInput[1].trim());
@@ -276,7 +272,7 @@ public class Esquie {
 
         try {
             Task removedTask = taskList.remove(Integer.parseInt(input[1].trim()) - 1);
-            overwriteAll();
+            storage.overwriteAll(taskList);
             ui.showMessage("Got it. I've removed this task:");
             ui.showMessage(removedTask.toString());
             ui.showMessage("Now you have " + taskList.size() + " tasks in the list.");
@@ -289,110 +285,5 @@ public class Esquie {
         }
     }
 
-    /**
-     * Check if save file (./data/esquie.txt) exists. Otherwise, create.
-     *
-     */
-    private void checkSave() {
-        Path path = Paths.get(".", "data", "esquie.txt");
-        try {
-            // 1. Create directory if missing
-            if (path.getParent() != null) {
-                Files.createDirectories(path.getParent());
-            }
 
-            // 2. Create esquie.txt (save file) if missing
-            if (!Files.exists(path)) {
-                Files.createFile(path);
-            }
-        } catch (IOException e) {
-            ui.showMessage("Something went wrong with the save file");
-        }
-
-    }
-
-    /**
-     * Append task to esquie.txt.
-     * @param task task object of either Todo, Deadline, Event
-     */
-    private void writeTask(Task task) throws EsquieException {
-        Path path = Paths.get(".", "data", "esquie.txt");
-        try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-            writer.write(task.saveString());
-            writer.newLine();
-        } catch (IOException e) {
-            throw new EsquieException("Oopsie! Something went wrong with the saving");
-        }
-    }
-
-    /**
-     * Overwrites the entire save file whenever there is a mark/unmark/delete event.
-     */
-    private void overwriteAll() throws EsquieException {
-        Path path = Paths.get(".", "data", "esquie.txt");
-        try (BufferedWriter writer = Files.newBufferedWriter(path,
-                StandardOpenOption.CREATE,
-                StandardOpenOption.TRUNCATE_EXISTING,
-                StandardOpenOption.WRITE)) {
-            for (Task task : taskList) {
-                writer.write(task.saveString());
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            throw new EsquieException("Oopsie! Something went wrong with the saving");
-        }
-    }
-
-    /**
-     * Loads tasks into taskList that was from a previous session (if exists).
-     *
-     */
-    private void loadTasks() throws EsquieException {
-        Path path = Paths.get(".", "data", "esquie.txt");
-        if (Files.exists(path)) {
-            try (BufferedReader reader = Files.newBufferedReader(path)) {
-                String line = reader.readLine();
-                while (line != null) {
-                    parseString(line);
-                    line = reader.readLine();
-                }
-            } catch (IOException e) {
-                throw new EsquieException("Oopsie! Something went wrong with importing previous tasks");
-            }
-        }
-    }
-
-    /**
-     * Parses a line of save file format, adds previous tasks to the taskList.
-     *
-     * @param input is a line from the save file (esquie.txt)
-     */
-    private void parseString(String input) throws EsquieException {
-        if (input.trim().isEmpty()) {
-            return;
-        }
-
-        String[] splitInput = input.split(" \\| ");
-        try {
-            switch (splitInput[0]) {
-            case "T" -> {
-                Task task = new Todo(splitInput[2], splitInput[1].equals("1"));
-                taskList.add(task);
-            }
-            case "D" -> {
-                Task task = new Deadline(splitInput[2], splitInput[3], splitInput[1].equals("1"));
-                taskList.add(task);
-            }
-            case "E" -> {
-                Task task = new Event(splitInput[2], splitInput[3], splitInput[4], splitInput[1].equals("1"));
-                taskList.add(task);
-            }
-            default -> throw new EsquieException("Corrupted Save File");
-            }
-        } catch (IndexOutOfBoundsException e) {
-            throw new EsquieException( "Corrupted Save File");
-        } catch (DateTimeParseException e) {
-            throw new EsquieException("Corrupted Date in Save File: " + input);
-        }
-    }
 }
