@@ -1,3 +1,4 @@
+package esquie.exceptions;
 /**
  * EsquieException represents exceptions specific to Esquie.
  */
