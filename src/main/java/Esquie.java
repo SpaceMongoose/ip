@@ -17,10 +17,7 @@ import java.util.ArrayList;
  */
 public class Esquie {
     private ArrayList<Task> taskList;
-
-    /** Constants used for standardized formatting. */
-    private static final String BREAKLINE = "--------------------------------------";
-    private static final String DOUBLEINDENTATION = "        ";
+    private Ui ui;
 
     /**
      * Initialize Esquie with empty task list (up to 100 items) and a counter for the number of tasks.
@@ -28,6 +25,7 @@ public class Esquie {
      */
     public Esquie() throws EsquieException {
         this.taskList = new ArrayList<>();
+        this.ui = new Ui();
         loadTasks();
         checkSave();
     }
@@ -46,54 +44,21 @@ public class Esquie {
      * Loop is continued until Esquie reads "bye".
      */
     public void run() {
-        printWelcome();
-        Scanner sc = new Scanner(System.in);
+        ui.printWelcome();
         while (true) {
-            String[] input = sc.nextLine().trim().split(" ", 2);
+            String[] input = ui.readCommand().split(" ", 2);
             if (input[0].equalsIgnoreCase("bye")) {
                 break;
             } else {
                 try {
                     inputHandler(input);
                 } catch (EsquieException e) {
-                    System.out.println(e.getMessage());
-                    System.out.println(DOUBLEINDENTATION + BREAKLINE);
+                    ui.printError(e.getMessage());
+                    ui.printLine();
                 }
             }
         }
-        printExit();
-    }
-
-    /**
-     * Prints the logo and welcome message to the User.
-     *
-     */
-    private void printWelcome() {
-        String logo = """
-                  ______                 _     \s
-                 |  ____|               (_)    \s
-                 | |__   ___  __ _ _   _ _  ___\s
-                 |  __| / __|/ _` | | | | |/ _ \\
-                 | |____\\__ \\ (_| | |_| | |  __/
-                 |______|___/\\__, |\\__,_|_|\\___|
-                                | |            \s
-                                |_|             \
-                """;
-
-        System.out.println(logo + "\n" + BREAKLINE);
-
-        // Initial Conversation
-        System.out.println("Bonjour mon ami! I'm Esquie\uD83D\uDE00" + "\nWhat can I do for you?");
-        System.out.println(BREAKLINE);
-    }
-
-    /**
-     * Prints the exit message.
-     *
-     */
-    private void printExit() {
-        System.out.println(BREAKLINE);
-        System.out.println("Bye mon ami! Hope to see you again soon!");
+        ui.printExit();
     }
 
     /**
@@ -102,7 +67,7 @@ public class Esquie {
      * @param input A String array that contains the commands and parameters specified by User
      */
     private void inputHandler(String[] input) throws EsquieException {
-        System.out.println(DOUBLEINDENTATION + BREAKLINE);
+        ui.printLine();
         try {
             Command cmd = Command.valueOf(input[0].toUpperCase());
 
@@ -115,9 +80,9 @@ public class Esquie {
             case DELETE -> deleteHandler(input);
             }
         } catch (IllegalArgumentException e) {
-            throw new EsquieException(DOUBLEINDENTATION + "Esquie did not understand that!");
+            throw new EsquieException("Esquie did not understand that!");
         }
-        System.out.println(DOUBLEINDENTATION + BREAKLINE);
+        ui.printLine();
     }
 
     /**
@@ -129,9 +94,8 @@ public class Esquie {
         // Error Checking
         // input length is minimally 2 i.e. command and taskNumber
         if (input.length < 2) {
-            throw new EsquieException(DOUBLEINDENTATION
-                    + "Whoopsie! command is missing an argument!"
-                    + "\n" + DOUBLEINDENTATION + "Example Usage: mark 1 OR unmark 1");
+            throw new EsquieException("Whoopsie! command is missing an argument!"
+                    + "\n" + ui.printIndent() + "Example Usage: mark 1 OR unmark 1");
         }
 
         try {
@@ -141,9 +105,8 @@ public class Esquie {
             boolean isMark = input[0].equalsIgnoreCase("mark");
             toggleMarkStatus(taskNumber, isMark);
         } catch (NumberFormatException e) {
-            throw new EsquieException(DOUBLEINDENTATION
-                    + "You didnt give me a number... Esquie is now sad :("
-                    + "\n" + DOUBLEINDENTATION + "Example Usage: mark 1 OR unmark 1");
+            throw new EsquieException("You didnt give me a number... Esquie is now sad :("
+                    + "\n" + ui.printIndent() + "Example Usage: mark 1 OR unmark 1");
 
         }
     }
@@ -157,22 +120,22 @@ public class Esquie {
     private void toggleMarkStatus(int taskNumber, boolean isMark) throws EsquieException {
         // Error Checking
         if (taskNumber < 0 || taskNumber >= taskList.size()) {
-            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! This task does not exist");
+            throw new EsquieException("Whoopsie! This task does not exist");
         }
 
         Task currentTask = taskList.get(taskNumber);
         if (isMark) {
             currentTask.markComplete();
             overwriteAll();
-            System.out.println(DOUBLEINDENTATION + "WhooWhee! I've marked this task as done:");
+            ui.showMessage("WhooWhee! I've marked this task as done:");
 
         } else {
             currentTask.markIncomplete();
             overwriteAll();
-            System.out.println(DOUBLEINDENTATION  + "WhooWhee! I've marked this task as not done yet:");
+            ui.showMessage("WhooWhee! I've marked this task as not done yet:");
 
         }
-        System.out.println(DOUBLEINDENTATION + currentTask.toString());
+        ui.showMessage(currentTask.toString());
     }
 
     /**
@@ -180,9 +143,9 @@ public class Esquie {
      *
      */
     private void listHandler() {
-        System.out.println(DOUBLEINDENTATION + "Listing Current Tasks:");
+        ui.showMessage("Listing Current Tasks:");
         for (int i = 0; i < taskList.size(); i++) {
-            System.out.println(DOUBLEINDENTATION + (i + 1) + "." + taskList.get(i).toString());
+            ui.showMessage((i + 1) + "." + taskList.get(i).toString());
         }
     }
 
@@ -193,13 +156,13 @@ public class Esquie {
      */
     private void taskHandler(Task task) throws EsquieException {
         if (taskList.size() >= 100) {
-            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! Number of tasks is full!");
+            throw new EsquieException("Whoopsie! Number of tasks is full!");
         }
         taskList.add(task);
         writeTask(task);
-        System.out.println(DOUBLEINDENTATION + "Got it. I've added this task:");
-        System.out.println(DOUBLEINDENTATION + taskList.get(taskList.size() - 1).toString());
-        System.out.println(DOUBLEINDENTATION + "Now you have " + taskList.size() + " tasks in the list.");
+        ui.showMessage("Got it. I've added this task:");
+        ui.showMessage(taskList.get(taskList.size() - 1).toString());
+        ui.showMessage("Now you have " + taskList.size() + " tasks in the list.");
     }
 
     /**
@@ -209,9 +172,8 @@ public class Esquie {
      */
     private void todoHandler(String[] input) throws EsquieException {
         if (input.length < 2 || input[1].trim().isEmpty()) {
-            throw new EsquieException(DOUBLEINDENTATION
-                    + "Whoopsie! Something is missing from the todo command!"
-                    + "\n" + DOUBLEINDENTATION + "Example Usage: todo borrow book");
+            throw new EsquieException("Whoopsie! Something is missing from the todo command!"
+                    + "\n" + ui.printIndent() + "Example Usage: todo borrow book");
         }
 
         Task task = new Todo(input[1].trim());
@@ -225,26 +187,24 @@ public class Esquie {
      */
     private void deadlineHandler(String[] input) throws EsquieException {
         if (input.length < 2) {
-            throw new EsquieException(DOUBLEINDENTATION
-                    + "Whoopsie! Something is missing from the deadline command!"
-                    + "\n" + DOUBLEINDENTATION + "Example Usage: deadline return book /by Sunday");
+            throw new EsquieException("Whoopsie! Something is missing from the deadline command!"
+                    + "\n" + ui.printIndent() + "Example Usage: deadline Play E33 /by 2026-01-25 1750"
+                    + "\n" + ui.printIndent() + "Example Usage: deadline Play E33 /by 2026-01-25");
         }
 
         // e.g. return book /by Sunday
         String[] byInput = input[1].split(" /by ", 2);
 
         if (byInput.length < 2 || byInput[0].trim().isEmpty() || byInput[1].trim().isEmpty()) {
-            throw new EsquieException(DOUBLEINDENTATION
-                    + "Whoopsie! Either your task or date is missing!"
-                    + "\n" + DOUBLEINDENTATION + "Example Usage: deadline Play E33 /by 2026-01-25 1750");
+            throw new EsquieException("Whoopsie! Either your task or date is missing!"
+                    + "\n" + ui.printIndent()+ "Example Usage: deadline Play E33 /by 2026-01-25 1750");
         }
         try {
             Task task = new Deadline(byInput[0].trim(), byInput[1].trim());
             taskHandler(task);
         } catch (DateTimeParseException e) {
-            throw new EsquieException(DOUBLEINDENTATION
-                    + "Oopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm format!"
-                    + "\n" + DOUBLEINDENTATION
+            throw new EsquieException("Oopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm format!"
+                    + "\n" + ui.printIndent()
                     + "Example Usage: /by 2026-01-25 OR /by 2026-01-25 1750");
         }
     }
@@ -256,9 +216,11 @@ public class Esquie {
      */
     private void eventHandler(String[] input) throws EsquieException {
         if (input.length < 2) {
-            throw new EsquieException(DOUBLEINDENTATION
-                    + "Whoopsie! Something is wrong with the event command!"
-                    + "\n" + DOUBLEINDENTATION + "Example Usage: event project meeting /from Mon 2pm /to 4pm");
+            throw new EsquieException("Whoopsie! Something is wrong with the event command!"
+                    + "\n" + ui.printIndent()
+                    + "Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800"
+                    + "\n" + ui.printIndent()
+                    + "Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25");
         }
 
         // e.g. project meeting /from Mon 2pm /to 4pm
@@ -266,11 +228,13 @@ public class Esquie {
         // This splits the description and time
         String[] splitFrom = input[1].split(" /from ", 2);
         if (splitFrom.length < 2 || splitFrom[0].trim().isEmpty() || splitFrom[1].trim().isEmpty()) {
-            throw new EsquieException(DOUBLEINDENTATION
-                    + "Whoopsie, something is wrong with the event command! \n"
-                    + DOUBLEINDENTATION
+            throw new EsquieException("Whoopsie, something is wrong with the event command! \n"
+                    + ui.printIndent()
                     + "Either a task description or time is missing!"
-                    + "\n" + DOUBLEINDENTATION + "Example Usage: event project meeting /from Mon 2pm /to 4pm");
+                    + "\n" + ui.printIndent()
+                    + "Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800"
+                    + "\n" + ui.printIndent()
+                    + "Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25");
         }
         String description = splitFrom[0];
         String date = splitFrom[1];
@@ -278,22 +242,23 @@ public class Esquie {
         // This further splits the time to obtain from and to
         String[] splitTo = date.split(" /to ", 2);
         if (splitTo.length < 2 || splitTo[0].trim().isEmpty() || splitTo[1].trim().isEmpty()) {
-            throw new EsquieException(DOUBLEINDENTATION
-                    + "Whoopsie, something is wrong with the event command!\n"
-                    + DOUBLEINDENTATION
+            throw new EsquieException("Whoopsie, something is wrong with the event command!\n"
+                    + ui.printIndent()
                     + "Either the from or to timing is missing from the event command!"
-                    + "\n" + DOUBLEINDENTATION + "Example Usage: event project meeting /from Mon 2pm /to 4pm");
+                    + "\n" + ui.printIndent()
+                    + "Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800"
+                    + "\n" + ui.printIndent()
+                    + "Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25");
         }
 
         try {
             Task task = new Event(description.trim(), splitTo[0].trim(), splitTo[1].trim());
             taskHandler(task);
         } catch (DateTimeParseException e) {
-            throw new EsquieException(DOUBLEINDENTATION
-                    + "Oopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm format!"
-                    + "\n" + DOUBLEINDENTATION
+            throw new EsquieException("Oopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm format!"
+                    + "\n" + ui.printIndent()
                     + "Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800"
-                    + "\n" + DOUBLEINDENTATION
+                    + "\n" + ui.printIndent()
                     + "Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25");
         }
     }
@@ -305,24 +270,22 @@ public class Esquie {
      */
     private void deleteHandler(String[] input) throws EsquieException {
         if (input.length < 2) {
-            throw new EsquieException(DOUBLEINDENTATION
-                    + "Whoopsie! Something is wrong with the delete command!"
-                    + "\n" + DOUBLEINDENTATION + "Example Usage: delete 3");
+            throw new EsquieException("Whoopsie! Something is wrong with the delete command!"
+                    + "\n" + ui.printIndent() + "Example Usage: delete 3");
         }
 
         try {
             Task removedTask = taskList.remove(Integer.parseInt(input[1].trim()) - 1);
             overwriteAll();
-            System.out.println(DOUBLEINDENTATION + "Got it. I've removed this task:");
-            System.out.println(DOUBLEINDENTATION + removedTask.toString());
-            System.out.println(DOUBLEINDENTATION + "Now you have " + taskList.size() + " tasks in the list.");
+            ui.showMessage("Got it. I've removed this task:");
+            ui.showMessage(removedTask.toString());
+            ui.showMessage("Now you have " + taskList.size() + " tasks in the list.");
 
         } catch (IndexOutOfBoundsException e) {
-            throw new EsquieException(DOUBLEINDENTATION + "Whoopsie! Task does not exist");
+            throw new EsquieException("Whoopsie! Task does not exist");
         } catch (NumberFormatException e) {
-            throw new EsquieException(DOUBLEINDENTATION
-                    + "Whoopsie! You did not give me a proper number!"
-                    + "\n" + DOUBLEINDENTATION + "Example Usage: delete 3");
+            throw new EsquieException("Whoopsie! You did not give me a proper number!"
+                    + "\n" + ui.printIndent() + "Example Usage: delete 3");
         }
     }
 
@@ -343,13 +306,14 @@ public class Esquie {
                 Files.createFile(path);
             }
         } catch (IOException e) {
-            System.out.println(DOUBLEINDENTATION + "Something went wrong with the save file");
+            ui.showMessage("Something went wrong with the save file");
         }
 
     }
 
     /**
      * Append task to esquie.txt.
+     * @param task task object of either Todo, Deadline, Event
      */
     private void writeTask(Task task) throws EsquieException {
         Path path = Paths.get(".", "data", "esquie.txt");
@@ -357,7 +321,7 @@ public class Esquie {
             writer.write(task.saveString());
             writer.newLine();
         } catch (IOException e) {
-            throw new EsquieException(DOUBLEINDENTATION + "Oopsie! Something went wrong with the saving");
+            throw new EsquieException("Oopsie! Something went wrong with the saving");
         }
     }
 
@@ -375,7 +339,7 @@ public class Esquie {
                 writer.newLine();
             }
         } catch (IOException e) {
-            throw new EsquieException(DOUBLEINDENTATION + "Oopsie! Something went wrong with the saving");
+            throw new EsquieException("Oopsie! Something went wrong with the saving");
         }
     }
 
@@ -393,8 +357,7 @@ public class Esquie {
                     line = reader.readLine();
                 }
             } catch (IOException e) {
-                throw new EsquieException(DOUBLEINDENTATION
-                        + "Oopsie! Something went wrong with importing previous tasks");
+                throw new EsquieException("Oopsie! Something went wrong with importing previous tasks");
             }
         }
     }
@@ -424,12 +387,12 @@ public class Esquie {
                 Task task = new Event(splitInput[2], splitInput[3], splitInput[4], splitInput[1].equals("1"));
                 taskList.add(task);
             }
-            default -> throw new EsquieException(DOUBLEINDENTATION + "Corrupted Save File");
+            default -> throw new EsquieException("Corrupted Save File");
             }
         } catch (IndexOutOfBoundsException e) {
-            throw new EsquieException(DOUBLEINDENTATION + "Corrupted Save File");
+            throw new EsquieException( "Corrupted Save File");
         } catch (DateTimeParseException e) {
-            throw new EsquieException(DOUBLEINDENTATION + "Corrupted Date in Save File: " + input);
+            throw new EsquieException("Corrupted Date in Save File: " + input);
         }
     }
 }

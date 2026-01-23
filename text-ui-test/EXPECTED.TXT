@@ -115,11 +115,13 @@ What can I do for you?
         --------------------------------------
         --------------------------------------
         Whoopsie! Something is missing from the deadline command!
-        Example Usage: deadline return book /by Sunday
+        Example Usage: deadline Play E33 /by 2026-01-25 1750
+        Example Usage: deadline Play E33 /by 2026-01-25
         --------------------------------------
         --------------------------------------
         Whoopsie! Something is missing from the deadline command!
-        Example Usage: deadline return book /by Sunday
+        Example Usage: deadline Play E33 /by 2026-01-25 1750
+        Example Usage: deadline Play E33 /by 2026-01-25
         --------------------------------------
         --------------------------------------
         Whoopsie! Either your task or date is missing!
@@ -135,31 +137,37 @@ What can I do for you?
         --------------------------------------
         --------------------------------------
         Whoopsie! Something is wrong with the event command!
-        Example Usage: event project meeting /from Mon 2pm /to 4pm
+        Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800
+        Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25
         --------------------------------------
         --------------------------------------
         Whoopsie! Something is wrong with the event command!
-        Example Usage: event project meeting /from Mon 2pm /to 4pm
+        Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800
+        Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25
         --------------------------------------
         --------------------------------------
         Whoopsie, something is wrong with the event command!
         Either the from or to timing is missing from the event command!
-        Example Usage: event project meeting /from Mon 2pm /to 4pm
+        Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800
+        Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25
         --------------------------------------
         --------------------------------------
         Whoopsie, something is wrong with the event command!
         Either the from or to timing is missing from the event command!
-        Example Usage: event project meeting /from Mon 2pm /to 4pm
+        Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800
+        Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25
         --------------------------------------
         --------------------------------------
         Whoopsie, something is wrong with the event command!
         Either the from or to timing is missing from the event command!
-        Example Usage: event project meeting /from Mon 2pm /to 4pm
+        Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800
+        Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25
         --------------------------------------
         --------------------------------------
         Whoopsie, something is wrong with the event command! 
         Either a task description or time is missing!
-        Example Usage: event project meeting /from Mon 2pm /to 4pm
+        Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800
+        Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25
         --------------------------------------
         --------------------------------------
         Oopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm format!
