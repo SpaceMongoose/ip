@@ -1,10 +1,11 @@
 list
 todo Defeat the Paintress
 todo Defeat Renoir
-deadline Finish Expedition 33 /by 17 Jan 2027
-event Go to Monoco's Station for a Party /from 27 Jan 1800H /to 27 Jan 1900H
-deadline Level up Verso /by 2 Feb 2026
-event Drink Esquie's wine /from 1 Feb 0000H /to 1 Feb 2359H
+deadline Finish Expedition 33 /by 2027-01-17
+event Go to Monoco's Station for a Party /from 2026-01-27 1500 /to 2026-01-27 1900
+deadline Level up Verso /by 2026-02-02
+event Drink Esquie's wine /from 2026-02-01 2359 /to 2026-02-01 0000
+event Drink Esquie's wine /from 2026-02-01 0000 /to 2026-02-01 2359
 list
 mark 2
 unmark 2
@@ -22,8 +23,8 @@ todo
 deadline
 deadline
 deadline fly back to lumiere /by
-deadline /by Today
-deadline fly back to lumiere /by Today
+deadline /by Today 1200
+deadline fly back to lumiere /by   Today   2000-01-01 1200
 event
 event
 event fly to the monolith /from /to
