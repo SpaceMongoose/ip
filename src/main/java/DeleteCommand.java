@@ -1,0 +1,43 @@
+/**
+ * Representation of a DeleteCommand.
+ */
+public class DeleteCommand extends Command {
+    private final int index;
+
+    /**
+     * Constructs a DeleteCommand object with a task index to delete.
+     * @param index index for a specific task to delete.
+     */
+    public DeleteCommand(int index) {
+        this.index = index;
+    }
+
+    /**
+     * Deletes a specified task from the tasklist.
+     * @param taskList is the tasklist to read through.
+     * @param ui is the Ui object for user interaction.
+     * @param storage is the Storage object for storage interaction.
+     * */
+    @Override
+    public void execute(TaskList taskList, Ui ui, Storage storage) throws EsquieException {
+        try {
+            Task removedTask = taskList.delete(index);
+            storage.overwriteAll(taskList);
+            ui.showMessage("Got it. I've removed this task:");
+            ui.showMessage(removedTask.toString());
+            ui.showMessage("Now you have " + taskList.size() + " tasks in the list.");
+
+        } catch (IndexOutOfBoundsException e) {
+            throw new EsquieException("Whoopsie! Task does not exist");
+        }
+    }
+
+    /**
+     * This command does not exit, thus returns false.
+     * @return returns true/false to indicate program exit.
+     */
+    @Override
+    public boolean isExit() {
+        return false;
+    }
+}
