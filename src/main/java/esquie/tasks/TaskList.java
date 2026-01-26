@@ -31,6 +31,7 @@ public class TaskList {
     /**
      * Delete specified task from taskList.
      * @param index index of the task to delete.
+     * @return Returns a task object that is removed
      */
     public Task delete(int index) {
         return taskList.remove(index);
@@ -39,6 +40,7 @@ public class TaskList {
     /**
      * Retrieve task at specified index.
      * @param index The task to add to the taskList.
+     * @return Returns a task object
      */
     public Task get(int index) {
         return taskList.get(index);

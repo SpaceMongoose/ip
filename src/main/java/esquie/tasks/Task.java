@@ -91,7 +91,7 @@ public class Task {
 
     /**
      * Returns a standardized string for task saving.
-     *
+     * @return  A formatted string for saving (e.g. 1 | Read book)
      */
     public String saveString() {
         String statusVal = getStatusIcon().equals("X") ? "1" : "0";

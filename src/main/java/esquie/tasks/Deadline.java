@@ -49,8 +49,8 @@ public class Deadline extends Task {
 
     /**
      * Returns a standardized string for task saving.
-     * e.g. D | 0 | Return Book | 2000-01-01 1300
-     * e.g. D | 0 | Return Book | 2000-01-01 0000 (If not time is specified)
+     * @return "D | 0 | Return Book | 2000-01-01 1300" OR "D | 0 | Return Book | 2000-01-01 0000"
+     * (If not time is specified)
      */
     @Override
     public String saveString() {

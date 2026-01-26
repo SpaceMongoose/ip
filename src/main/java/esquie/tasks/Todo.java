@@ -37,6 +37,7 @@ public class Todo extends Task {
     /**
      * Returns a standardized string for task saving.
      *
+     * @return A formatted string for saving (e.g. T | ....)
      */
     @Override
     public String saveString() {

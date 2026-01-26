@@ -49,7 +49,7 @@ public class MarkCommand extends Command {
     }
 
     /**
-     * This command does not exit, thus returns false.
+     * Returns false for this specific command.
      * @return returns true/false to indicate program exit.
      */
     @Override
