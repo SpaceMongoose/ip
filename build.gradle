@@ -1,8 +1,18 @@
 plugins {
     id 'java'
     id 'application'
+    id 'checkstyle'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
+
+checkstyle {
+    toolVersion = '11.0.0'
+}
+
+run {
+    enableAssertions = true
+}
+
 
 repositories {
     mavenCentral()
@@ -28,11 +38,11 @@ test {
 }
 
 application {
-    mainClass.set("seedu.duke.Duke")
+    mainClass.set("esquie.Esquie")
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveFileName = 'esquie.jar'
     archiveClassifier = null
 }
 
