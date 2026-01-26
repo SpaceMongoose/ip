@@ -1,9 +1,9 @@
 package esquie.commands;
 
+import esquie.exceptions.EsquieException;
+import esquie.storage.Storage;
 import esquie.tasks.TaskList;
 import esquie.ui.Ui;
-import esquie.storage.Storage;
-import esquie.exceptions.EsquieException;
 
 /**
  * Representation of a ExitCommand.
