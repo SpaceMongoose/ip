@@ -6,10 +6,10 @@ import java.util.Scanner;
  * Ui deals with interactions with the user, focusing on input and output.
  */
 public class Ui {
-    private Scanner sc;
     /** Constants used for standardized formatting. */
     private static final String BREAKLINE = "--------------------------------------";
     private static final String DOUBLEINDENTATION = "        ";
+    private Scanner sc;
 
     public Ui() {
         this.sc = new Scanner(System.in);

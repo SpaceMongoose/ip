@@ -1,9 +1,9 @@
 package esquie.tasks;
 
-import esquie.exceptions.EsquieException;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import esquie.exceptions.EsquieException;
 
 /**
  * Task with a specific date or time attached to it.
@@ -25,7 +25,7 @@ public class Event extends Task {
         this.from = LocalDateTime.parse(from, Task.DATE_FORMATTER);
         this.to = LocalDateTime.parse(to, Task.DATE_FORMATTER);
         if (this.to.isBefore(this.from)) {
-            throw new EsquieException ("Oopsie! End time cannot be before Start time!");
+            throw new EsquieException("Oopsie! End time cannot be before Start time!");
         }
     }
 
@@ -42,7 +42,7 @@ public class Event extends Task {
         this.from = LocalDateTime.parse(from, Task.DATE_FORMATTER);
         this.to = LocalDateTime.parse(to, Task.DATE_FORMATTER);
         if (this.to.isBefore(this.from)) {
-            throw new EsquieException ("Oopsie! End time cannot be before Start time!");
+            throw new EsquieException("Oopsie! End time cannot be before Start time!");
         }
     }
 
