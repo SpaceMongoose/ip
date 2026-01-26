@@ -36,7 +36,7 @@ public class DeleteCommand extends Command {
             ui.showMessage("Now you have " + taskList.size() + " tasks in the list.");
 
         } catch (IndexOutOfBoundsException e) {
-            throw new EsquieException("Whoopsie! Task does not exist");
+            throw new EsquieException("Whoopsie! This task does not exist");
         }
     }
 
