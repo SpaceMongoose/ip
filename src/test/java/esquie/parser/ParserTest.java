@@ -1,53 +1,57 @@
 package esquie.parser;
 
-import esquie.commands.*;
-import esquie.exceptions.EsquieException;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import esquie.commands.AddCommand;
+import esquie.commands.DeleteCommand;
+import esquie.commands.ExitCommand;
+import esquie.commands.ListCommand;
+import esquie.commands.MarkCommand;
+import esquie.exceptions.EsquieException;
 
 public class ParserTest {
     @Test
-    public void parse_list_returnsListCommand() throws Exception {
+    public void parseList_returnsListCommand() throws Exception {
         assertTrue(Parser.parse("list") instanceof ListCommand);
         assertTrue(Parser.parse("LIST") instanceof ListCommand);
     }
 
     @Test
-    public void parse_bye_returnsExitCommand() throws Exception {
+    public void parseBye_returnsExitCommand() throws Exception {
         assertInstanceOf(ExitCommand.class, Parser.parse("bye"));
         assertInstanceOf(ExitCommand.class, Parser.parse("BYE"));
     }
 
     @Test
-    public void parse_todo_returnsAddCommand() throws Exception {
+    public void parseTodo_returnsAddCommand() throws Exception {
         assertInstanceOf(AddCommand.class, Parser.parse("todo read book"));
         assertInstanceOf(AddCommand.class, Parser.parse("TODO read book"));
     }
 
     @Test
-    public void parse_deadline_returnsAddCommand() throws Exception {
+    public void parseDeadline_returnsAddCommand() throws Exception {
         assertInstanceOf(AddCommand.class, Parser.parse("deadline read book /by 2026-01-01"));
         assertInstanceOf(AddCommand.class, Parser.parse("DEADLINE read book /by 2026-01-01"));
     }
 
     @Test
-    public void parse_event_returnsAddCommand() throws Exception {
+    public void parseEvent_returnsAddCommand() throws Exception {
         assertInstanceOf(AddCommand.class, Parser.parse("event read book /from 2026-01-01 /to 2026-01-02"));
         assertInstanceOf(AddCommand.class, Parser.parse("EVENT read book /from 2026-01-01 /to 2026-01-02"));
     }
 
     @Test
-    public void parse_delete_returnsDeleteCommand() throws Exception {
+    public void parseDelete_returnsDeleteCommand() throws Exception {
         assertInstanceOf(DeleteCommand.class, Parser.parse("delete 1"));
         assertInstanceOf(DeleteCommand.class, Parser.parse("DELETE 1"));
     }
 
     @Test
-    public void parse_mark_unmark_returnsMarkCommand() throws Exception {
+    public void parseMarkUnmark_returnsMarkCommand() throws Exception {
         assertInstanceOf(MarkCommand.class, Parser.parse("mark 1"));
         assertInstanceOf(MarkCommand.class, Parser.parse("MARK 1"));
         assertInstanceOf(MarkCommand.class, Parser.parse("unmark 1"));
@@ -55,7 +59,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_unknownCommand_throwsException() throws Exception {
+    public void parseUnknownCommand_throwsException() throws Exception {
         EsquieException e = assertThrows(EsquieException.class, () -> {
             Parser.parse("this is a random command");
         });
@@ -63,7 +67,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_todo_missingArg_throwsException() {
+    public void parseTodo_missingArg_throwsException() {
         EsquieException e = assertThrows(EsquieException.class, () -> {
             Parser.parse("todo"); // Missing description
         });
@@ -71,7 +75,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_deadline_missingBy_throwsException() {
+    public void parseDeadline_missingBy_throwsException() {
         EsquieException e = assertThrows(EsquieException.class, () -> {
             Parser.parse("deadline read book"); // Missing /by
         });
@@ -85,7 +89,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_event_missingBy_throwsException() {
+    public void parseEvent_missingBy_throwsException() {
         EsquieException e = assertThrows(EsquieException.class, () -> {
             Parser.parse("event read book /to 2026-01-01"); // Missing /from
         });
@@ -101,7 +105,7 @@ public class ParserTest {
 
 
     @Test
-    public void parse_delete_invalidNumber_throwsException() {
+    public void parseDelete_invalidNumber_throwsException() {
         EsquieException e = assertThrows(EsquieException.class, () -> {
             Parser.parse("delete abc"); // Not a Number
         });
@@ -115,7 +119,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_mark_invalidNumber_throwsException() {
+    public void parseMark_invalidNumber_throwsException() {
         EsquieException e = assertThrows(EsquieException.class, () -> {
             Parser.parse("mark abc"); // Not a Number
         });

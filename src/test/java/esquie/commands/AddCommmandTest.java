@@ -1,20 +1,21 @@
 package esquie.commands;
 
-import esquie.tasks.TaskList;
-import esquie.tasks.Todo;
-import esquie.ui.Ui;
-import esquie.storage.Storage;
-import esquie.exceptions.EsquieException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import java.nio.file.Path;
-import java.nio.file.Files;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import esquie.exceptions.EsquieException;
+import esquie.storage.Storage;
+import esquie.tasks.TaskList;
+import esquie.tasks.Todo;
+import esquie.ui.Ui;
 
 public class AddCommmandTest {
 
@@ -59,7 +60,7 @@ public class AddCommmandTest {
         AddCommand command = new AddCommand(todoTask);
 
         // 3. Populate current taskList with mock tasks
-        for(int i = 0; i < 100; i++) {
+        for (int i = 0; i < 100; i++) {
             taskList.add(new Todo("Read " + i));
         }
 

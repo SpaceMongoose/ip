@@ -1,19 +1,20 @@
 package esquie.commands;
 
-import esquie.exceptions.EsquieException;
-import esquie.tasks.TaskList;
-import esquie.tasks.Todo;
-import esquie.ui.Ui;
-import esquie.storage.Storage;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import esquie.exceptions.EsquieException;
+import esquie.storage.Storage;
+import esquie.tasks.TaskList;
+import esquie.tasks.Todo;
+import esquie.ui.Ui;
 
 public class MarkCommandTest {
     @TempDir
