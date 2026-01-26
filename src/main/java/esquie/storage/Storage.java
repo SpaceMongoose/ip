@@ -1,23 +1,23 @@
 package esquie.storage;
 
-import esquie.tasks.Task;
-import esquie.tasks.Todo;
-import esquie.tasks.Deadline;
-import esquie.tasks.Event;
-import esquie.tasks.TaskList;
-import esquie.exceptions.EsquieException;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
-
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+
+import esquie.exceptions.EsquieException;
+import esquie.tasks.Deadline;
+import esquie.tasks.Event;
+import esquie.tasks.Task;
+import esquie.tasks.TaskList;
+import esquie.tasks.Todo;
+
+
 
 /**
  * Storage deals with loading tasks from the file and saving tasks in the file (./data/esquie.txt).
@@ -31,7 +31,8 @@ public class Storage {
 
     /**
      * Loads tasks into taskList that was from a previous session (if exists).
-     * @return a ArrayList<Task> used by TaskList class to create a new TaskList, or import old tasks.
+     *
+     * @return a ArrayList of Task objects for creating TaskList class to create a new TaskList, or import old tasks.
      */
     public ArrayList<Task> loadTasks() throws EsquieException {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -56,7 +57,6 @@ public class Storage {
 
     /**
      * Check if save file (./data/esquie.txt) exists. Otherwise, create.
-     *
      */
     public void checkSave() throws EsquieException {
         try {
