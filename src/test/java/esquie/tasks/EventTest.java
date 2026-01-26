@@ -29,8 +29,16 @@ public class EventTest {
     }
 
     @Test
-    public void event_manual_mark() {
+    public void event_manual_mark() throws EsquieException {
+        Event eventMarked = new Event("Read book", "2026-01-01", "2026-01-02", true);
+        Event eventUnmarked = new Event("Read book", "2026-01-01 1000", "2026-01-02 0800",
+                false);
 
+        assertEquals("[E][X] Read book (from: 1 Jan 2026 to: 2 Jan 2026)", eventMarked.toString());
+        assertEquals("E | 1 | Read book | 2026-01-01 0000 | 2026-01-02 0000", eventMarked.saveString());
+        assertEquals("[E][ ] Read book (from: 1 Jan 2026, 1000H to: 2 Jan 2026, 0800H)",
+                eventUnmarked.toString());
+        assertEquals("E | 0 | Read book | 2026-01-01 1000 | 2026-01-02 0800", eventUnmarked.saveString());
     }
 
     @Test
