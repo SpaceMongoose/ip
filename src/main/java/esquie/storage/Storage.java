@@ -25,6 +25,10 @@ import java.util.ArrayList;
 public class Storage {
     private final Path filePath;
 
+    /**
+     * Initializes a Storage object with a filePath
+     * @param filePath is the filePath to the save file (i.e. where the tasks are stored)
+     */
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
     }
@@ -55,8 +59,7 @@ public class Storage {
     }
 
     /**
-     * Check if save file (./data/esquie.txt) exists. Otherwise, create.
-     *
+     * Checks if save file (./data/esquie.txt) exists. Otherwise, create.
      */
     public void checkSave() throws EsquieException {
         try {

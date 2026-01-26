@@ -60,7 +60,7 @@ public class Parser {
     }
 
     /**
-     * Helper method that parses the remainder of the input to return a AddCommand object.
+     * Parses the remainder of the input to return a AddCommand object.
      * @param input is the remainder of the command not processed.
      * @return AddCommand object.
      */
@@ -74,7 +74,7 @@ public class Parser {
     }
 
     /**
-     * Helper method that parses the remainder of the input to return a AddCommand object.
+     * Parses the remainder of the input to return a AddCommand object.
      * @param input is the remainder of the command not processed.
      * @return AddCommand object.
      */
@@ -98,7 +98,7 @@ public class Parser {
     }
 
     /**
-     * Helper method that parses the remainder of the input to return a AddCommand object.
+     * Parses the remainder of the input to return a AddCommand object.
      * @param input is the remainder of the command not processed.
      * @return AddCommand object.
      */
@@ -142,7 +142,7 @@ public class Parser {
     }
 
     /**
-     * Helper method that parses the remainder of the input to return a DeleteCommand object.
+     * Parses the remainder of the input to return a DeleteCommand object.
      * @param input is the remainder of the command not processed.
      * @return DeleteCommand object.
      */
@@ -161,7 +161,7 @@ public class Parser {
     }
 
     /**
-     * Helper method that parses the remainder of the input to return a MarkCommand object.
+     * Parses the remainder of the input to return a MarkCommand object.
      * @param command is the initial command e.g. mark or unmark.
      * @param input is the remainder of the command not processed.
      * @return MarkCommand object.

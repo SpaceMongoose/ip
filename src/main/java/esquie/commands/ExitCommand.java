@@ -22,7 +22,7 @@ public class ExitCommand extends Command {
     }
 
     /**
-     * Exit command to stop the program.
+     * Returns true to exit the program.
      * @return returns true to indicate program exit.
      */
     @Override

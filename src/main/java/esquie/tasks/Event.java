@@ -50,7 +50,7 @@ public class Event extends Task {
     /**
      * Returns the String representation of an Event task.
      *
-     * @return A formatted string [e.g. [E][] Sleep (from: 6 Jun 2026, 1800 to: 7 Jun 2026, 1900)].
+     * @return A formatted string [e.g. [E][] Sleep (from: 6 Jun 2026, 1800H to: 7 Jun 2026, 1900H)].
      */
     @Override
     public String toString() {
@@ -65,8 +65,8 @@ public class Event extends Task {
 
     /**
      * Returns a standardized string for task saving.
-     * e.g. E | 0 | Play E33 | 2000-01-01 1300 | 2000-01-01 1800
-     * e.g. E | 0 | Play E33 | 2000-01-01 0000 | 2000-01-01 0000 (If no time is specified)
+     * @return "E | 0 | Play E33 | 2000-01-01 1300 | 2000-01-01 1800" OR
+     * "E | 0 | Play E33 | 2000-01-01 0000 | 2000-01-01 0000" (If no time is specified)
      */
     @Override
     public String saveString() {
