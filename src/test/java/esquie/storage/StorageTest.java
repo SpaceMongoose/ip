@@ -1,16 +1,21 @@
 package esquie.storage;
 
-import esquie.tasks.*;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import esquie.tasks.Deadline;
+import esquie.tasks.Event;
+import esquie.tasks.Task;
+import esquie.tasks.TaskList;
+import esquie.tasks.Todo;
 
 public class StorageTest {
 
@@ -18,7 +23,7 @@ public class StorageTest {
     Path tempDir;
 
     @Test
-    public void write_task_to_saveFile() throws Exception {
+    public void writeTask_toSaveFile() throws Exception {
         // tempFile -> tempDir/temp_esquie.txt
 
         // 1. Set the path and simulate verification
@@ -38,7 +43,7 @@ public class StorageTest {
     }
 
     @Test
-    public void load_task_to_taskList() throws Exception {
+    public void loadTask_toTaskList() throws Exception {
         // 1. Set the path and simulate verification
         Path tempFile = tempDir.resolve("temp_esquie.txt");
         Storage storage = new Storage(tempFile.toString());
@@ -63,7 +68,7 @@ public class StorageTest {
     }
 
     @Test
-    public void load_task_skip_corruptLines() throws Exception {
+    public void loadTask_skipCorruptLines() throws Exception {
         // 1. Set the path and simulate verification
         Path tempFile = tempDir.resolve("temp_esquie.txt");
         Storage storage = new Storage(tempFile.toString());

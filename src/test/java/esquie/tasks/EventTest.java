@@ -1,11 +1,11 @@
 package esquie.tasks;
 
-import esquie.exceptions.EsquieException;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.Test;
+
+import esquie.exceptions.EsquieException;
 
 public class EventTest {
 
@@ -44,8 +44,9 @@ public class EventTest {
     @Test
     public void event_initialization_failure() {
         EsquieException exception = assertThrows(EsquieException.class, () -> {
-            new Event("Read book", "2026-01-02", "2026-01-01");
-            });
+                new Event("Read book", "2026-01-02", "2026-01-01");
+            }
+        );
 
         assertEquals("Oopsie! End time cannot be before Start time!", exception.getMessage());
 

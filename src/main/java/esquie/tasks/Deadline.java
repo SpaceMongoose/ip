@@ -54,6 +54,6 @@ public class Deadline extends Task {
      */
     @Override
     public String saveString() {
-        return "D" + " | " + super.saveString()  + " | " + by.format(Task.SAVE_FORMATTER);
+        return "D" + " | " + super.saveString() + " | " + by.format(Task.SAVE_FORMATTER);
     }
 }

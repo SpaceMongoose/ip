@@ -9,18 +9,18 @@ import java.time.temporal.ChronoField;
  *
  */
 public class Task {
+    protected static final DateTimeFormatter DATE_FORMATTER = new DateTimeFormatterBuilder()
+            .appendPattern("yyyy-MM-dd")
+            .optionalStart()
+            .appendPattern(" HHmm")
+            .optionalEnd()
+            .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+            .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+            .toFormatter();
+    protected static final DateTimeFormatter SAVE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     protected String description;
     protected boolean isDone;
-    protected static final DateTimeFormatter DATE_FORMATTER = new DateTimeFormatterBuilder()
-                                                                .appendPattern("yyyy-MM-dd")
-                                                                .optionalStart()
-                                                                .appendPattern(" HHmm")
-                                                                .optionalEnd()
-                                                                .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
-                                                                .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
-                                                                .toFormatter();
 
-    protected static final DateTimeFormatter SAVE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
     /**
      * Initializes new Task with given description.

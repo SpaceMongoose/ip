@@ -1,19 +1,18 @@
 package esquie.parser;
 
-import esquie.tasks.Task;
-import esquie.tasks.Todo;
+import java.time.format.DateTimeParseException;
+
+import esquie.commands.AddCommand;
+import esquie.commands.Command;
+import esquie.commands.DeleteCommand;
+import esquie.commands.ExitCommand;
+import esquie.commands.ListCommand;
+import esquie.commands.MarkCommand;
+import esquie.exceptions.EsquieException;
 import esquie.tasks.Deadline;
 import esquie.tasks.Event;
-
-import esquie.commands.Command;
-import esquie.commands.ListCommand;
-import esquie.commands.ExitCommand;
-import esquie.commands.AddCommand;
-import esquie.commands.MarkCommand;
-import esquie.commands.DeleteCommand;
-import esquie.exceptions.EsquieException;
-
-import java.time.format.DateTimeParseException;
+import esquie.tasks.Task;
+import esquie.tasks.Todo;
 
 /**
  * Parser that processes input, and returns a Command Object to perform the respective action.

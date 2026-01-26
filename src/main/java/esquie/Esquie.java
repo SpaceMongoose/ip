@@ -1,12 +1,11 @@
 package esquie;
 
-import esquie.tasks.TaskList;
-import esquie.ui.Ui;
-import esquie.storage.Storage;
-import esquie.parser.Parser;
 import esquie.commands.Command;
 import esquie.exceptions.EsquieException;
-
+import esquie.parser.Parser;
+import esquie.storage.Storage;
+import esquie.tasks.TaskList;
+import esquie.ui.Ui;
 
 /**
  * A Personal Assistant Chatbot that helps a person keep track of various things.
@@ -55,7 +54,9 @@ public class Esquie {
                 Command command = Parser.parse(fullCommand);
                 command.execute(taskList, ui, storage);
                 isExit = command.isExit();
-                if (isExit) {ui.printExit();}
+                if (isExit) {
+                    ui.printExit();
+                }
             } catch (EsquieException e) {
                 ui.printError(e.getMessage());
 

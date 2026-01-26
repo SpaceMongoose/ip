@@ -1,20 +1,21 @@
 package esquie.commands;
 
-import esquie.tasks.Deadline;
-import esquie.tasks.TaskList;
-import esquie.tasks.Todo;
-import esquie.ui.Ui;
-import esquie.storage.Storage;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Path;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import esquie.storage.Storage;
+import esquie.tasks.Deadline;
+import esquie.tasks.TaskList;
+import esquie.tasks.Todo;
+import esquie.ui.Ui;
 
 public class ListCommandTest {
     @TempDir
@@ -37,7 +38,7 @@ public class ListCommandTest {
     }
 
     @Test
-    public void list_with_no_corrupt() throws Exception {
+    public void listWith_noCorrupt() throws Exception {
         // 1. Create the mock env
         Path tempFile = tempDir.resolve("temp_esquie.txt");
         Storage storage = new Storage(tempFile.toString());
