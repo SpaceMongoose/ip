@@ -53,7 +53,7 @@ public class DeleteCommandTest {
         Ui ui = new Ui();
 
         // 2. Create the Task to add
-        Todo todoTask = new Todo("Read book (by: 1 Jan 2026)");
+        Todo todoTask = new Todo("Read book");
         taskList.add(todoTask);
 
         // 3. Create the DeleteCommand
