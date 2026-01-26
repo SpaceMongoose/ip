@@ -15,12 +15,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class DeleteCommandTest {
+public class MarkCommandTest {
     @TempDir
     Path tempDir;
 
     @Test
-    public void execute_validDelete() throws Exception {
+    public void execute_validMark() throws Exception {
         // 1. Create the mock env
         Path tempFile = tempDir.resolve("temp_esquie.txt");
         Storage storage = new Storage(tempFile.toString());
@@ -32,19 +32,23 @@ public class DeleteCommandTest {
         Todo todoTask = new Todo("Read book");
         taskList.add(todoTask);
 
-        // 3. Create the DeleteCommand
+        // 3. Create the MarkCommand
         // Note: Parser handles the -1 already
-        DeleteCommand command = new DeleteCommand(0);
-        command.execute(taskList, ui, storage);
+        MarkCommand commandMark = new MarkCommand(0, true);
+        commandMark.execute(taskList, ui, storage);
 
         // 4. Assertions
-        assertEquals(0, taskList.size());
+        assertEquals(1, taskList.size());
+        assertEquals("X", taskList.get(0).getStatusIcon());
+        MarkCommand commandUnmark = new MarkCommand(0, false);
+        commandUnmark.execute(taskList, ui, storage);
+        assertEquals(" ", taskList.get(0).getStatusIcon());
         List<String> lines = Files.readAllLines(tempFile);
-        assertEquals(0, lines.size());
+        assertEquals("T | 0 | Read book", lines.get(0));
     }
 
     @Test
-    public void execute_invalidDelete() throws Exception {
+    public void execute_invalidMark() throws Exception {
         // 1. Create the mock env
         Path tempFile = tempDir.resolve("temp_esquie.txt");
         Storage storage = new Storage(tempFile.toString());
@@ -56,12 +60,12 @@ public class DeleteCommandTest {
         Todo todoTask = new Todo("Read book");
         taskList.add(todoTask);
 
-        // 3. Create the DeleteCommand
-        DeleteCommand command = new DeleteCommand(2);
+        // 3. Create the MarkCommand
+        MarkCommand commandMark = new MarkCommand(2, true);
 
         // 4. Execute the command
         EsquieException e = assertThrows(EsquieException.class, () -> {
-            command.execute(taskList, ui, storage);
+            commandMark.execute(taskList, ui, storage);
         });
         assertEquals("Whoopsie! This task does not exist", e.getMessage());
     }
