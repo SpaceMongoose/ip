@@ -66,7 +66,7 @@ public class Event extends Task {
     /**
      * Returns a standardized string for task saving.
      * @return "E | 0 | Play E33 | 2000-01-01 1300 | 2000-01-01 1800" OR
-     * "E | 0 | Play E33 | 2000-01-01 0000 | 2000-01-01 0000" (If no time is specified)
+     *         "E | 0 | Play E33 | 2000-01-01 0000 | 2000-01-01 0000" (If no time is specified)
      */
     @Override
     public String saveString() {
