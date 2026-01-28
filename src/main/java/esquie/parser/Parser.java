@@ -6,6 +6,7 @@ import esquie.commands.AddCommand;
 import esquie.commands.Command;
 import esquie.commands.DeleteCommand;
 import esquie.commands.ExitCommand;
+import esquie.commands.FindCommand;
 import esquie.commands.ListCommand;
 import esquie.commands.MarkCommand;
 import esquie.exceptions.EsquieException;
@@ -51,6 +52,9 @@ public class Parser {
         }
         case "MARK", "UNMARK" -> {
             return parseMark(input[0].toUpperCase(), arguments);
+        }
+        case "FIND" -> {
+            return parseFind(arguments);
         }
         default -> {
             throw new EsquieException("Oopsie! Esquie did not understand that!");
@@ -184,5 +188,19 @@ public class Parser {
                     + "\n" + INDENT + "Example Usage: mark 1 OR unmark 1");
 
         }
+    }
+
+    /**
+     * Parses the remainder of the input to return a FindCommand object.
+     * @param input is the remainder of the command not processed.
+     * @return FindCommand object.
+     */
+    private static Command parseFind(String input) throws EsquieException {
+        if (input.trim().isEmpty()) {
+            throw new EsquieException("Whoopsie! You have to tell me what to find!"
+                    + "\n" + INDENT + "Example Usage: find book");
+        }
+
+        return new FindCommand(input.trim().toLowerCase());
     }
 }
