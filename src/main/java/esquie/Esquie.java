@@ -6,6 +6,7 @@ import esquie.parser.Parser;
 import esquie.storage.Storage;
 import esquie.tasks.TaskList;
 import esquie.ui.Ui;
+import javafx.application.Platform;
 
 /**
  * A Personal Assistant Chatbot that helps a person keep track of various things.
@@ -31,38 +32,31 @@ public class Esquie {
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            new Esquie("./data/esquie.txt").run();
-        } catch (EsquieException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     /**
-     * Starts the main execution of Esquie.
-     * Displays welcome message and loops to read user input to call the correct methods.
-     * Loop is continued until Esquie reads BYE command is executed
+     * Generates a response for the user's chat message.
+     * @return A response on the UI for the user to read
      */
-    public void run() {
-        ui.printWelcome();
+    public String getResponse(String input) {
         boolean isExit = false;
-        while (!isExit) {
-            try {
-                String fullCommand = ui.readCommand();
-                ui.printLine();
-                Command command = Parser.parse(fullCommand);
-                command.execute(taskList, ui, storage);
-                isExit = command.isExit();
-                if (isExit) {
-                    ui.printExit();
-                }
-            } catch (EsquieException e) {
-                ui.printError(e.getMessage());
+        try {
+            // 1. Parse the user input into a Command
+            Command command = Parser.parse(input);
 
-            } finally {
-                ui.printLine();
+            // 2. Execute the command
+            // Call ui.showMessage, which now writes to our buffer instead of the console
+            command.execute(taskList, ui, storage);
+            isExit = command.isExit();
+            if (isExit) {
+                Platform.exit();
+                System.exit(0);
             }
+
+            // 3. Return the stored text from the buffer
+            return ui.getResponse();
+
+        } catch (EsquieException e) {
+            // If an error happens, we return the error message directly
+            return e.getMessage();
         }
     }
 }

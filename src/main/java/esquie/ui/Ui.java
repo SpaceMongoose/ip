@@ -9,6 +9,7 @@ public class Ui {
     /** Constants used for standardized formatting. */
     private static final String BREAKLINE = "--------------------------------------";
     private static final String DOUBLEINDENTATION = "        ";
+    private StringBuilder response = new StringBuilder();
     private Scanner sc;
 
     public Ui() {
@@ -64,7 +65,8 @@ public class Ui {
      * Prints a formatted error message.
      */
     public void printError(String message) {
-        System.out.println(DOUBLEINDENTATION + message);
+        // System.out.println(DOUBLEINDENTATION + message);
+        response.append(message).append("\n");
     }
 
     /**
@@ -78,6 +80,16 @@ public class Ui {
      * Prints a formatted message.
      */
     public void showMessage(String message) {
-        System.out.println(DOUBLEINDENTATION + message);
+        // System.out.println(DOUBLEINDENTATION + message);
+        response.append(message).append("\n");
+    }
+
+    /**
+     * Returns the current command response and resets the response
+     */
+    public String getResponse() {
+        String currentResponse = response.toString();
+        response.setLength(0);
+        return currentResponse;
     }
 }
