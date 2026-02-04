@@ -19,7 +19,6 @@ import esquie.tasks.Todo;
  * Parser that processes input, and returns a Command Object to perform the respective action.
  */
 public class Parser {
-    private static final String INDENT = "        ";
 
     /**
      * Parses the command into 2, the command and the arguments.
@@ -70,7 +69,7 @@ public class Parser {
     private static Command parseTodo(String input) throws EsquieException {
         if (input.trim().isEmpty()) {
             throw new EsquieException("Whoopsie! Something is missing from the todo command!"
-                    + "\n" + INDENT + "Example Usage: todo borrow book");
+                    + "\n" + "Example Usage: todo borrow book");
         }
 
         return new AddCommand(new Todo(input.trim()));
@@ -87,15 +86,15 @@ public class Parser {
 
         if (byInput.length < 2 || byInput[0].trim().isEmpty() || byInput[1].trim().isEmpty()) {
             throw new EsquieException("Whoopsie! Something is missing from the deadline command!"
-                    + "\n" + INDENT + "Example Usage: deadline Play E33 /by 2026-01-25 1750"
-                    + "\n" + INDENT + "Example Usage: deadline Play E33 /by 2026-01-25");
+                    + "\n" + "Example Usage: deadline Play E33 /by 2026-01-25 1750"
+                    + "\n" + "Example Usage: deadline Play E33 /by 2026-01-25");
         }
         try {
             Task task = new Deadline(byInput[0].trim(), byInput[1].trim());
             return new AddCommand(task);
         } catch (DateTimeParseException e) {
             throw new EsquieException("Oopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm format!"
-                    + "\n" + INDENT
+                    + "\n"
                     + "Example Usage: /by 2026-01-25 OR /by 2026-01-25 1750");
         }
     }
@@ -110,11 +109,10 @@ public class Parser {
         String[] splitFrom = input.split(" /from ", 2);
         if (splitFrom.length < 2 || splitFrom[0].trim().isEmpty() || splitFrom[1].trim().isEmpty()) {
             throw new EsquieException("Whoopsie, something is wrong with the event command! \n"
-                    + INDENT
                     + "Either a task description or time is missing!"
-                    + "\n" + INDENT
+                    + "\n"
                     + "Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800"
-                    + "\n" + INDENT
+                    + "\n"
                     + "Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25");
         }
         String description = splitFrom[0];
@@ -124,11 +122,10 @@ public class Parser {
         String[] splitTo = date.split(" /to ", 2);
         if (splitTo.length < 2 || splitTo[0].trim().isEmpty() || splitTo[1].trim().isEmpty()) {
             throw new EsquieException("Whoopsie, something is wrong with the event command!\n"
-                    + INDENT
                     + "Either the from or to timing is missing from the event command!"
-                    + "\n" + INDENT
+                    + "\n"
                     + "Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800"
-                    + "\n" + INDENT
+                    + "\n"
                     + "Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25");
         }
 
@@ -137,9 +134,9 @@ public class Parser {
             return new AddCommand(task);
         } catch (DateTimeParseException e) {
             throw new EsquieException("Oopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm format!"
-                    + "\n" + INDENT
+                    + "\n"
                     + "Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800"
-                    + "\n" + INDENT
+                    + "\n"
                     + "Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25");
         }
     }
@@ -152,14 +149,14 @@ public class Parser {
     private static Command parseDelete(String input) throws EsquieException {
         if (input.trim().isEmpty()) {
             throw new EsquieException("Whoopsie! Something is wrong with the delete command!"
-                    + "\n" + INDENT + "Example Usage: delete 3");
+                    + "\n" + "Example Usage: delete 3");
         }
         try {
             int index = Integer.parseInt(input.trim()) - 1;
             return new DeleteCommand(index);
         } catch (NumberFormatException e) {
             throw new EsquieException("Whoopsie! You did not give me a proper number!"
-                    + "\n" + INDENT + "Example Usage: delete 3");
+                    + "\n" + "Example Usage: delete 3");
         }
     }
 
@@ -174,7 +171,7 @@ public class Parser {
         // If the 2nd input is ""
         if (input.trim().isEmpty()) {
             throw new EsquieException("Whoopsie! command is missing an argument!"
-                    + "\n" + INDENT + "Example Usage: mark 1 OR unmark 1");
+                    + "\n" + "Example Usage: mark 1 OR unmark 1");
         }
 
         try {
@@ -185,7 +182,7 @@ public class Parser {
             return new MarkCommand(taskNumber, isMark);
         } catch (NumberFormatException e) {
             throw new EsquieException("You didnt give me a number... Esquie is now sad :("
-                    + "\n" + INDENT + "Example Usage: mark 1 OR unmark 1");
+                    + "\n" + "Example Usage: mark 1 OR unmark 1");
 
         }
     }
@@ -198,7 +195,7 @@ public class Parser {
     private static Command parseFind(String input) throws EsquieException {
         if (input.trim().isEmpty()) {
             throw new EsquieException("Whoopsie! You have to tell me what to find!"
-                    + "\n" + INDENT + "Example Usage: find book");
+                    + "\n" + "Example Usage: find book");
         }
 
         return new FindCommand(input.trim().toLowerCase());

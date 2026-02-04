@@ -4,12 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.nio.file.Path;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -23,21 +19,6 @@ public class FindCommandTest {
     @TempDir
     Path tempDir;
 
-    // Variables for holding the tasks listed out
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
-
-    // Redirect System.out to the outContent stream
-    @BeforeEach
-    public void setUpStream() {
-        System.setOut(new PrintStream(outContent));
-    }
-
-    // After each test, reset the System.out to System.out
-    @AfterEach
-    public void clearStream() {
-        System.setOut(originalOut);
-    }
 
     @Test
     public void execute_find_matchFound() throws Exception {
@@ -58,7 +39,7 @@ public class FindCommandTest {
         FindCommand command = new FindCommand("Code");
         command.execute(taskList, ui, storage);
 
-        String output = outContent.toString();
+        String output = ui.getResponse();
         assertTrue(output.contains("1.[T][ ] Code CS2103"));
         assertTrue(output.contains("2.[T][ ] Code CS2109S problem set"));
     }
@@ -106,7 +87,7 @@ public class FindCommandTest {
         FindCommand command = new FindCommand("code");
         command.execute(taskList, ui, storage);
 
-        String output = outContent.toString();
+        String output = ui.getResponse();
         assertTrue(output.contains("1.[T][ ] Code CS2103"));
         assertTrue(output.contains("2.[T][ ] Code CS2109S problem set"));
     }
