@@ -101,6 +101,15 @@ public class Ui {
     public void showTaskAdded(Task task, int size) {
         showMessage(Messages.MSG_TASK_ADD);
         showMessage(task.toString());
-        showMessage("Now you have " + size + " tasks in the list.");
+        showMessage(Messages.getTaskCountMessage(size));
+    }
+
+    /**
+     * Returns the success message when a task is deleted
+     */
+    public void showTaskDelete(Task task, int size) {
+        showMessage(Messages.MSG_TASK_DELETE);
+        showMessage(task.toString());
+        showMessage(Messages.getTaskCountMessage(size));
     }
 }
