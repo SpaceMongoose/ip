@@ -2,6 +2,8 @@ package esquie.ui;
 
 import java.util.Scanner;
 
+import esquie.common.Messages;
+import esquie.tasks.Task;
 /**
  * Ui deals with interactions with the user, focusing on input and output.
  */
@@ -91,5 +93,14 @@ public class Ui {
         String currentResponse = response.toString();
         response.setLength(0);
         return currentResponse;
+    }
+
+    /**
+     * Returns the success message when a task is added
+     */
+    public void showTaskAdded(Task task, int size) {
+        showMessage(Messages.MSG_TASK_ADD);
+        showMessage(task.toString());
+        showMessage("Now you have " + size + " tasks in the list.");
     }
 }
