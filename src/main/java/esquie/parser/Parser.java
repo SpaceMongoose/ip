@@ -87,6 +87,9 @@ public class Parser {
         if (byInput.length < 2 || byInput[0].trim().isEmpty() || byInput[1].trim().isEmpty()) {
             throw new EsquieException(Messages.ERR_DEADLINE_FORMAT);
         }
+
+        assert byInput.length == 2 : "parseDeadline split logic fails";
+
         try {
             Task task = new Deadline(byInput[0].trim(), byInput[1].trim());
             return new AddCommand(task);
@@ -106,6 +109,9 @@ public class Parser {
         if (splitFrom.length < 2 || splitFrom[0].trim().isEmpty() || splitFrom[1].trim().isEmpty()) {
             throw new EsquieException(Messages.ERR_EVENT_FORMAT);
         }
+
+        assert splitFrom.length == 2 : "parseEvent split logic fails";
+
         String description = splitFrom[0];
         String date = splitFrom[1];
 
@@ -114,6 +120,8 @@ public class Parser {
         if (splitTo.length < 2 || splitTo[0].trim().isEmpty() || splitTo[1].trim().isEmpty()) {
             throw new EsquieException(Messages.ERR_EVENT_TIMING);
         }
+
+        assert splitTo.length == 2 : "parseEvent split time logic fails";
 
         try {
             Task task = new Event(description.trim(), splitTo[0].trim(), splitTo[1].trim());

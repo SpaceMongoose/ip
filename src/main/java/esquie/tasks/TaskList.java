@@ -26,6 +26,8 @@ public class TaskList {
      * @param task The task to add to the taskList.
      */
     public void add(Task task) {
+        assert taskList.size() < 100 : "Tasklist is full! AddCommand should fail!";
+        assert task != null : "task should be a Task object, not null";
         taskList.add(task);
     }
 
@@ -35,15 +37,17 @@ public class TaskList {
      * @return Returns a task object that is removed
      */
     public Task delete(int index) {
+        assert index >= 0 && index < taskList.size() : "Task index is out of bounds!";
         return taskList.remove(index);
     }
 
     /**
      * Retrieve task at specified index.
-     * @param index The task to add to the taskList.
+     * @param index The task to get from the taskList.
      * @return Returns a task object
      */
     public Task get(int index) {
+        assert index >= 0 && index < taskList.size() : "Task index is out of bounds!";
         return taskList.get(index);
     }
 
