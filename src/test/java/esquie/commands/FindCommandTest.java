@@ -65,7 +65,7 @@ public class FindCommandTest {
             command.execute(taskList, ui, storage);
         });
 
-        assertEquals("Nothing could be found!", e.getMessage());
+        assertEquals("Whoopsie! Nothing could be found", e.getMessage());
     }
 
     @Test
