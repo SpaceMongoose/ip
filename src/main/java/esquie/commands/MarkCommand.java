@@ -1,5 +1,6 @@
 package esquie.commands;
 
+import esquie.common.Messages;
 import esquie.exceptions.EsquieException;
 import esquie.storage.Storage;
 import esquie.tasks.Task;
@@ -33,19 +34,20 @@ public class MarkCommand extends Command {
     public void execute(TaskList taskList, Ui ui, Storage storage) throws EsquieException {
         // Error Checking
         if (taskNumber < 0 || taskNumber >= taskList.size()) {
-            throw new EsquieException("Whoopsie! This task does not exist");
+            throw new EsquieException(Messages.ERR_TASK_NOT_EXIST);
         }
 
         Task currentTask = taskList.get(taskNumber);
+
         if (isMark) {
             currentTask.markComplete();
-            ui.showMessage("WhooWhee! I've marked this task as done:");
+            ui.showMark(currentTask);
         } else {
             currentTask.markIncomplete();
-            ui.showMessage("WhooWhee! I've marked this task as not done yet:");
+            ui.showUnmark(currentTask);
         }
+
         storage.overwriteAll(taskList);
-        ui.showMessage(currentTask.toString());
     }
 
     /**

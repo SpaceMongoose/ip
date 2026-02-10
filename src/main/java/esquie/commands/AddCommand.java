@@ -29,7 +29,7 @@ public class AddCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws EsquieException {
-        if (taskList.size() >= Command.MAX_TASKLIST_SIZE) {
+        if (taskList.size() >= TaskList.MAX_TASKLIST_SIZE) {
             throw new EsquieException(Messages.ERR_TASKLIST_FULL);
         }
         taskList.add(task);

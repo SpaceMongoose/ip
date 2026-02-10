@@ -15,6 +15,8 @@ public class Messages {
     public static final String MSG_TASK_DELETE = "Got it. I've removed this task:";
     public static final String MSG_TASK_LIST = "Listing Current Tasks:";
     public static final String MSG_TASK_FIND = "Here are the matching tasks in your list:";
+    public static final String MSG_TASK_MARK = "WhooWhee! I've marked this task as done:";
+    public static final String MSG_TASK_UNMARK = "WhooWhee! I've marked this task as not done yet:";
 
     private Messages() {};
 

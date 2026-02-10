@@ -123,4 +123,20 @@ public class Ui {
             showMessage((i + 1) + "." + taskList.get(i).toString());
         }
     }
+
+    /**
+     * Returns a string representation of a marked task
+     */
+    public void showMark(Task task) {
+        showMessage(Messages.MSG_TASK_MARK);
+        showMessage(task.toString());
+    }
+
+    /**
+     * Returns a string representation of a unmarked task
+     */
+    public void showUnmark(Task task) {
+        showMessage(Messages.MSG_TASK_UNMARK);
+        showMessage(task.toString());
+    }
 }

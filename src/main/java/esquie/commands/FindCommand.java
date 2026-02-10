@@ -42,7 +42,7 @@ public class FindCommand extends Command {
         }
 
         if (findList.isEmpty()) {
-            throw new EsquieException(Messages.ERR_TASK_NOT_EXIST);
+            throw new EsquieException(Messages.ERR_TASK_NOT_FOUND);
         }
 
         ui.showMessage(Messages.MSG_TASK_FIND);

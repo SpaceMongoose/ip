@@ -9,7 +9,6 @@ import esquie.ui.Ui;
  * Represents the valid commands that Esquie can execute.
  */
 public abstract class Command {
-    public static final int MAX_TASKLIST_SIZE = 100;
     public abstract void execute(TaskList taskList, Ui ui, Storage storage) throws EsquieException;
     public abstract boolean isExit();
 }
