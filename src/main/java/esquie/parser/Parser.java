@@ -89,6 +89,9 @@ public class Parser {
                     + "\n" + "Example Usage: deadline Play E33 /by 2026-01-25 1750"
                     + "\n" + "Example Usage: deadline Play E33 /by 2026-01-25");
         }
+
+        assert byInput.length == 2 : "parseDeadline split logic fails";
+
         try {
             Task task = new Deadline(byInput[0].trim(), byInput[1].trim());
             return new AddCommand(task);
@@ -115,6 +118,9 @@ public class Parser {
                     + "\n"
                     + "Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25");
         }
+
+        assert splitFrom.length == 2 : "parseEvent split logic fails";
+
         String description = splitFrom[0];
         String date = splitFrom[1];
 
@@ -128,6 +134,8 @@ public class Parser {
                     + "\n"
                     + "Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25");
         }
+
+        assert splitTo.length == 2 : "parseEvent split time logic fails";
 
         try {
             Task task = new Event(description.trim(), splitTo[0].trim(), splitTo[1].trim());

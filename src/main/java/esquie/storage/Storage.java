@@ -120,8 +120,15 @@ public class Storage {
      * @param task task object of either Todo, Deadline, Event
      */
     public void writeTask(Task task) throws EsquieException {
+        assert task != null : "Unable to write null task!";
+
         try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.APPEND)) {
-            writer.write(task.saveString());
+            String lineToWrite = task.saveString();
+
+            // Task is valid, should return a valid save string to write
+            assert lineToWrite != null && !lineToWrite.isEmpty() : "Task.saveString() returns invalid data";
+
+            writer.write(lineToWrite);
             writer.newLine();
         } catch (IOException e) {
             throw new EsquieException("Oopsie! Something went wrong with the saving");
