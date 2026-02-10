@@ -1,5 +1,6 @@
 package esquie.commands;
 
+import esquie.common.Messages;
 import esquie.exceptions.EsquieException;
 import esquie.storage.Storage;
 import esquie.tasks.TaskList;
@@ -17,10 +18,8 @@ public class ListCommand extends Command {
      * */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws EsquieException {
-        ui.showMessage("Listing Current Tasks:");
-        for (int i = 0; i < taskList.size(); i++) {
-            ui.showMessage((i + 1) + "." + taskList.get(i).toString());
-        }
+        ui.showMessage(Messages.MSG_TASK_LIST);
+        ui.showTaskList(taskList);
     }
 
     /**

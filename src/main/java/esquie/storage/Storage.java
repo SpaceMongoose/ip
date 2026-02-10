@@ -1,6 +1,5 @@
 package esquie.storage;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,7 +8,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.List;
 
+import esquie.common.Messages;
 import esquie.exceptions.EsquieException;
 import esquie.tasks.Deadline;
 import esquie.tasks.Event;
@@ -17,13 +18,13 @@ import esquie.tasks.Task;
 import esquie.tasks.TaskList;
 import esquie.tasks.Todo;
 
-
-
 /**
  * Storage deals with loading tasks from the file and saving tasks in the file (./data/esquie.txt).
  */
 public class Storage {
+    private static final String DELIMITER = " \\| ";
     private final Path filePath;
+
 
     /**
      * Initializes a Storage object with a filePath
@@ -40,22 +41,27 @@ public class Storage {
      */
     public ArrayList<Task> loadTasks() throws EsquieException {
         ArrayList<Task> tasks = new ArrayList<>();
-        if (Files.exists(filePath)) {
-            try (BufferedReader reader = Files.newBufferedReader(filePath)) {
-                String line = reader.readLine();
-                while (line != null) {
-                    try {
-                        parseString(line, tasks);
-                    } catch (EsquieException e) {
-                        // No indentation since this loads before Esquie
-                        System.out.println("Warning! Skipping corrupted line in save file: " + line);
-                    }
-                    line = reader.readLine();
-                }
-            } catch (IOException e) {
-                throw new EsquieException("Oopsie! Something went wrong with importing previous tasks");
-            }
+        if (!Files.exists(filePath)) {
+            return tasks;
         }
+
+        try {
+            List<String> lines = Files.readAllLines(filePath);
+            for (String line: lines) {
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+                try {
+                    Task task = parseString(line);
+                    tasks.add(task);
+                } catch (EsquieException | IndexOutOfBoundsException | DateTimeParseException e) {
+                    System.out.println(Messages.ERR_STORAGE_CORRUPT_SKIP + line);
+                }
+            }
+        } catch (IOException e) {
+            throw new EsquieException(Messages.ERR_STORAGE_IMPORT);
+        }
+
         return tasks;
     }
 
@@ -74,45 +80,28 @@ public class Storage {
                 Files.createFile(filePath);
             }
         } catch (IOException e) {
-            throw new EsquieException("Something went wrong with the save file");
+            throw new EsquieException(Messages.ERR_STORAGE_SAVE);
         }
 
     }
 
     /**
-     * Parses a line of save file format, adds previous tasks to the taskList.
+     * Parses a line of save file format, returns a task object based on this
      *
      * @param input is a line from the save file (esquie.txt).
-     * @param taskList is the taskList to add on previous tasks too.
      */
-    private void parseString(String input, ArrayList<Task> taskList) throws EsquieException {
+    private Task parseString(String input) throws EsquieException {
+        String[] splitInput = input.split(DELIMITER);
+        String type = splitInput[0];
+        boolean isDone = splitInput[1].equals("1");
 
-        if (input.trim().isEmpty()) {
-            return;
-        }
-
-        String[] splitInput = input.split(" \\| ");
-        try {
-            switch (splitInput[0]) {
-            case "T" -> {
-                Task task = new Todo(splitInput[2], splitInput[1].equals("1"));
-                taskList.add(task);
-            }
-            case "D" -> {
-                Task task = new Deadline(splitInput[2], splitInput[3], splitInput[1].equals("1"));
-                taskList.add(task);
-            }
-            case "E" -> {
-                Task task = new Event(splitInput[2], splitInput[3], splitInput[4], splitInput[1].equals("1"));
-                taskList.add(task);
-            }
-            default -> throw new EsquieException("Corrupted Save File");
-            }
-        } catch (IndexOutOfBoundsException e) {
-            throw new EsquieException("Corrupted Save File");
-        } catch (DateTimeParseException e) {
-            throw new EsquieException("Corrupted Date in Save File: " + input);
-        }
+        // Return the tasks created
+        return switch (type) {
+        case "T" -> new Todo(splitInput[2], isDone);
+        case "D" -> new Deadline(splitInput[2], splitInput[3], isDone);
+        case "E" -> new Event(splitInput[2], splitInput[3], splitInput[4], isDone);
+        default -> throw new EsquieException(Messages.ERR_STORAGE_CORRUPT_FILE);
+        };
     }
 
     /**
@@ -131,7 +120,7 @@ public class Storage {
             writer.write(lineToWrite);
             writer.newLine();
         } catch (IOException e) {
-            throw new EsquieException("Oopsie! Something went wrong with the saving");
+            throw new EsquieException(Messages.ERR_STORAGE_WRITE);
         }
     }
 
@@ -149,7 +138,7 @@ public class Storage {
                 writer.newLine();
             }
         } catch (IOException e) {
-            throw new EsquieException("Oopsie! Something went wrong with the saving");
+            throw new EsquieException(Messages.ERR_STORAGE_WRITE);
         }
     }
 }
