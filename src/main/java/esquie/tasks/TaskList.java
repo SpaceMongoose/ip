@@ -7,6 +7,7 @@ import java.util.List;
  *  TaskList class contains the task list and its methods (e.g. add, delete, get, size)
  */
 public class TaskList {
+    public static final int MAX_TASKLIST_SIZE = 100;
     private ArrayList<Task> taskList;
 
     public TaskList() {

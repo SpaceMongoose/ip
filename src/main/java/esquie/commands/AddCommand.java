@@ -1,5 +1,6 @@
 package esquie.commands;
 
+import esquie.common.Messages;
 import esquie.exceptions.EsquieException;
 import esquie.storage.Storage;
 import esquie.tasks.Task;
@@ -28,14 +29,12 @@ public class AddCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws EsquieException {
-        if (taskList.size() >= 100) {
-            throw new EsquieException("Whoopsie! Number of tasks is full!");
+        if (taskList.size() >= TaskList.MAX_TASKLIST_SIZE) {
+            throw new EsquieException(Messages.ERR_TASKLIST_FULL);
         }
         taskList.add(task);
         storage.writeTask(task);
-        ui.showMessage("Got it. I've added this task:");
-        ui.showMessage(task.toString());
-        ui.showMessage("Now you have " + taskList.size() + " tasks in the list.");
+        ui.showTaskAdded(task, taskList.size());
     }
 
     /**
