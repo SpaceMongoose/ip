@@ -1,6 +1,7 @@
 package esquie.tasks;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *  TaskList class contains the task list and its methods (e.g. add, delete, get, size)
@@ -56,5 +57,19 @@ public class TaskList {
      */
     public int size() {
         return taskList.size();
+    }
+
+    /**
+     * Filter the current tasks and extracts out only tasks with matching keywords
+     *
+     * @param keyword is the filter keyword to apply on tasks
+     */
+    public TaskList find(String keyword) {
+        String searchKey = keyword.toLowerCase();
+        List<Task> findList = this.taskList.stream()
+                .filter(currentTask -> currentTask.toString().toLowerCase().contains(searchKey))
+                .toList();
+
+        return new TaskList(new ArrayList<>(findList));
     }
 }
