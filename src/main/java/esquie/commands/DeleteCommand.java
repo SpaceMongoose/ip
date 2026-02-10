@@ -28,16 +28,16 @@ public class DeleteCommand extends Command {
      * */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws EsquieException {
-        try {
-            Task removedTask = taskList.delete(index);
-            storage.overwriteAll(taskList);
-            ui.showMessage("Got it. I've removed this task:");
-            ui.showMessage(removedTask.toString());
-            ui.showMessage("Now you have " + taskList.size() + " tasks in the list.");
-
-        } catch (IndexOutOfBoundsException e) {
+        if (index < 0 || index >= taskList.size()) {
             throw new EsquieException("Whoopsie! This task does not exist");
         }
+
+        Task removedTask = taskList.delete(index);
+        storage.overwriteAll(taskList);
+
+        ui.showMessage("Got it. I've removed this task:");
+        ui.showMessage(removedTask.toString());
+        ui.showMessage("Now you have " + taskList.size() + " tasks in the list.");
     }
 
     /**
