@@ -3,6 +3,7 @@ package esquie.tasks;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import esquie.common.Messages;
 import esquie.exceptions.EsquieException;
 
 /**
@@ -10,6 +11,8 @@ import esquie.exceptions.EsquieException;
  * Has a Start and End date.
  */
 public class Event extends Task {
+    private static final String DATE_PATTERN_NO_TIME = "d MMM yyyy";
+    private static final String DATE_PATTERN_WITH_TIME = "d MMM yyyy, HHmm'H'";
     protected LocalDateTime from;
     protected LocalDateTime to;
 
@@ -25,7 +28,7 @@ public class Event extends Task {
         this.from = LocalDateTime.parse(from, Task.DATE_FORMATTER);
         this.to = LocalDateTime.parse(to, Task.DATE_FORMATTER);
         if (this.to.isBefore(this.from)) {
-            throw new EsquieException("Oopsie! End time cannot be before Start time!");
+            throw new EsquieException(Messages.ERR_EVENT_TIME_CONFLICT);
         }
     }
 
@@ -42,7 +45,7 @@ public class Event extends Task {
         this.from = LocalDateTime.parse(from, Task.DATE_FORMATTER);
         this.to = LocalDateTime.parse(to, Task.DATE_FORMATTER);
         if (this.to.isBefore(this.from)) {
-            throw new EsquieException("Oopsie! End time cannot be before Start time!");
+            throw new EsquieException(Messages.ERR_EVENT_TIME_CONFLICT);
         }
     }
 
@@ -56,8 +59,10 @@ public class Event extends Task {
     public String toString() {
         boolean noFromTime = (from.getHour() == 0 && from.getMinute() == 0);
         boolean noToTime = (to.getHour() == 0 && to.getMinute() == 0);
-        String patternFrom = noFromTime ? "d MMM yyyy" : "d MMM yyyy, HHmm'H'";
-        String patternTo = noToTime ? "d MMM yyyy" : "d MMM yyyy, HHmm'H'";
+
+        String patternFrom = noFromTime ? DATE_PATTERN_NO_TIME : DATE_PATTERN_WITH_TIME;
+        String patternTo = noToTime ? DATE_PATTERN_NO_TIME : DATE_PATTERN_WITH_TIME;
+
         String formatFrom = from.format(DateTimeFormatter.ofPattern(patternFrom));
         String formatTo = to.format(DateTimeFormatter.ofPattern(patternTo));
         return "[E]" + super.toString() + " (from: " + formatFrom + " to: " + formatTo + ")";

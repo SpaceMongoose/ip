@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
  * Task with a specific date or time attached to it. (Only End Date)
  */
 public class Deadline extends Task {
+    private static final String DATE_PATTERN_NO_TIME = "d MMM yyyy";
+    private static final String DATE_PATTERN_WITH_TIME = "d MMM yyyy, HHmm'H'";
     protected LocalDateTime by;
 
     /**
@@ -42,7 +44,8 @@ public class Deadline extends Task {
         // DATE_FORMATTER returns 00:00 if no time is specified
         // Select which type of pattern (either show time or no time)
         boolean noTime = (by.getHour() == 0 && by.getMinute() == 0);
-        String pattern = noTime ? "d MMM yyyy" : "d MMM yyyy, HHmm'H'";
+        String pattern = noTime ? DATE_PATTERN_NO_TIME : DATE_PATTERN_WITH_TIME;
+
         String formatDate = by.format(DateTimeFormatter.ofPattern(pattern));
         return "[D]" + super.toString() + " (by: " + formatDate + ")";
     }
