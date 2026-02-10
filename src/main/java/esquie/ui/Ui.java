@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import esquie.common.Messages;
 import esquie.tasks.Task;
+import esquie.tasks.TaskList;
+
 /**
  * Ui deals with interactions with the user, focusing on input and output.
  */
@@ -111,5 +113,14 @@ public class Ui {
         showMessage(Messages.MSG_TASK_DELETE);
         showMessage(task.toString());
         showMessage(Messages.getTaskCountMessage(size));
+    }
+
+    /**
+     * Returns the current task(s) in taskList
+     */
+    public void showTaskList(TaskList taskList) {
+        for (int i = 0; i < taskList.size(); i++) {
+            showMessage((i + 1) + "." + taskList.get(i).toString());
+        }
     }
 }
