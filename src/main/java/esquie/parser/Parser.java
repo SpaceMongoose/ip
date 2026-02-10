@@ -9,6 +9,7 @@ import esquie.commands.ExitCommand;
 import esquie.commands.FindCommand;
 import esquie.commands.ListCommand;
 import esquie.commands.MarkCommand;
+import esquie.common.Messages;
 import esquie.exceptions.EsquieException;
 import esquie.tasks.Deadline;
 import esquie.tasks.Event;
@@ -56,7 +57,7 @@ public class Parser {
             return parseFind(arguments);
         }
         default -> {
-            throw new EsquieException("Oopsie! Esquie did not understand that!");
+            throw new EsquieException(Messages.ERR_COMMAND_NOT_UNDERSTOOD);
         }
         }
     }
@@ -68,8 +69,7 @@ public class Parser {
      */
     private static Command parseTodo(String input) throws EsquieException {
         if (input.trim().isEmpty()) {
-            throw new EsquieException("Whoopsie! Something is missing from the todo command!"
-                    + "\n" + "Example Usage: todo borrow book");
+            throw new EsquieException(Messages.ERR_TODO_FORMAT);
         }
 
         return new AddCommand(new Todo(input.trim()));
@@ -85,17 +85,13 @@ public class Parser {
         String[] byInput = input.split(" /by ", 2);
 
         if (byInput.length < 2 || byInput[0].trim().isEmpty() || byInput[1].trim().isEmpty()) {
-            throw new EsquieException("Whoopsie! Something is missing from the deadline command!"
-                    + "\n" + "Example Usage: deadline Play E33 /by 2026-01-25 1750"
-                    + "\n" + "Example Usage: deadline Play E33 /by 2026-01-25");
+            throw new EsquieException(Messages.ERR_DEADLINE_FORMAT);
         }
         try {
             Task task = new Deadline(byInput[0].trim(), byInput[1].trim());
             return new AddCommand(task);
         } catch (DateTimeParseException e) {
-            throw new EsquieException("Oopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm format!"
-                    + "\n"
-                    + "Example Usage: /by 2026-01-25 OR /by 2026-01-25 1750");
+            throw new EsquieException(Messages.ERR_DEADLINE_DATE);
         }
     }
 
@@ -108,12 +104,7 @@ public class Parser {
         // This splits the description and time
         String[] splitFrom = input.split(" /from ", 2);
         if (splitFrom.length < 2 || splitFrom[0].trim().isEmpty() || splitFrom[1].trim().isEmpty()) {
-            throw new EsquieException("Whoopsie, something is wrong with the event command! \n"
-                    + "Either a task description or time is missing!"
-                    + "\n"
-                    + "Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800"
-                    + "\n"
-                    + "Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25");
+            throw new EsquieException(Messages.ERR_EVENT_FORMAT);
         }
         String description = splitFrom[0];
         String date = splitFrom[1];
@@ -121,23 +112,14 @@ public class Parser {
         // This further splits the time to obtain from and to
         String[] splitTo = date.split(" /to ", 2);
         if (splitTo.length < 2 || splitTo[0].trim().isEmpty() || splitTo[1].trim().isEmpty()) {
-            throw new EsquieException("Whoopsie, something is wrong with the event command!\n"
-                    + "Either the from or to timing is missing from the event command!"
-                    + "\n"
-                    + "Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800"
-                    + "\n"
-                    + "Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25");
+            throw new EsquieException(Messages.ERR_EVENT_TIMING);
         }
 
         try {
             Task task = new Event(description.trim(), splitTo[0].trim(), splitTo[1].trim());
             return new AddCommand(task);
         } catch (DateTimeParseException e) {
-            throw new EsquieException("Oopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm format!"
-                    + "\n"
-                    + "Example Usage: event Play E33 /from 2026-01-25 1300 /to 2026-01-25 1800"
-                    + "\n"
-                    + "Example Usage: event Play E33 /from 2026-01-25 /to 2026-01-25");
+            throw new EsquieException(Messages.ERR_EVENT_DATE);
         }
     }
 
@@ -148,15 +130,13 @@ public class Parser {
      */
     private static Command parseDelete(String input) throws EsquieException {
         if (input.trim().isEmpty()) {
-            throw new EsquieException("Whoopsie! Something is wrong with the delete command!"
-                    + "\n" + "Example Usage: delete 3");
+            throw new EsquieException(Messages.ERR_DELETE_FORMAT);
         }
         try {
             int index = Integer.parseInt(input.trim()) - 1;
             return new DeleteCommand(index);
         } catch (NumberFormatException e) {
-            throw new EsquieException("Whoopsie! You did not give me a proper number!"
-                    + "\n" + "Example Usage: delete 3");
+            throw new EsquieException(Messages.ERR_DELETE_NUMBER);
         }
     }
 
@@ -170,8 +150,7 @@ public class Parser {
         // Error Checking
         // If the 2nd input is ""
         if (input.trim().isEmpty()) {
-            throw new EsquieException("Whoopsie! command is missing an argument!"
-                    + "\n" + "Example Usage: mark 1 OR unmark 1");
+            throw new EsquieException(Messages.ERR_MARK_FORMAT);
         }
 
         try {
@@ -181,8 +160,7 @@ public class Parser {
             boolean isMark = command.equalsIgnoreCase("mark");
             return new MarkCommand(taskNumber, isMark);
         } catch (NumberFormatException e) {
-            throw new EsquieException("You didnt give me a number... Esquie is now sad :("
-                    + "\n" + "Example Usage: mark 1 OR unmark 1");
+            throw new EsquieException(Messages.ERR_MARK_NUMBER);
 
         }
     }
@@ -194,8 +172,7 @@ public class Parser {
      */
     private static Command parseFind(String input) throws EsquieException {
         if (input.trim().isEmpty()) {
-            throw new EsquieException("Whoopsie! You have to tell me what to find!"
-                    + "\n" + "Example Usage: find book");
+            throw new EsquieException(Messages.ERR_FIND_FORMAT);
         }
 
         return new FindCommand(input.trim().toLowerCase());

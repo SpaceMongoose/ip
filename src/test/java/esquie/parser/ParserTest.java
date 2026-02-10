@@ -63,7 +63,7 @@ public class ParserTest {
         EsquieException e = assertThrows(EsquieException.class, () -> {
             Parser.parse("this is a random command");
         });
-        assertTrue(e.getMessage().contains("Oopsie! Esquie did not understand that!"));
+        assertTrue(e.getMessage().contains("Whoopsie! Esquie did not understand that!"));
     }
 
     @Test
