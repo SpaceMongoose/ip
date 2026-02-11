@@ -1,5 +1,7 @@
 package esquie;
 
+import java.io.File;
+
 import esquie.commands.Command;
 import esquie.common.Messages;
 import esquie.exceptions.EsquieException;
@@ -7,10 +9,7 @@ import esquie.parser.Parser;
 import esquie.storage.Storage;
 import esquie.tasks.TaskList;
 import esquie.ui.Ui;
-
 import javafx.application.Platform;
-
-import java.io.File;
 
 /**
  * A Personal Assistant Chatbot that helps a person keep track of various things.
