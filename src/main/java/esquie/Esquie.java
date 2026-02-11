@@ -1,12 +1,16 @@
 package esquie;
 
 import esquie.commands.Command;
+import esquie.common.Messages;
 import esquie.exceptions.EsquieException;
 import esquie.parser.Parser;
 import esquie.storage.Storage;
 import esquie.tasks.TaskList;
 import esquie.ui.Ui;
+
 import javafx.application.Platform;
+
+import java.io.File;
 
 /**
  * A Personal Assistant Chatbot that helps a person keep track of various things.
@@ -57,6 +61,28 @@ public class Esquie {
         } catch (EsquieException e) {
             // If an error happens, we return the error message directly
             return e.getMessage();
+        }
+    }
+
+    /**
+     * Updates the current Storage object based on the new file path
+     * @param directoryPath is the file path to save/read esquie.txt from
+     * */
+    public void updateSaveLocation(String directoryPath) throws EsquieException {
+        try {
+            String fullPath = directoryPath + File.separator + "esquie.txt";
+
+            // Load new file path and load tasks again
+            Storage tempStorage = new Storage(fullPath);
+            TaskList tempTaskList = new TaskList(tempStorage.loadTasks());
+
+            // Update if reading and loading without error
+            this.storage = tempStorage;
+            this.taskList = tempTaskList;
+            storage.checkSave();
+
+        } catch (EsquieException e) {
+            throw new EsquieException(Messages.ERR_STORAGE_IMPORT_FILE);
         }
     }
 }
