@@ -89,6 +89,7 @@ public class Messages {
     public static final String ERR_STORAGE_IMPORT = "Whoopsie! Something went wrong with importing previous tasks!";
     public static final String ERR_STORAGE_SAVE = "Whoopsie! Something went wrong with the save file!";
     public static final String ERR_STORAGE_WRITE = "Whoopsie! Something went wrong with writing to the save file!";
+    public static final String ERR_STORAGE_IMPORT_FILE = "Whoopsie! Something went wrong with importing save file!";
 
     private Messages() {};
 

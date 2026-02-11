@@ -1,6 +1,9 @@
 package esquie.ui;
 
+import java.io.File;
+
 import esquie.Esquie;
+import esquie.exceptions.EsquieException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -8,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-
+import javafx.stage.DirectoryChooser;
 /**
  * Controller for MainWindow. Provides the layout for the other controls.
  */
@@ -21,6 +24,8 @@ public class MainWindow extends AnchorPane {
     private TextField userInput;
     @FXML
     private Button sendButton;
+    @FXML
+    private Button importButton;
 
     private Esquie esquie;
 
@@ -59,5 +64,33 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getEsquieDialog(response, esquieImage)
         );
         userInput.clear();
+    }
+
+    /**
+     * Creates a directory chooser that allows user to choose a location where the save file should be written to /
+     * imported from.
+     */
+    @FXML
+    private void handleImport() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select/Import Save Location");
+
+        File selectedDir = directoryChooser.showDialog(userInput.getScene().getWindow());
+
+        if (selectedDir != null) {
+            try {
+                esquie.updateSaveLocation(selectedDir.getAbsolutePath());
+                String response = "Successfully loaded data from: " + selectedDir.getAbsolutePath();
+                dialogContainer.getChildren().addAll(
+                        DialogBox.getEsquieDialog(response, esquieImage)
+                );
+
+            } catch (EsquieException e) {
+                String response = "Error loading file: " + e.getMessage();
+                dialogContainer.getChildren().add(
+                        DialogBox.getEsquieDialog(response, esquieImage)
+                );
+            }
+        }
     }
 }
