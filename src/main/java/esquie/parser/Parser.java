@@ -94,7 +94,12 @@ public class Parser {
             Task task = new Deadline(byInput[0].trim(), byInput[1].trim());
             return new AddCommand(task);
         } catch (DateTimeParseException e) {
-            throw new EsquieException(Messages.ERR_DEADLINE_DATE);
+            String errorMessage = e.getMessage();
+            if (errorMessage.contains("Invalid date")) {
+                throw new EsquieException(Messages.ERR_DATE_INVALID);
+            } else {
+                throw new EsquieException(Messages.ERR_DEADLINE_DATE);
+            }
         }
     }
 
@@ -127,7 +132,12 @@ public class Parser {
             Task task = new Event(description.trim(), splitTo[0].trim(), splitTo[1].trim());
             return new AddCommand(task);
         } catch (DateTimeParseException e) {
-            throw new EsquieException(Messages.ERR_EVENT_DATE);
+            String errorMessage = e.getMessage();
+            if (errorMessage.contains("Invalid date")) {
+                throw new EsquieException(Messages.ERR_DATE_INVALID);
+            } else {
+                throw new EsquieException(Messages.ERR_EVENT_DATE);
+            }
         }
     }
 

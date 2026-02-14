@@ -2,6 +2,7 @@ package esquie.tasks;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.ResolverStyle;
 import java.time.temporal.ChronoField;
 
 /**
@@ -10,13 +11,14 @@ import java.time.temporal.ChronoField;
  */
 public class Task {
     protected static final DateTimeFormatter DATE_FORMATTER = new DateTimeFormatterBuilder()
-            .appendPattern("yyyy-MM-dd")
+            .appendPattern("uuuu-MM-dd")
             .optionalStart()
             .appendPattern(" HHmm")
             .optionalEnd()
             .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
             .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
-            .toFormatter();
+            .toFormatter()
+            .withResolverStyle(ResolverStyle.STRICT);
     protected static final DateTimeFormatter SAVE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     protected String description;
     protected boolean isDone;
@@ -87,6 +89,25 @@ public class Task {
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + getDescription();
+    }
+
+
+    /**
+     * Returns a boolean to indicate if equals (true) or not (false)
+     * @param obj Object to compare against
+     * @return A boolean true or false to indicate if current object equals to object
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj instanceof Task otherTask && this.getClass().equals(obj.getClass())) {
+            return this.description.equalsIgnoreCase(otherTask.description);
+        }
+
+        return false;
     }
 
     /**

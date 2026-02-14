@@ -48,12 +48,12 @@ public class EventTest {
             }
         );
 
-        assertEquals("Whoopsie! End time cannot be before Start time!", exception.getMessage());
+        assertEquals("Whoopsie! Ensure your Start and End time are correct!", exception.getMessage());
 
         EsquieException exceptionWithTime = assertThrows(EsquieException.class, () -> {
             new Event("Read book", "2026-01-01 2359", "2026-01-01 0000");
         });
 
-        assertEquals("Whoopsie! End time cannot be before Start time!", exceptionWithTime.getMessage());
+        assertEquals("Whoopsie! Ensure your Start and End time are correct!", exceptionWithTime.getMessage());
     }
 }

@@ -22,6 +22,7 @@ public class Messages {
     public static final String ERR_TASKLIST_FULL = "Whoopsie! Number of tasks is full!";
     public static final String ERR_TASK_NOT_EXIST = "Whoopsie! This task does not exist";
     public static final String ERR_TASK_NOT_FOUND = "Whoopsie! Nothing could be found";
+    public static final String ERR_DUPLICATE_TASK = "Whoopsie! This task already exists";
 
     // SUCCESS MESSAGE
     public static final String MSG_TASK_ADD = "Got it, mon ami. I've added this task:";
@@ -42,6 +43,8 @@ public class Messages {
     public static final String ERR_DEADLINE_FORMAT = "Whoopsie! Something is missing from the deadline command!"
             + "\n" + ERR_DEADLINE_EXAMPLE;
 
+    public static final String ERR_DATE_INVALID = "Whoopsie! Mon ami, you gave me a invalid date!";
+
     public static final String ERR_DEADLINE_DATE = "Whoopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm "
             + "format!" + "\n" + ERR_DEADLINE_DATE_EXAMPLE;
 
@@ -59,7 +62,7 @@ public class Messages {
             + "\n"
             + ERR_EVENT_EXAMPLE;
 
-    public static final String ERR_EVENT_TIME_CONFLICT = "Whoopsie! End time cannot be before Start time!";
+    public static final String ERR_EVENT_TIME_CONFLICT = "Whoopsie! Ensure your Start and End time are correct!";
 
     // DELETE ERROR MESSAGE
     public static final String ERR_DELETE_FORMAT = "Whoopsie! Something is wrong with the delete command!"

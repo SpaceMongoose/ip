@@ -27,7 +27,7 @@ public class Event extends Task {
         super(description);
         this.from = LocalDateTime.parse(from, Task.DATE_FORMATTER);
         this.to = LocalDateTime.parse(to, Task.DATE_FORMATTER);
-        if (this.to.isBefore(this.from)) {
+        if (this.to.isBefore(this.from) || this.to.isEqual(this.from)) {
             throw new EsquieException(Messages.ERR_EVENT_TIME_CONFLICT);
         }
     }
@@ -44,7 +44,7 @@ public class Event extends Task {
         super(description, isDone);
         this.from = LocalDateTime.parse(from, Task.DATE_FORMATTER);
         this.to = LocalDateTime.parse(to, Task.DATE_FORMATTER);
-        if (this.to.isBefore(this.from)) {
+        if (this.to.isBefore(this.from) || this.to.isEqual(this.from)) {
             throw new EsquieException(Messages.ERR_EVENT_TIME_CONFLICT);
         }
     }
@@ -78,5 +78,24 @@ public class Event extends Task {
         return "E" + " | " + super.saveString()
                 + " | " + from.format(Task.SAVE_FORMATTER)
                 + " | " + to.format(Task.SAVE_FORMATTER);
+    }
+
+    /**
+     * Returns a boolean to indicate if equals (true) or not (false)
+     * @param obj Object to compare against
+     * @return A boolean true or false to indicate if current object equals to object
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        // Double check for time and description
+        if (obj instanceof Event otherEvent && super.equals(obj)) {
+            return this.from.equals(otherEvent.from) && this.to.equals(otherEvent.to);
+        }
+
+        return false;
     }
 }

@@ -16,6 +16,7 @@ public class Deadline extends Task {
      *
      * @param description The description of the event.
      * @param by The deadline of the event. Expects a string in "yyyy-MM-dd HH:mm", (HH:mm) is optional
+     * @throws DateTimeParseException If the date format is invalid or the date does not exist (e.g. Feb 30).
      */
     public Deadline(String description, String by) {
         super(description);
@@ -58,5 +59,25 @@ public class Deadline extends Task {
     @Override
     public String saveString() {
         return "D" + " | " + super.saveString() + " | " + by.format(Task.SAVE_FORMATTER);
+    }
+
+
+    /**
+     * Returns a boolean to indicate if equals (true) or not (false)
+     * @param obj Object to compare against
+     * @return A boolean true or false to indicate if current object equals to object
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        // Double check for time and description
+        if (obj instanceof Deadline otherDeadline && super.equals(obj)) {
+            return this.by.equals(otherDeadline.by);
+        }
+
+        return false;
     }
 }
