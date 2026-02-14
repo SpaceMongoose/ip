@@ -63,7 +63,7 @@ public class DialogBox extends HBox {
         db.flip();
 
         // All error message starts with "Whoopsie!"
-        if (text.contains("Whoopsie!")) {
+        if (text.contains("Whoopsie")) {
             db.dialog.getStyleClass().add("error-label");
         }
         return db;
