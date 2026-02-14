@@ -42,6 +42,8 @@ public class Messages {
     public static final String ERR_DEADLINE_FORMAT = "Whoopsie! Something is missing from the deadline command!"
             + "\n" + ERR_DEADLINE_EXAMPLE;
 
+    public static final String ERR_DATE_INVALID = "Whoopsie! Mon ami, you gave me a invalid date!";
+
     public static final String ERR_DEADLINE_DATE = "Whoopsie! Please enter the date in yyyy-MM-dd or yyyy-MM-dd HHmm "
             + "format!" + "\n" + ERR_DEADLINE_DATE_EXAMPLE;
 

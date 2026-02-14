@@ -16,6 +16,7 @@ public class Deadline extends Task {
      *
      * @param description The description of the event.
      * @param by The deadline of the event. Expects a string in "yyyy-MM-dd HH:mm", (HH:mm) is optional
+     * @throws DateTimeParseException If the date format is invalid or the date does not exist (e.g. Feb 30).
      */
     public Deadline(String description, String by) {
         super(description);

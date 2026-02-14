@@ -4,10 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import esquie.exceptions.EsquieException;
+
 public class DeadlineTest {
 
     @Test
-    public void deadline_add_success() {
+    public void deadline_add_success() throws EsquieException {
         Deadline deadline = new Deadline("Read book", "2026-01-01");
         assertEquals("[D][ ] Read book (by: 1 Jan 2026)", deadline.toString());
 
@@ -16,7 +18,7 @@ public class DeadlineTest {
     }
 
     @Test
-    public void deadline_add_saveString() {
+    public void deadline_add_saveString() throws EsquieException {
         Deadline deadline = new Deadline("Read book", "2026-01-01");
         assertEquals("D | 0 | Read book | 2026-01-01 0000", deadline.saveString());
 
