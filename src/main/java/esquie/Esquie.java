@@ -20,8 +20,11 @@ public class Esquie {
     private Storage storage;
 
     /**
-     * Initialize Esquie with empty task list (up to 100 items) and a counter for the number of tasks.
-     * Check if save file exists.
+     * Initializes Esquie with empty task list (up to 100 items) and a counter for the number of tasks.
+     * Checks if the specified save file exists and loads it if found.
+     *
+     * @param filePath The file path where data is stored
+     * @throws EsquieException If the file cannot be created or accessed
      */
     public Esquie(String filePath) throws EsquieException {
         this.ui = new Ui();

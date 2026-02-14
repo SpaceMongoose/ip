@@ -23,7 +23,7 @@ public class TaskList {
     }
 
     /**
-     * Add task to taskList.
+     * Adds the specified task to the task list
      * @param task The task to add to the taskList.
      */
     public void add(Task task) {
@@ -33,9 +33,10 @@ public class TaskList {
     }
 
     /**
-     * Delete specified task from taskList.
+     * Deletes specified task from taskList.
+     *
      * @param index index of the task to delete.
-     * @return Returns a task object that is removed
+     * @return The task object that was removed
      */
     public Task delete(int index) {
         assert index >= 0 && index < taskList.size() : "Task index is out of bounds!";
