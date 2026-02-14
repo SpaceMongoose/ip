@@ -61,7 +61,7 @@ public class Messages {
             + "\n"
             + ERR_EVENT_EXAMPLE;
 
-    public static final String ERR_EVENT_TIME_CONFLICT = "Whoopsie! End time cannot be before Start time!";
+    public static final String ERR_EVENT_TIME_CONFLICT = "Whoopsie! Ensure your Start and End time are correct!";
 
     // DELETE ERROR MESSAGE
     public static final String ERR_DELETE_FORMAT = "Whoopsie! Something is wrong with the delete command!"

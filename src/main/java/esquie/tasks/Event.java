@@ -27,7 +27,7 @@ public class Event extends Task {
         super(description);
         this.from = LocalDateTime.parse(from, Task.DATE_FORMATTER);
         this.to = LocalDateTime.parse(to, Task.DATE_FORMATTER);
-        if (this.to.isBefore(this.from)) {
+        if (this.to.isBefore(this.from) || this.to.isEqual(this.from)) {
             throw new EsquieException(Messages.ERR_EVENT_TIME_CONFLICT);
         }
     }
@@ -44,7 +44,7 @@ public class Event extends Task {
         super(description, isDone);
         this.from = LocalDateTime.parse(from, Task.DATE_FORMATTER);
         this.to = LocalDateTime.parse(to, Task.DATE_FORMATTER);
-        if (this.to.isBefore(this.from)) {
+        if (this.to.isBefore(this.from) || this.to.isEqual(this.from)) {
             throw new EsquieException(Messages.ERR_EVENT_TIME_CONFLICT);
         }
     }
