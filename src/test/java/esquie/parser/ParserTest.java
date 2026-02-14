@@ -128,7 +128,7 @@ public class ParserTest {
             Parser.parse("mark"); // Missing Number
         });
 
-        assertTrue(e.getMessage().contains("You didnt give me a number... Esquie is now sad :("));
-        assertTrue(eNoNumber.getMessage().contains("Whoopsie! command is missing an argument!"));
+        assertTrue(e.getMessage().contains("Whoopsie!"));
+        assertTrue(eNoNumber.getMessage().contains("Whoopsie! Command is missing an argument!"));
     }
 }

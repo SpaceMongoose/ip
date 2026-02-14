@@ -61,6 +61,11 @@ public class DialogBox extends HBox {
     public static DialogBox getEsquieDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
+
+        // All error message starts with "Whoopsie!"
+        if (text.contains("Whoopsie!")) {
+            db.dialog.getStyleClass().add("error-label");
+        }
         return db;
     }
 }

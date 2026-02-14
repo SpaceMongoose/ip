@@ -71,10 +71,10 @@ public class Messages {
             + ERR_DELETE_EXAMPLE;
 
     // MARK ERROR MESSAGE
-    public static final String ERR_MARK_FORMAT = "Whoopsie! command is missing an argument!"
+    public static final String ERR_MARK_FORMAT = "Whoopsie! Command is missing an argument!"
             + "\n"
             + ERR_MARK_EXAMPLE;
-    public static final String ERR_MARK_NUMBER = "You didnt give me a number... Esquie is now sad :("
+    public static final String ERR_MARK_NUMBER = "Whoopsie! You have to give me a number!"
             + "\n"
             + ERR_MARK_EXAMPLE;
 
@@ -84,7 +84,7 @@ public class Messages {
             + ERR_FIND_EXAMPLE;
 
     // STORAGE ERROR MESSAGE
-    public static final String ERR_STORAGE_CORRUPT_SKIP = "Warning! Skipping corrupted line in save file: ";
+    public static final String ERR_STORAGE_CORRUPT_SKIP = "Whoopsie!  Skipping corrupted line in save file: ";
     public static final String ERR_STORAGE_CORRUPT_FILE = "Whoopsie! Corrupted Save File!";
     public static final String ERR_STORAGE_IMPORT = "Whoopsie! Something went wrong with importing previous tasks!";
     public static final String ERR_STORAGE_SAVE = "Whoopsie! Something went wrong with the save file!";

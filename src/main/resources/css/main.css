@@ -6,18 +6,18 @@
 }
 
 .text-field {
-    -fx-background-color: #d9ffe2;
+    -fx-background-color: #ecf0f1;
     -fx-font: 20px "Arial";
 }
 
 .button {
-    -fx-background-color: saddlebrown;
+    -fx-background-color: #4b6584;
     -fx-font: italic bold 16px "Arial";
     -fx-text-fill: white;
 }
 
 .button:hover {
-    -fx-background-color:sienna;
+    -fx-background-color:#778ca3;
     -fx-font-size: 18px;
 }
 

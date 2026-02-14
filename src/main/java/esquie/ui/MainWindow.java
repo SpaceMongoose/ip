@@ -40,7 +40,7 @@ public class MainWindow extends AnchorPane {
         // This method runs automatically when the window starts.
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
 
-        String welcomeText = "Bonjour mon ami! I'm Esquie\uD83D\uDE00 " + "\nWhat can I do for you?";
+        String welcomeText = "Bonjour mon ami! I'm Esquie \uD83D\uDE00 " + "\nWhat can I do for you?";
         dialogContainer.getChildren().add(
                 DialogBox.getEsquieDialog(welcomeText, esquieImage)
         );
