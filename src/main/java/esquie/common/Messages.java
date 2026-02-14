@@ -22,6 +22,7 @@ public class Messages {
     public static final String ERR_TASKLIST_FULL = "Whoopsie! Number of tasks is full!";
     public static final String ERR_TASK_NOT_EXIST = "Whoopsie! This task does not exist";
     public static final String ERR_TASK_NOT_FOUND = "Whoopsie! Nothing could be found";
+    public static final String ERR_DUPLICATE_TASK = "Whoopsie! This task already exists";
 
     // SUCCESS MESSAGE
     public static final String MSG_TASK_ADD = "Got it, mon ami. I've added this task:";

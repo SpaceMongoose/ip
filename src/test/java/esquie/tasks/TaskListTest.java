@@ -4,10 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import esquie.exceptions.EsquieException;
+
 public class TaskListTest {
 
     @Test
-    public void addTask_sizeIncrease() {
+    public void addTask_sizeIncrease() throws EsquieException {
         TaskList taskList = new TaskList();
         Task task = new Task("Read book");
         taskList.add(task);
@@ -15,7 +17,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void deleteTask_sizeDecrease() {
+    public void deleteTask_sizeDecrease() throws EsquieException {
         TaskList taskList = new TaskList();
         Task task = new Task("Read book");
         taskList.add(task);
@@ -25,7 +27,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void getReturns_correctTask() {
+    public void getReturns_correctTask() throws EsquieException {
         TaskList taskList = new TaskList();
         Task taskOne = new Task("Read book");
         Task taskTwo = new Task("Watch TV");

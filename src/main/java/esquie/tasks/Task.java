@@ -91,6 +91,25 @@ public class Task {
         return "[" + getStatusIcon() + "] " + getDescription();
     }
 
+
+    /**
+     * Returns a boolean to indicate if equals (true) or not (false)
+     * @param obj Object to compare against
+     * @return A boolean true or false to indicate if current object equals to object
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj instanceof Task otherTask && this.getClass().equals(obj.getClass())) {
+            return this.description.equalsIgnoreCase(otherTask.description);
+        }
+
+        return false;
+    }
+
     /**
      * Returns a standardized string for task saving.
      * @return  A formatted string for saving (e.g. 1 | Read book)

@@ -3,6 +3,9 @@ package esquie.tasks;
 import java.util.ArrayList;
 import java.util.List;
 
+import esquie.common.Messages;
+import esquie.exceptions.EsquieException;
+
 /**
  *  TaskList class contains the task list and its methods (e.g. add, delete, get, size)
  */
@@ -26,9 +29,13 @@ public class TaskList {
      * Adds the specified task to the task list
      * @param task The task to add to the taskList.
      */
-    public void add(Task task) {
+    public void add(Task task) throws EsquieException {
         assert taskList.size() < 100 : "Tasklist is full! AddCommand should fail!";
         assert task != null : "task should be a Task object, not null";
+        if (taskList.contains(task)) {
+            throw new EsquieException(Messages.ERR_DUPLICATE_TASK);
+        }
+
         taskList.add(task);
     }
 

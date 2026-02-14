@@ -79,4 +79,23 @@ public class Event extends Task {
                 + " | " + from.format(Task.SAVE_FORMATTER)
                 + " | " + to.format(Task.SAVE_FORMATTER);
     }
+
+    /**
+     * Returns a boolean to indicate if equals (true) or not (false)
+     * @param obj Object to compare against
+     * @return A boolean true or false to indicate if current object equals to object
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        // Double check for time and description
+        if (obj instanceof Event otherEvent && super.equals(obj)) {
+            return this.from.equals(otherEvent.from) && this.to.equals(otherEvent.to);
+        }
+
+        return false;
+    }
 }

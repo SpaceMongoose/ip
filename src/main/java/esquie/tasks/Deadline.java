@@ -60,4 +60,24 @@ public class Deadline extends Task {
     public String saveString() {
         return "D" + " | " + super.saveString() + " | " + by.format(Task.SAVE_FORMATTER);
     }
+
+
+    /**
+     * Returns a boolean to indicate if equals (true) or not (false)
+     * @param obj Object to compare against
+     * @return A boolean true or false to indicate if current object equals to object
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        // Double check for time and description
+        if (obj instanceof Deadline otherDeadline && super.equals(obj)) {
+            return this.by.equals(otherDeadline.by);
+        }
+
+        return false;
+    }
 }
