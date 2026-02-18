@@ -8,6 +8,7 @@
 * Delete task from task list
 * Mark/Unmark task as done/not done
 * Find task(s) related to a keyword
+* Import existing task lists, Write to existing task lists
 
 # 2. Commands
 ### 2.1 Adding todo: `todo`
@@ -94,9 +95,9 @@ Now you have 1 tasks in the list.
 ```
 
 ### 2.8 Importing from a existing task list
-The button located on the bottom left of the GUI allows the selection of an existing task list `esquie.txt`
+The button located on the bottom left of the GUI allows the selection of an existing task list `*.txt`
 to be used in the current session.
-* Note that only the directory containing `esquie.txt` has to be chosen.
+* Note that the selection can be any .txt file
 
 ### 2.9 Exit from the program: `bye`
 Exit from the program.
