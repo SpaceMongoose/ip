@@ -1,7 +1,5 @@
 package esquie;
 
-import java.io.File;
-
 import esquie.commands.Command;
 import esquie.common.Messages;
 import esquie.exceptions.EsquieException;
@@ -68,14 +66,13 @@ public class Esquie {
 
     /**
      * Updates the current Storage object based on the new file path
-     * @param directoryPath is the file path to save/read esquie.txt from
+     * @param filePath is the file path to save/read to/from
      * */
-    public void updateSaveLocation(String directoryPath) throws EsquieException {
+    public void updateSaveLocation(String filePath) throws EsquieException {
         try {
-            String fullPath = directoryPath + File.separator + "esquie.txt";
 
             // Load new file path and load tasks again
-            Storage tempStorage = new Storage(fullPath);
+            Storage tempStorage = new Storage(filePath);
             TaskList tempTaskList = new TaskList(tempStorage.loadTasks());
 
             // Update if reading and loading without error

@@ -11,7 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+
 /**
  * Controller for MainWindow. Provides the layout for the other controls.
  */
@@ -72,15 +73,19 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void handleImport() {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Select/Import Save Location");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select/Import Save File");
 
-        File selectedDir = directoryChooser.showDialog(userInput.getScene().getWindow());
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt")
+        );
 
-        if (selectedDir != null) {
+        File selectedFile = fileChooser.showOpenDialog(userInput.getScene().getWindow());
+
+        if (selectedFile != null) {
             try {
-                esquie.updateSaveLocation(selectedDir.getAbsolutePath());
-                String response = "Successfully loaded data from: " + selectedDir.getAbsolutePath();
+                esquie.updateSaveLocation(selectedFile.getAbsolutePath());
+                String response = "Successfully loaded data from: " + selectedFile.getName();
                 dialogContainer.getChildren().addAll(
                         DialogBox.getEsquieDialog(response, esquieImage)
                 );
