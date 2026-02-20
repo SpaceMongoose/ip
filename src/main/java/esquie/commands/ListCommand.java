@@ -18,6 +18,10 @@ public class ListCommand extends Command {
      * */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws EsquieException {
+        if (taskList.size() == 0) {
+            ui.showMessage(Messages.MSG_TASK_LIST_NOTHING);
+            return;
+        }
         ui.showMessage(Messages.MSG_TASK_LIST);
         ui.showTaskList(taskList);
     }
