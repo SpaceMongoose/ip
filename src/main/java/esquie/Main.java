@@ -35,8 +35,8 @@ public class Main extends Application {
             stage.setTitle("Esquie Bot");
             Image image = new Image(this.getClass().getResourceAsStream("/images/e33_icon.jpg"));
             stage.getIcons().add(image);
-            stage.setMinWidth(300);
-            stage.setMinHeight(300);
+            stage.setMinWidth(400);
+            stage.setMinHeight(600);
 
             // 6. Inject Esquie
             Esquie esquie = new Esquie("./data/esquie.txt");
