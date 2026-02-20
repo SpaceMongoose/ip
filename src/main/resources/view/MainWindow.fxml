@@ -35,7 +35,7 @@
 
             <TextField fx:id="userInput" promptText="Type here..."
                        prefHeight="41.0" minHeight="41.0" maxHeight="41.0"
-                       HBox.hgrow="ALWAYS"/>
+                       HBox.hgrow="ALWAYS" onAction="#handleUserInput"/>
 
             <Button fx:id="sendButton" mnemonicParsing="false" onAction="#handleUserInput"
                     prefHeight="41.0" minHeight="41.0" maxHeight="41.0"
